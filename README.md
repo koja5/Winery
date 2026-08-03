@@ -25,4 +25,4 @@ npm run client           # http://localhost:4201, proxy na /api -> server
 
 ## Backlog
 
-Fazni plan razvoja (Faza 0–5, 45 taskova) vodi se odvojeno; trenutna faza: **Faza 3 — Vinograd** (Faze 0–2 završene).
+Fazni plan razvoja (Faza 0–5, 45 taskova) vodi se odvojeno; **Faza 3 — Vinograd završena** (T3.1–T3.9): parcele, utrošak sredstava, radni nalozi, analize zemljišta/loze, GIS mapa (Leaflet+OSM), NDVI vizualizacija (Copernicus Sentinel Hub, besplatan tier), geografski izveštaji (choropleth po parceli). Sledeća faza: **Faza 4 — IoT i hardver**.

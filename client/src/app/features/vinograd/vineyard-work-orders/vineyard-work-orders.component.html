@@ -1,0 +1,16 @@
+<div class="work-orders__toolbar">
+  <div class="work-orders__view-toggle">
+    <button type="button" [class.is-active]="view === 'grid'" (click)="view = 'grid'">
+      <i class="pi pi-table"></i> {{ 'workOrders.viewGrid' | translate }}
+    </button>
+    <button type="button" [class.is-active]="view === 'calendar'" (click)="view = 'calendar'">
+      <i class="pi pi-calendar"></i> {{ 'workOrders.viewCalendar' | translate }}
+    </button>
+  </div>
+</div>
+
+@if (view === 'grid') {
+  <app-dynamic-table path="grids/admin" file="vineyard-work-orders.json"></app-dynamic-table>
+} @else {
+  <app-work-orders-calendar apiUrl="/api/admin/vineyard-work-orders"></app-work-orders-calendar>
+}

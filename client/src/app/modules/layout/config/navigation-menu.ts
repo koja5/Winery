@@ -104,7 +104,20 @@ export const NAVIGATION_MENU: NavGroup[] = [
     ]
   },
   {
-    items: [{ title: 'nav.vinograd', icon: 'assets/icons/heroicons/outline/tree.svg', route: '/vinograd', locked: true }]
+    items: [
+      {
+        title: 'nav.vinograd',
+        icon: 'assets/icons/heroicons/outline/tree.svg',
+        children: [
+          { title: 'nav.vinograd.parcele', route: '/vinograd/parcele' },
+          { title: 'nav.vinograd.utrosak', route: '/vinograd/utrosak-sredstava' },
+          { title: 'nav.vinograd.radniNalozi', route: '/vinograd/radni-nalozi' },
+          { title: 'nav.vinograd.analize', route: '/vinograd/analize' },
+          { title: 'nav.vinograd.mapa', route: '/vinograd/mapa' },
+          { title: 'nav.vinograd.geoIzvestaji', route: '/vinograd/geo-izvestaji' }
+        ]
+      }
+    ]
   },
   {
     items: [

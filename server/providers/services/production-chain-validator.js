@@ -260,6 +260,37 @@ class WineProductionChainValidator {
     };
   }
 
+  async canDeleteVineyardParcel(pool, id, tenantId) {
+    const [rows] = await pool.query('SELECT id FROM vineyard_parcels WHERE id = ? AND tenant_id = ?', [
+      id,
+      tenantId
+    ]);
+    if (!rows.length) {
+      return this._notFound();
+    }
+
+    const receptionCount = await this._countRelatedRecords(pool, 'grape_receptions', 'parcel_id', id);
+    const announcementCount = await this._countRelatedRecords(pool, 'harvest_announcements', 'parcel_id', id);
+
+    if (receptionCount > 0 || announcementCount > 0) {
+      return {
+        canProceed: false,
+        message: 'productionChain.parcelHasHistory',
+        deletionType: 'none',
+        affectedEntities: { receptions: receptionCount, announcements: announcementCount },
+        warnings: []
+      };
+    }
+
+    return {
+      canProceed: true,
+      message: 'productionChain.canSafelyDelete',
+      deletionType: 'both',
+      affectedEntities: {},
+      warnings: []
+    };
+  }
+
   // ---------------------------------------------------------------------
   // EDIT checks
   // ---------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { WorkOrdersService } from './work-orders.service';
@@ -18,6 +18,8 @@ interface CalendarDay {
   styleUrl: './work-orders-calendar.component.scss'
 })
 export class WorkOrdersCalendarComponent implements OnInit {
+  @Input() apiUrl = '/api/admin/work-orders';
+
   private ordersService = inject(WorkOrdersService);
   private translate = inject(TranslateService);
 
@@ -50,7 +52,7 @@ export class WorkOrdersCalendarComponent implements OnInit {
   }
 
   private load(): void {
-    this.ordersService.list().subscribe((orders) => {
+    this.ordersService.list(this.apiUrl).subscribe((orders) => {
       this.allOrders = orders;
       this.buildCalendar();
     });

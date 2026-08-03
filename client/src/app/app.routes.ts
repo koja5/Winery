@@ -49,6 +49,37 @@ export const routes: Routes = [
           )
       },
       {
+        path: 'vinograd/parcele',
+        loadComponent: () => import('./features/vinograd/parcele/parcele.component').then((m) => m.ParceleComponent)
+      },
+      {
+        path: 'vinograd/utrosak-sredstava',
+        loadComponent: () =>
+          import('./features/vinograd/parcel-treatments/parcel-treatments.component').then(
+            (m) => m.ParcelTreatmentsComponent
+          )
+      },
+      {
+        path: 'vinograd/radni-nalozi',
+        loadComponent: () =>
+          import('./features/vinograd/vineyard-work-orders/vineyard-work-orders.component').then(
+            (m) => m.VineyardWorkOrdersComponent
+          )
+      },
+      {
+        path: 'vinograd/analize',
+        loadComponent: () =>
+          import('./features/vinograd/soil-analyses/soil-analyses.component').then((m) => m.SoilAnalysesComponent)
+      },
+      {
+        path: 'vinograd/mapa',
+        loadComponent: () => import('./features/vinograd/parcel-map/parcel-map.component').then((m) => m.ParcelMapComponent)
+      },
+      {
+        path: 'vinograd/geo-izvestaji',
+        loadComponent: () => import('./features/vinograd/geo-reports/geo-reports.component').then((m) => m.GeoReportsComponent)
+      },
+      {
         path: 'podrum/posude',
         loadComponent: () => import('./features/podrum/vessels/vessels.component').then((m) => m.VesselsComponent)
       },

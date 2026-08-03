@@ -1,0 +1,29 @@
+.work-orders__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.work-orders__view-toggle {
+  display: flex;
+  border: 1px solid var(--ev-line);
+  border-radius: 10px;
+  overflow: hidden;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--ev-surface);
+    border: none;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.82rem;
+    color: var(--ev-muted);
+    cursor: pointer;
+
+    &.is-active {
+      background: var(--ev-primary);
+      color: #ffffff;
+    }
+  }
+}

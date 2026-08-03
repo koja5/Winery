@@ -1,0 +1,35 @@
+<p-toast position="top-center"></p-toast>
+
+<div class="parcel-map__toolbar">
+  <p-select
+    [options]="parcels"
+    [(ngModel)]="selectedParcelId"
+    optionValue="id"
+    optionLabel="name"
+    [placeholder]="'parcelMap.selectParcel' | translate"
+    (onChange)="onParcelChange()"
+    [style]="{ width: '18rem' }"
+  ></p-select>
+
+  <button pButton type="button" [label]="'parcelMap.clear' | translate" class="p-button-text" [disabled]="!selectedParcelId" (click)="clearBoundary()"></button>
+  <button pButton type="button" [label]="'general.save' | translate" [disabled]="!selectedParcelId" (click)="saveBoundary()"></button>
+</div>
+
+<div class="parcel-map__toolbar parcel-map__toolbar--ndvi">
+  <label>
+    {{ 'ndvi.from' | translate }}
+    <input type="date" [(ngModel)]="ndviDateFrom" [max]="ndviDateTo" />
+  </label>
+  <label>
+    {{ 'ndvi.to' | translate }}
+    <input type="date" [(ngModel)]="ndviDateTo" [min]="ndviDateFrom" />
+  </label>
+
+  @if (!ndviVisible) {
+    <button pButton type="button" [label]="'ndvi.show' | translate" icon="pi pi-map" [loading]="ndviLoading" [disabled]="!hasBoundary" (click)="showNdvi()"></button>
+  } @else {
+    <button pButton type="button" [label]="'ndvi.hide' | translate" class="p-button-text" (click)="hideNdvi()"></button>
+  }
+</div>
+
+<div id="parcel-map" class="parcel-map__canvas"></div>

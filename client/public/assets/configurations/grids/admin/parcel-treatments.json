@@ -1,0 +1,65 @@
+{
+  "name": "parcelTreatments.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/parcel-treatments" },
+  "save": { "type": "POST", "api": "/api/admin/parcel-treatments" },
+  "delete": { "type": "DELETE", "api": "/api/admin/parcel-treatments/:id" },
+  "dialogTitleCreate": "parcelTreatments.newTreatment",
+  "dialogTitleEdit": "parcelTreatments.editTreatment",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "parcelTreatments.date", "field": "treatment_date", "type": "date" },
+    { "title": "parcelTreatments.parcel", "field": "parcel_name", "type": "string" },
+    {
+      "title": "parcelTreatments.type",
+      "field": "treatment_type",
+      "type": "string",
+      "translateMap": {
+        "spraying": "parcelTreatments.type.spraying",
+        "fertilizing": "parcelTreatments.type.fertilizing",
+        "pruning": "parcelTreatments.type.pruning",
+        "irrigation": "parcelTreatments.type.irrigation",
+        "other": "parcelTreatments.type.other"
+      }
+    },
+    { "title": "parcelTreatments.substance", "field": "substance", "type": "string" },
+    { "title": "parcelTreatments.quantity", "field": "quantity", "type": "number" },
+    { "title": "parcelTreatments.unit", "field": "unit", "type": "string" }
+  ],
+  "fields": [
+    {
+      "type": "combobox",
+      "name": "parcel_id",
+      "title": "parcelTreatments.parcel",
+      "width": "48%",
+      "required": true,
+      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" }
+    },
+    { "type": "date", "name": "treatment_date", "title": "parcelTreatments.date", "width": "48%", "required": true },
+    {
+      "type": "combobox",
+      "name": "treatment_type",
+      "title": "parcelTreatments.type",
+      "width": "100%",
+      "required": true,
+      "options": [
+        { "text": "parcelTreatments.type.spraying", "value": "spraying" },
+        { "text": "parcelTreatments.type.fertilizing", "value": "fertilizing" },
+        { "text": "parcelTreatments.type.pruning", "value": "pruning" },
+        { "text": "parcelTreatments.type.irrigation", "value": "irrigation" },
+        { "text": "parcelTreatments.type.other", "value": "other" }
+      ]
+    },
+    { "type": "textbox", "name": "substance", "title": "parcelTreatments.substance", "width": "48%" },
+    { "type": "number", "name": "quantity", "title": "parcelTreatments.quantity", "width": "24%", "min": 0, "step": 0.01 },
+    { "type": "textbox", "name": "unit", "title": "parcelTreatments.unit", "width": "24%", "placeholder": "kg / l / h" },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

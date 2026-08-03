@@ -1,0 +1,38 @@
+<div class="geo-reports__toolbar">
+  <p-select
+    [options]="datasets"
+    [(ngModel)]="selectedDataset"
+    optionLabel="label"
+    [placeholder]="'reports.datasets' | translate"
+    (onChange)="selectDataset(selectedDataset!)"
+    [style]="{ width: '16rem' }"
+  >
+    <ng-template let-option pTemplate="item">{{ option.label | translate }}</ng-template>
+    <ng-template let-option pTemplate="selectedItem">{{ option.label | translate }}</ng-template>
+  </p-select>
+
+  @if (selectedDataset) {
+    <p-select
+      [options]="objectKeys(selectedDataset.metrics)"
+      [(ngModel)]="selectedMetric"
+      [placeholder]="'reports.metrics' | translate"
+      [style]="{ width: '14rem' }"
+    >
+      <ng-template let-option pTemplate="item">{{ selectedDataset.metrics[option].label | translate }}</ng-template>
+      <ng-template let-option pTemplate="selectedItem">{{ selectedDataset.metrics[option].label | translate }}</ng-template>
+    </p-select>
+  }
+
+  @if (selectedDataset?.hasDateRange) {
+    <input type="date" [(ngModel)]="from" [placeholder]="'reports.from' | translate" />
+    <input type="date" [(ngModel)]="to" [placeholder]="'reports.to' | translate" />
+  }
+
+  <button pButton type="button" [label]="'reports.run' | translate" [loading]="loading" [disabled]="!selectedMetric" (click)="run()"></button>
+</div>
+
+<div id="geo-reports-map" class="geo-reports__canvas"></div>
+
+@if (!hasResults) {
+  <p class="geo-reports__hint">{{ 'reports.noResultsYet' | translate }}</p>
+}

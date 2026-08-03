@@ -1,0 +1,50 @@
+{
+  "name": "vineyard.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" },
+  "save": { "type": "POST", "api": "/api/admin/vineyard-parcels" },
+  "delete": { "type": "DELETE", "api": "/api/admin/vineyard-parcels/:id" },
+  "dialogTitleCreate": "vineyard.newParcel",
+  "dialogTitleEdit": "vineyard.editParcel",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "vineyard.name", "field": "name", "type": "string" },
+    { "title": "vineyard.location", "field": "location", "type": "string" },
+    { "title": "vineyard.area", "field": "area_ha", "type": "number" },
+    { "title": "vineyard.grapeVariety", "field": "grape_variety", "type": "string" },
+    {
+      "title": "vineyard.ownershipType",
+      "field": "ownership_type",
+      "type": "string",
+      "translateMap": {
+        "owned": "vineyard.ownershipType.owned",
+        "leased": "vineyard.ownershipType.leased"
+      }
+    }
+  ],
+  "fields": [
+    { "type": "textbox", "name": "name", "title": "vineyard.name", "width": "100%", "required": true },
+    { "type": "textbox", "name": "location", "title": "vineyard.location", "width": "100%" },
+    { "type": "number", "name": "area_ha", "title": "vineyard.area", "width": "48%", "min": 0, "step": 0.01 },
+    { "type": "textbox", "name": "grape_variety", "title": "vineyard.grapeVariety", "width": "48%" },
+    {
+      "type": "combobox",
+      "name": "ownership_type",
+      "title": "vineyard.ownershipType",
+      "width": "100%",
+      "required": true,
+      "options": [
+        { "text": "vineyard.ownershipType.owned", "value": "owned" },
+        { "text": "vineyard.ownershipType.leased", "value": "leased" }
+      ]
+    },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

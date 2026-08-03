@@ -42,6 +42,12 @@
     "employees": "Zaposleni",
     "documents": "Dokumenti",
     "vinograd": "Vinograd",
+    "vinograd.parcele": "Parcele",
+    "vinograd.utrosak": "Utrošak sredstava",
+    "vinograd.radniNalozi": "Radni nalozi",
+    "vinograd.analize": "Analize",
+    "vinograd.mapa": "Mapa",
+    "vinograd.geoIzvestaji": "Geo izveštaji",
     "settings": "Podešavanja",
     "settings.vessels": "Tipovi posuda",
     "settings.varieties": "Sorte",
@@ -125,6 +131,7 @@
     "agingLosses": { "label": "Gubici tokom nege" },
     "harvestSettlements": { "label": "Obračuni berbe i isplate" },
     "wineProductionCost": { "label": "Trošak proizvodnje vina" },
+    "parcelTreatments": { "label": "Utrošak sredstava po parceli" },
     "dim": {
       "grapeVariety": "Sorta",
       "parcel": "Parcela",
@@ -132,7 +139,8 @@
       "wineVariety": "Sorta vina",
       "vessel": "Posuda",
       "vesselType": "Tip posude",
-      "status": "Status"
+      "status": "Status",
+      "treatmentType": "Vrsta mere"
     },
     "metric": {
       "quantityKg": "Količina (kg)",
@@ -151,7 +159,9 @@
       "paidAmount": "Plaćeno",
       "balanceDue": "Dugovanje",
       "costTotal": "Ukupan trošak",
-      "costPerLiter": "Trošak po litru"
+      "costPerLiter": "Trošak po litru",
+      "quantitySum": "Ukupna količina",
+      "treatmentsCount": "Broj mera"
     },
     "col": {
       "date": "Datum",
@@ -260,6 +270,7 @@
     "taskTitle": "Naziv zadatka",
     "description": "Opis",
     "vessel": "Posuda",
+    "parcel": "Parcela",
     "assignedTo": "Dodeljeno",
     "dueDate": "Rok",
     "priority": "Prioritet",
@@ -283,6 +294,66 @@
     "phone": "Telefon",
     "email": "Email",
     "address": "Adresa"
+  },
+  "vineyard": {
+    "title": "Parcele",
+    "newParcel": "Nova parcela",
+    "editParcel": "Izmena parcele",
+    "name": "Naziv",
+    "location": "Lokacija",
+    "area": "Površina (ha)",
+    "grapeVariety": "Sorta",
+    "ownershipType": "Vlasništvo",
+    "ownershipType.owned": "U vlasništvu",
+    "ownershipType.leased": "U zakupu"
+  },
+  "parcelTreatments": {
+    "title": "Utrošak sredstava",
+    "newTreatment": "Novi unos",
+    "editTreatment": "Izmena unosa",
+    "parcel": "Parcela",
+    "date": "Datum",
+    "type": "Vrsta mere",
+    "type.spraying": "Prskanje",
+    "type.fertilizing": "Đubrenje",
+    "type.pruning": "Orezivanje",
+    "type.irrigation": "Navodnjavanje",
+    "type.other": "Ostalo",
+    "substance": "Sredstvo",
+    "quantity": "Količina",
+    "unit": "Jedinica mere"
+  },
+  "soilAnalyses": {
+    "title": "Analize zemljišta i loze",
+    "newAnalysis": "Nova analiza",
+    "editAnalysis": "Izmena analize",
+    "parcel": "Parcela",
+    "sampleDate": "Datum uzorkovanja",
+    "sampleType": "Vrsta uzorka",
+    "sampleType.soil": "Zemljište",
+    "sampleType.leaf": "List (vinova loza)",
+    "sampleType.grape": "Grožđe",
+    "labName": "Laboratorija",
+    "ph": "pH",
+    "organicMatterPct": "Organska materija (%)",
+    "cec": "Kapacitet izmene katjona (CEC)",
+    "nitrogen": "Azot N (mg/kg)",
+    "phosphorus": "Fosfor P2O5 (mg/kg)",
+    "potassium": "Kalijum K2O (mg/kg)",
+    "calcium": "Kalcijum (mg/kg)",
+    "magnesium": "Magnezijum (mg/kg)"
+  },
+  "parcelMap": {
+    "selectParcel": "Izaberi parcelu",
+    "clear": "Obriši crtež",
+    "noShape": "Nacrtaj granicu parcele pre čuvanja."
+  },
+  "ndvi": {
+    "from": "Od",
+    "to": "Do",
+    "show": "Prikaži NDVI",
+    "hide": "Sakrij NDVI",
+    "loadError": "Greška pri učitavanju satelitskog snimka."
   },
   "announcements": {
     "title": "Najave berbe",

@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `soil_analyses` (
+  `id` CHAR(36) NOT NULL PRIMARY KEY,
+  `tenant_id` CHAR(36) NOT NULL,
+  `parcel_id` CHAR(36) NOT NULL,
+  `sample_type` ENUM('soil', 'leaf', 'grape') NOT NULL DEFAULT 'soil',
+  `sample_date` DATE NOT NULL,
+  `lab_name` VARCHAR(255) DEFAULT NULL,
+  `ph` DECIMAL(4, 2) DEFAULT NULL,
+  `organic_matter_pct` DECIMAL(5, 2) DEFAULT NULL,
+  `nitrogen` DECIMAL(8, 2) DEFAULT NULL,
+  `phosphorus` DECIMAL(8, 2) DEFAULT NULL,
+  `potassium` DECIMAL(8, 2) DEFAULT NULL,
+  `calcium` DECIMAL(8, 2) DEFAULT NULL,
+  `magnesium` DECIMAL(8, 2) DEFAULT NULL,
+  `cec` DECIMAL(8, 2) DEFAULT NULL,
+  `notes` TEXT DEFAULT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  KEY `idx_soil_analyses_tenant` (`tenant_id`),
+  KEY `idx_soil_analyses_parcel` (`parcel_id`),
+  CONSTRAINT `fk_soil_analyses_tenant` FOREIGN KEY (`tenant_id`) REFERENCES `tenants` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_soil_analyses_parcel` FOREIGN KEY (`parcel_id`) REFERENCES `vineyard_parcels` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

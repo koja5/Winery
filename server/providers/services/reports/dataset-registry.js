@@ -265,6 +265,32 @@ const datasets = {
       { key: 'cost_total', label: 'reports.metric.costTotal', sql: 'ROUND(row.cost_allocated, 2)' },
       { key: 'output_l', label: 'reports.metric.outputL', sql: 'row.output_l' }
     ]
+  },
+
+  // T3.9: geografski izveštaji — utrošak sredstava po parceli, grupisano po
+  // parceli za prikaz kao choropleth sloj preko GIS mape (T3.6).
+  parcel_treatments: {
+    label: 'reports.parcelTreatments.label',
+    kind: 'sql',
+    from: `FROM parcel_treatments pt
+           LEFT JOIN vineyard_parcels vp ON vp.id = pt.parcel_id`,
+    where: 'pt.tenant_id = ?',
+    dateColumn: 'pt.treatment_date',
+    dimensions: {
+      parcel: { label: 'reports.dim.parcel', sql: 'vp.name' },
+      treatment_type: { label: 'reports.dim.treatmentType', sql: 'pt.treatment_type' }
+    },
+    metrics: {
+      quantity_sum: { label: 'reports.metric.quantitySum', sql: 'ROUND(SUM(pt.quantity), 2)' },
+      treatments_count: { label: 'reports.metric.treatmentsCount', sql: 'COUNT(*)' }
+    },
+    drilldownColumns: [
+      { key: 'treatment_date', label: 'reports.col.date', sql: 'pt.treatment_date' },
+      { key: 'parcel', label: 'reports.dim.parcel', sql: 'vp.name' },
+      { key: 'treatment_type', label: 'reports.dim.treatmentType', sql: 'pt.treatment_type' },
+      { key: 'substance', label: 'parcelTreatments.substance', sql: 'pt.substance' },
+      { key: 'quantity', label: 'parcelTreatments.quantity', sql: 'pt.quantity' }
+    ]
   }
 };
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 export class WorkOrdersService {
   private http = inject(HttpClient);
 
-  list(): Observable<Record<string, any>[]> {
-    return this.http.get<Record<string, any>[]>('/api/admin/work-orders');
+  list(apiUrl: string = '/api/admin/work-orders'): Observable<Record<string, any>[]> {
+    return this.http.get<Record<string, any>[]>(apiUrl);
   }
 }
