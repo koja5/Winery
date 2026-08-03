@@ -1,0 +1,50 @@
+<div class="profile-wrapper">
+  <button type="button" class="profile-avatar-btn" (click)="toggleMenu()">
+    <span class="sr-only">Profil</span>
+    <div class="profile-avatar">{{ (user?.role || '?').charAt(0).toUpperCase() }}</div>
+  </button>
+
+  <div class="profile-dropdown" *ngIf="isOpen">
+    <div class="profile-dropdown-header">
+      <div class="profile-avatar profile-avatar--large">{{ (user?.role || '?').charAt(0).toUpperCase() }}</div>
+      <div class="profile-role">{{ user?.role }}</div>
+    </div>
+
+    <hr class="profile-divider" />
+
+    <ul class="profile-menu-list">
+      <li class="profile-menu-item" [routerLink]="'/uskoro'" [queryParams]="{ from: 'settings' }">
+        <i class="pi pi-cog"></i>
+        Podešavanja
+      </li>
+      <li class="profile-menu-item profile-menu-item--danger" (click)="logout()">
+        <i class="pi pi-sign-out"></i>
+        Odjava
+      </li>
+    </ul>
+
+    <hr class="profile-divider" />
+
+    <div class="profile-theme-section">
+      <span class="profile-theme-label">Tema</span>
+      <div class="profile-theme-options">
+        <button
+          type="button"
+          class="profile-theme-btn"
+          [class.is-active]="themeService.theme() === 'light'"
+          (click)="setThemeMode('light')">
+          <i class="pi pi-sun"></i>
+          Svetla
+        </button>
+        <button
+          type="button"
+          class="profile-theme-btn"
+          [class.is-active]="themeService.theme() === 'dark'"
+          (click)="setThemeMode('dark')">
+          <i class="pi pi-moon"></i>
+          Tamna
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

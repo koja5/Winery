@@ -23,6 +23,8 @@ const harvestAnnouncements = require('./providers/apis/admin/harvest-announcemen
 const grapeReceptions = require('./providers/apis/admin/grape-receptions.routes');
 const harvestSettlements = require('./providers/apis/admin/harvest-settlements.routes');
 const vineyardParcels = require('./providers/apis/admin/vineyard-parcels.routes');
+const search = require('./providers/apis/admin/search.routes');
+const notifications = require('./providers/apis/admin/notifications.routes');
 const superadminTenants = require('./providers/apis/superadmin/tenants.routes');
 const superadminUsers = require('./providers/apis/superadmin/users.routes');
 const superadminTickets = require('./providers/apis/superadmin/support-tickets.routes');
@@ -61,6 +63,8 @@ app.use('/api/admin', authenticateToken, harvestAnnouncements);
 app.use('/api/admin', authenticateToken, grapeReceptions);
 app.use('/api/admin', authenticateToken, harvestSettlements);
 app.use('/api/admin', authenticateToken, vineyardParcels);
+app.use('/api/admin', authenticateToken, search);
+app.use('/api/admin', authenticateToken, notifications);
 app.use('/api/superadmin', authenticateToken, requireRole('superadmin'), superadminTenants);
 app.use('/api/superadmin', authenticateToken, requireRole('superadmin'), superadminUsers);
 app.use('/api/superadmin', authenticateToken, requireRole('superadmin'), superadminTickets);

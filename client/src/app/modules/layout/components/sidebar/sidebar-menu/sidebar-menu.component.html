@@ -1,0 +1,191 @@
+<div class="py-2" *ngFor="let group of menuService.menu">
+  <!-- Group label -->
+  <div class="mb-1 px-2.5" *ngIf="group.label">
+    <small *ngIf="menuService.showSidebar()" class="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/35 select-none">
+      {{ group.label | translate }}
+    </small>
+    <div *ngIf="!menuService.showSidebar()" class="mx-auto h-px w-6 bg-border/40 my-1"></div>
+  </div>
+
+  <ul class="flex flex-col gap-0.5">
+    <li *ngFor="let item of group.items">
+      <div
+        (click)="handleIconClick($event, item)"
+        (mouseenter)="onItemMouseEnter($event, item)"
+        (mouseleave)="onItemMouseLeave(item)"
+        [ngClass]="{ 'bg-primary/10 rounded-lg': flyoutItem === item && !menuService.showSidebar() }"
+        class="group relative transition-colors duration-150"
+      >
+        <ng-container [ngTemplateOutlet]="item.children ? childMenu : (item.locked ? lockedMenu : parentMenu)" [ngTemplateOutletContext]="{ item: item }"> </ng-container>
+
+        <!-- Parent menu (no children, not locked) -->
+        <ng-template #parentMenu let-item="item">
+          <div
+            [routerLink]="item.route"
+            routerLinkActive
+            #rla="routerLinkActive"
+            class="flex h-10 cursor-pointer items-center rounded-lg px-2.5 transition-all duration-150"
+            [ngClass]="{
+              'gap-3 justify-start': menuService.showSidebar(),
+              'justify-center': !menuService.showSidebar(),
+              'bg-primary/10 text-primary': rla.isActive,
+              'text-muted-foreground hover:bg-muted hover:text-foreground': !rla.isActive
+            }"
+          >
+            <div
+              class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md transition-colors duration-150"
+              [ngClass]="rla.isActive ? 'bg-primary/15 text-primary' : 'text-muted-foreground/50 group-hover:text-foreground'"
+            >
+              <svg-icon [src]="item.icon" [svgClass]="'h-4 w-4'"></svg-icon>
+            </div>
+            <span *ngIf="menuService.showSidebar()" class="flex-1 truncate text-sm font-medium">
+              {{ item.title | translate }}
+            </span>
+            <span *ngIf="item.badge && menuService.showSidebar()" class="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
+              {{ item.badge | translate }}
+            </span>
+          </div>
+        </ng-template>
+
+        <!-- Locked parent menu (navigates to "coming soon") -->
+        <ng-template #lockedMenu let-item="item">
+          <div
+            [routerLink]="'/uskoro'"
+            [queryParams]="{ from: item.title }"
+            class="flex h-10 cursor-pointer items-center rounded-lg px-2.5 text-muted-foreground transition-all duration-150 hover:bg-muted hover:text-foreground"
+            [ngClass]="{ 'gap-3 justify-start': menuService.showSidebar(), 'justify-center': !menuService.showSidebar() }"
+          >
+            <div class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md text-muted-foreground/50 transition-colors duration-150 group-hover:text-foreground">
+              <svg-icon [src]="item.icon" [svgClass]="'h-4 w-4'"></svg-icon>
+            </div>
+            <span *ngIf="menuService.showSidebar()" class="flex-1 truncate text-sm font-medium">
+              {{ item.title | translate }}
+            </span>
+            <span
+              *ngIf="menuService.showSidebar()"
+              class="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary ring-1 ring-primary/20"
+            >
+              <i class="pi pi-lock" style="font-size: 8px"></i>
+              {{ 'nav.locked' | translate }}
+            </span>
+          </div>
+        </ng-template>
+
+        <!-- Child menu (has submenu) -->
+        <ng-template #childMenu let-item="item">
+          <div
+            class="flex h-10 cursor-pointer items-center rounded-lg px-2.5 transition-all duration-150"
+            [ngClass]="{
+              'gap-3 justify-start': menuService.showSidebar(),
+              'justify-center': !menuService.showSidebar(),
+              'bg-primary/10 text-primary': isGroupActive(item),
+              'text-muted-foreground hover:bg-muted hover:text-foreground': !isGroupActive(item)
+            }"
+          >
+            <div
+              class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md transition-colors duration-150"
+              [ngClass]="isGroupActive(item) ? 'bg-primary/15 text-primary' : 'text-muted-foreground/50 group-hover:text-foreground'"
+            >
+              <svg-icon [src]="item.icon" [svgClass]="'h-4 w-4'"></svg-icon>
+            </div>
+            <span *ngIf="menuService.showSidebar()" class="flex-1 truncate text-sm font-medium">
+              {{ item.title | translate }}
+            </span>
+            <span *ngIf="item.badge && menuService.showSidebar() && !item.locked" class="rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
+              {{ item.badge | translate }}
+            </span>
+            <span
+              *ngIf="item.locked && menuService.showSidebar()"
+              class="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary ring-1 ring-primary/20"
+            >
+              <i class="pi pi-lock" style="font-size: 8px"></i>
+              {{ 'nav.locked' | translate }}
+            </span>
+            <svg-icon
+              *ngIf="item.children && !item.locked && menuService.showSidebar()"
+              [ngClass]="{ 'rotate-90': menuService.isExpanded(item.title) }"
+              src="assets/icons/heroicons/solid/chevron-right.svg"
+              [svgClass]="'h-4 w-4 flex-shrink-0 text-muted-foreground/40 transition-transform duration-200'"
+            >
+            </svg-icon>
+          </div>
+        </ng-template>
+
+        <!-- Tooltip (only when no flyout, collapsed mode) -->
+        <div
+          *ngIf="!menuService.showSidebar() && flyoutItem !== item && hoveredItem === item"
+          class="sidebar-flyout fixed pointer-events-none"
+          style="left: 74px"
+          [style.top.px]="hoveredTop - 14"
+        >
+          <span class="block w-auto min-w-max rounded-md bg-foreground px-2 py-1.5 text-xs font-bold text-background shadow-md">
+            {{ item.title | translate }}
+          </span>
+        </div>
+
+        <!-- Flyout submenu panel (collapsed mode) -->
+        <div
+          *ngIf="!menuService.showSidebar() && item.children && flyoutItem === item"
+          class="fixed sidebar-flyout flyout-panel"
+          [style.top.px]="!flyoutOpenUpward ? flyoutTop - 8 : null"
+          [style.bottom.px]="flyoutOpenUpward ? flyoutBottom : null"
+          style="left: 62px"
+          (click)="$event.stopPropagation()"
+        >
+          <div [ngClass]="flyoutOpenUpward ? 'bottom-[18px]' : 'top-[18px]'" class="absolute -left-[5px] h-2.5 w-2.5 rotate-45 border-l border-b border-primary/20 bg-primary/10"></div>
+          <div class="w-52 overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+            <div class="relative overflow-hidden px-4 pt-4 pb-3">
+              <div class="absolute inset-0 bg-primary/10"></div>
+              <div class="relative flex items-center gap-3">
+                <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 ring-1 ring-primary/20">
+                  <svg-icon [src]="item.icon" [svgClass]="'h-4 w-4 text-primary'"></svg-icon>
+                </div>
+                <p class="text-[11px] font-bold text-foreground leading-tight">{{ item.title | translate }}</p>
+              </div>
+            </div>
+            <div class="mx-3 border-t border-border/60"></div>
+            <div class="p-2">
+              <ng-container *ngFor="let child of item.children">
+                <a
+                  *ngIf="!child.locked"
+                  [routerLink]="child.route"
+                  (click)="$event.stopPropagation(); closeFlyout()"
+                  routerLinkActive="bg-primary/10 text-primary font-bold"
+                  class="group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-medium text-muted-foreground transition-all duration-150 hover:bg-muted hover:text-foreground"
+                >
+                  <span class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md bg-muted transition-colors duration-150 group-hover:bg-primary/10">
+                    <span class="h-1.5 w-1.5 rounded-full bg-muted-foreground/40 transition-colors duration-150 group-hover:bg-primary"></span>
+                  </span>
+                  {{ child.title | translate }}
+                </a>
+                <a
+                  *ngIf="child.locked"
+                  [routerLink]="'/uskoro'"
+                  [queryParams]="{ from: child.title }"
+                  (click)="$event.stopPropagation(); closeFlyout()"
+                  class="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-medium text-muted-foreground/40 transition-all duration-150 hover:bg-muted/50"
+                >
+                  <span class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md bg-muted/50">
+                    <i class="pi pi-lock text-[9px] text-muted-foreground/30"></i>
+                  </span>
+                  <span class="flex-1">{{ child.title | translate }}</span>
+                  <span class="inline-flex items-center gap-0.5 rounded-full bg-primary/10 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-primary ring-1 ring-primary/20">
+                    <i class="pi pi-lock" style="font-size: 7px"></i>
+                    {{ 'nav.locked' | translate }}
+                  </span>
+                </a>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submenu items — only expand if item is not fully locked -->
+      <app-sidebar-submenu *ngIf="!item.locked" [submenu]="item"></app-sidebar-submenu>
+    </li>
+  </ul>
+
+  <div class="pt-3" *ngIf="group.separator">
+    <hr class="border-dashed border-border/50" />
+  </div>
+</div>

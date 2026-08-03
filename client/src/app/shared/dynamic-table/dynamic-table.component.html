@@ -2,34 +2,14 @@
 <p-confirmDialog></p-confirmDialog>
 
 @if (config) {
-  <div class="dynamic-table-toolbar">
-    @if (config.save) {
-      <button pButton icon="pi pi-plus" [label]="'general.addNew' | translate" (click)="createNewEntry()"></button>
-    }
-
-    <p-iconfield class="dynamic-table-toolbar__search">
-      <p-inputicon styleClass="pi pi-search" />
-      <input pInputText type="text" [placeholder]="'general.searchPlaceholder' | translate" (input)="onGlobalFilter($event)" />
-    </p-iconfield>
-
-    <button
-      type="button"
-      class="dynamic-table-toolbar__icon-btn"
-      (click)="loadData()"
-      [attr.aria-label]="'general.refresh' | translate"
-      [attr.title]="'general.refresh' | translate"
-    >
-      <i class="pi pi-refresh"></i>
-    </button>
-
-    <button type="button" class="dynamic-table-toolbar__options" (click)="optionsMenu.toggle($event)">
-      {{ 'general.options' | translate }}
-      <i class="pi pi-chevron-down"></i>
-    </button>
-    <p-menu #optionsMenu [popup]="true" [model]="optionsMenuItems" appendTo="body"></p-menu>
-  </div>
-
-  <p-table
+  <div class="dynamic-table-wrapper">
+    <div class="empty-overlay" *ngIf="!loading && rows.length === 0">
+      <div class="empty-state">
+        <img src="assets/icons/no-data.png" class="empty-state-img" alt="" />
+        <span class="empty-state-label">{{ 'general.noData' | translate }}</span>
+      </div>
+    </div>
+    <p-table
     #dt
     [value]="rows"
     [loading]="loading"
@@ -40,8 +20,75 @@
     [showCurrentPageReport]="true"
     [currentPageReportTemplate]="currentPageReportTemplate"
     [globalFilterFields]="globalFilterFields"
+    [scrollable]="true"
+    [scrollHeight]="tableHeight"
+    [tableStyle]="{ 'min-width': '100%' }"
     responsiveLayout="scroll"
   >
+    <ng-template pTemplate="caption">
+      <!-- Desktop: sve u jednom redu -->
+      <div class="caption caption-big">
+        @if (config.save) {
+          <button pButton icon="pi pi-plus" class="custom-button" [label]="'general.addNew' | translate" (click)="createNewEntry()"></button>
+        }
+
+        <div class="global-search ml-2 mr-2">
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon styleClass="pi pi-search" />
+            <input pInputText type="text" [placeholder]="'general.searchPlaceholder' | translate" (input)="onGlobalFilter($event)" />
+          </p-iconfield>
+        </div>
+
+        <div class="flex items-center">
+          <button
+            pButton
+            type="button"
+            [outlined]="true"
+            icon="pi pi-refresh"
+            class="mr-2 custom-button"
+            (click)="loadData()"
+            [pTooltip]="'general.refresh' | translate"
+            tooltipPosition="top"
+          ></button>
+
+          <button pButton type="button" [outlined]="true" class="custom-button" [label]="'general.options' | translate" iconPos="right" icon="pi pi-chevron-down" (click)="optionsMenu.toggle($event)"></button>
+          <p-menu #optionsMenu [popup]="true" [model]="optionsMenuItems" appendTo="body"></p-menu>
+        </div>
+      </div>
+
+      <!-- Mobilni: preloženo u dva reda -->
+      <div class="caption-small">
+        <div class="caption">
+          <div>
+            @if (config.save) {
+              <button pButton icon="pi pi-plus" class="custom-button" [label]="'general.addNew' | translate" (click)="createNewEntry()"></button>
+            }
+          </div>
+          <div class="flex items-center">
+            <button
+              pButton
+              type="button"
+              [outlined]="true"
+              icon="pi pi-refresh"
+              class="mr-2 custom-button"
+              (click)="loadData()"
+              [pTooltip]="'general.refresh' | translate"
+              tooltipPosition="top"
+            ></button>
+            <button pButton type="button" [outlined]="true" class="custom-button" [label]="'general.options' | translate" iconPos="right" icon="pi pi-chevron-down" (click)="optionsMenuSmall.toggle($event)"></button>
+            <p-menu #optionsMenuSmall [popup]="true" [model]="optionsMenuItems" appendTo="body"></p-menu>
+          </div>
+        </div>
+        <div class="caption mt-3">
+          <div class="global-search m-0">
+            <p-iconfield iconPosition="left" class="ml-auto">
+              <p-inputicon styleClass="pi pi-search" />
+              <input pInputText type="text" [placeholder]="'general.searchPlaceholder' | translate" (input)="onGlobalFilter($event)" />
+            </p-iconfield>
+          </div>
+        </div>
+      </div>
+    </ng-template>
     <ng-template pTemplate="header">
       <tr>
         @if (hasRowActions) {
@@ -49,10 +96,8 @@
         }
         @for (col of dataColumns; track col.field) {
           <th>
-            <div class="dynamic-table-col-header">
-              <span>{{ col.title | translate }}</span>
-              <p-columnFilter [field]="col.field" [type]="filterTypeFor(col)" display="menu"></p-columnFilter>
-            </div>
+            {{ col.title | translate }}
+            <p-columnFilter [field]="col.field" [type]="filterTypeFor(col)" display="menu"></p-columnFilter>
           </th>
         }
       </tr>
@@ -73,12 +118,11 @@
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td [attr.colspan]="dataColumns.length + (hasRowActions ? 1 : 0)">
-          {{ 'general.noData' | translate }}
-        </td>
+        <td class="empty" [attr.colspan]="dataColumns.length + (hasRowActions ? 1 : 0)"></td>
       </tr>
     </ng-template>
-  </p-table>
+    </p-table>
+  </div>
 
   <p-menu #rowActionMenu [popup]="true" [model]="rowMenuItems" appendTo="body"></p-menu>
 

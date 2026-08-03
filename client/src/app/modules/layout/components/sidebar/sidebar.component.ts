@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MenuService } from '../../services/menu.service';
-import { NavItem } from '../../config/navigation-menu';
+import { SidebarMenuComponent } from './sidebar-menu/sidebar-menu.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, TranslateModule],
+  imports: [CommonModule, AngularSvgIconModule, SidebarMenuComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -17,11 +16,5 @@ export class SidebarComponent {
 
   toggle(): void {
     this.menuService.toggleSidebar();
-  }
-
-  toggleItem(item: NavItem): void {
-    if (item.children) {
-      this.menuService.toggleExpanded(item.title);
-    }
   }
 }

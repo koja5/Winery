@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <!-- Base -->
+  <rect x="5" y="21" width="14" height="2.5" rx="1"/>
+  <!-- Stem -->
+  <rect x="11" y="17" width="2" height="5"/>
+  <!-- Large tulip bowl: wide belly, narrow rim and base -->
+  <path d="M9 2H15C16.5 6 19 10 19 14C19 16.5 16 17 13 17H11C8 17 5 16.5 5 14C5 10 7.5 6 9 2Z"/>
+</svg>

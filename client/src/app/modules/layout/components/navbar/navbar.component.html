@@ -1,42 +1,48 @@
-<header class="navbar">
-  <button type="button" class="navbar__mobile-toggle" (click)="menuService.toggleMobileMenu()">
-    <i class="pi pi-bars"></i>
-  </button>
+<div class="relative bg-background">
+  <!-- Gornji navigacioni meni — samo za desktop -->
+  <div class="mx-auto px-5 hidden md:flex">
+    <div class="grid w-full grid-cols-3 items-center py-3.5">
+      <div class="flex items-center"></div>
 
-  <div class="navbar__search">
-    <i class="pi pi-search"></i>
-    <input type="text" [placeholder]="'nav.searchPlaceholder' | translate" disabled />
-  </div>
+      <!-- Centar: globalna pretraga -->
+      <div class="flex items-center justify-center">
+        <app-global-search></app-global-search>
+      </div>
 
-  <div class="navbar__actions">
-    <button type="button" class="navbar__icon-btn" [attr.aria-label]="'nav.notifications' | translate">
-      <i class="pi pi-bell"></i>
-    </button>
-
-    <button type="button" class="navbar__icon-btn" (click)="theme.toggle()" [attr.aria-label]="'nav.toggleTheme' | translate">
-      <i class="pi" [class.pi-moon]="theme.theme() === 'light'" [class.pi-sun]="theme.theme() === 'dark'"></i>
-    </button>
-
-    <div class="navbar__profile">
-      <button type="button" class="navbar__avatar-btn" (click)="toggleProfileMenu()">
-        <div class="navbar__avatar">{{ (user?.role || '?').charAt(0).toUpperCase() }}</div>
-      </button>
-
-      @if (profileMenuOpen) {
-        <div class="navbar__profile-menu" (mouseleave)="closeProfileMenu()">
-          <div class="navbar__profile-menu-header">
-            <div class="navbar__avatar navbar__avatar--large">{{ (user?.role || '?').charAt(0).toUpperCase() }}</div>
-            <div>
-              <div class="navbar__profile-role">{{ user?.role }}</div>
-            </div>
-          </div>
-          <hr />
-          <button type="button" class="navbar__profile-menu-item navbar__profile-menu-item--danger" (click)="logout()">
-            <i class="pi pi-sign-out"></i>
-            {{ 'nav.logout' | translate }}
-          </button>
-        </div>
-      }
+      <!-- Desna strana: zvono + profile meni -->
+      <div class="ml-auto flex items-center gap-2">
+        <app-notification-bell></app-notification-bell>
+        <button
+          type="button"
+          class="navbar__icon-btn flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
+          (click)="theme.toggle()">
+          <i class="pi" [class.pi-moon]="theme.theme() === 'light'" [class.pi-sun]="theme.theme() === 'dark'"></i>
+        </button>
+        <app-profile-menu></app-profile-menu>
+      </div>
     </div>
   </div>
-</header>
+
+  <!-- Donji navigacioni meni — samo za mobilne -->
+  <div class="mobile-navbar fixed bottom-0 left-0 right-0 z-50 flex h-16 border-t bg-background md:hidden">
+    <button routerLink="/dashboard" routerLinkActive="text-primary" class="nav-btn flex h-full flex-1 items-center justify-center">
+      <i class="pi pi-th-large text-xl"></i>
+    </button>
+
+    <button routerLink="/podrum/berba/prijem" routerLinkActive="text-primary" class="nav-btn flex h-full flex-1 items-center justify-center">
+      <i class="pi pi-sun text-xl"></i>
+    </button>
+
+    <div class="flex h-full flex-1 items-center justify-center">
+      <app-global-search></app-global-search>
+    </div>
+
+    <div class="flex h-full flex-1 items-center justify-center">
+      <app-notification-bell></app-notification-bell>
+    </div>
+
+    <button (click)="menuService.toggleMobileMenu()" class="nav-btn flex h-full flex-1 items-center justify-center text-muted-foreground">
+      <i class="pi pi-bars text-xl"></i>
+    </button>
+  </div>
+</div>

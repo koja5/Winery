@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Nunito+Sans:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,9 +11,10 @@
 @import 'primeicons/primeicons.css';
 
 :root {
-  /* eVinarija brend paleta (izvučena sa evinarija.com), HSL trojke da rade
-     sa Tailwind opacity utility-jima (bg-primary/10 i sl.) — isti sistem kao
-     eDestilerija, samo bordo/zelena umesto pink/indigo. */
+  /* eVinarija brend paleta (izvučena sa evinarija.com) — vraćeno na
+     originalne bordo/zelene tonove. Dizajn tabele/grida je usklađen sa
+     eDestilerijom (Material PrimeNG preset, spacing, custom-button oblik),
+     ali BOJA ostaje brend boja, ne kopirana paleta eDestilerije. */
   --background: 30 40% 97%;
   --foreground: 20 30% 12%;
   --card: 28 30% 95%;
@@ -28,7 +29,7 @@
   --destructive-foreground: 0 0% 98%;
   --border: 25 22% 86%;
 
-  /* brend "wordmark" boje, odvojene od --primary (isto kao eDestilerija #242B80) */
+  /* brend "wordmark" boje, odvojene od --primary */
   --brand-color: #7d1f36;
   --brand-accent: #7c9a5c;
 
@@ -288,6 +289,125 @@ body {
     background: rgba(124, 154, 92, 0.12);
     color: #3f5a2a;
     border: 1px solid rgba(124, 154, 92, 0.3);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Navbar global search — mobilni fullscreen dijalog (appendTo="body", pa
+   ove klase moraju biti globalne — vidi global-search.component.ts).
+   --------------------------------------------------------------------- */
+.gsearch-mobile-dialog-mask {
+  padding: 0 !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+}
+
+.gsearch-mobile-dialog {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  top: 0 !important;
+  left: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden;
+
+  .p-dialog-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid hsl(var(--border) / 0.6);
+    flex: 0 0 auto;
+  }
+
+  .p-dialog-content {
+    padding: 4px 0 12px;
+    flex: 1 1 0 !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    max-height: none !important;
+  }
+}
+
+.gsearch-mobile-input-wrap {
+  width: 100%;
+}
+
+/* ---------------------------------------------------------------------
+   PrimeNG grid — identičan izgled kao eDestilerija (styles.scss).
+   --------------------------------------------------------------------- */
+.p-datatable-table {
+  display: table;
+  background: #ffffff;
+  min-width: fit-content !important;
+}
+
+.dark .p-datatable-table {
+  background: hsl(var(--card));
+}
+
+.p-datatable-flex-scrollable > .p-datatable-table-container {
+  background: #ffffff;
+}
+
+.dark .p-datatable-flex-scrollable > .p-datatable-table-container {
+  background: hsl(var(--card));
+}
+
+.p-datatable-scrollable .p-datatable-frozen-column {
+  position: sticky;
+  background: var(--p-datatable-header-cell-background);
+}
+
+// Moderno primarno dugme — grid "Dodaj novo" (createNew) + forma "Sačuvaj".
+// Skopirano samo na filled dugmad; outlined toolbar dugmad (Opcije, refresh,
+// clear filter) zadržavaju svoj izgled preko :not(.p-button-outlined).
+.custom-button .p-button:not(.p-button-outlined):not(.p-button-text):not(.p-button-secondary),
+.custom-button:not(.p-button-outlined):not(.p-button-text):not(.p-button-secondary) {
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.2px;
+  padding: 0.62rem 1.2rem !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #8a2440 0%, #7d1f36 100%) !important;
+  box-shadow:
+    0 4px 12px -2px rgba(125, 31, 54, 0.42),
+    0 2px 5px -2px rgba(125, 31, 54, 0.3) !important;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    filter 0.18s ease !important;
+
+  .p-button-icon {
+    font-size: 0.95rem;
+  }
+
+  &:enabled:hover,
+  &:not(:disabled):hover {
+    background: linear-gradient(135deg, #96294a 0%, #6b1b2f 100%) !important;
+    box-shadow:
+      0 9px 22px -5px rgba(125, 31, 54, 0.55),
+      0 4px 9px -3px rgba(125, 31, 54, 0.4) !important;
+  }
+
+  &:enabled:active,
+  &:not(:disabled):active {
+    box-shadow: 0 3px 8px -3px rgba(125, 31, 54, 0.5) !important;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgba(125, 31, 54, 0.28),
+      0 4px 12px -2px rgba(125, 31, 54, 0.42) !important;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    box-shadow: none !important;
   }
 }
 

@@ -7,4 +7,19 @@
     </div>
     <app-footer></app-footer>
   </div>
+
+  <!-- Mobilni meni overlay (donja navigaciona traka -> dugme "meni") -->
+  @if (menuService.showMobileMenu()) {
+    <div class="mobile-menu-overlay" (click)="menuService.toggleMobileMenu()">
+      <div class="mobile-menu-panel" (click)="$event.stopPropagation()">
+        <div class="mobile-menu-panel__header">
+          <span>Meni</span>
+          <button type="button" (click)="menuService.toggleMobileMenu()">
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+        <app-sidebar-menu></app-sidebar-menu>
+      </div>
+    </div>
+  }
 </div>

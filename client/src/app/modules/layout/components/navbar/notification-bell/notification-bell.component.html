@@ -1,0 +1,55 @@
+<div class="notif-wrapper">
+  <button (click)="togglePanel()" class="notif-trigger" type="button" aria-label="Notifikacije">
+    <i class="pi pi-bell"></i>
+    <span *ngIf="unreadCount > 0" class="notif-badge">{{ unreadCount > 99 ? '99+' : unreadCount }}</span>
+  </button>
+
+  <div class="notif-dropdown" *ngIf="isOpen">
+    <div class="notif-header">
+      <div class="notif-header-left">
+        <span class="notif-header-title">Notifikacije</span>
+        <span *ngIf="unreadCount > 0" class="notif-header-badge">{{ unreadCount }} novo</span>
+      </div>
+      <button *ngIf="unreadCount > 0" (click)="markAllAsRead()" class="notif-mark-all">
+        <i class="pi pi-check-circle"></i>
+        Označi sve
+      </button>
+    </div>
+
+    <div class="notif-list">
+      <ng-container *ngIf="notifications.length > 0; else empty">
+        <div
+          *ngFor="let n of notifications"
+          (click)="onNotificationClick(n)"
+          class="notif-item"
+          [class.notif-item--unread]="!n.is_read"
+          [class.notif-item--clickable]="!!n.action_url">
+          <div class="notif-icon-wrap" [ngClass]="getSeverityClass(n.severity)">
+            <i [class]="getIcon(n.type)"></i>
+          </div>
+          <div class="notif-content">
+            <div class="notif-content-top">
+              <p class="notif-title">{{ n.title }}</p>
+              <span *ngIf="!n.is_read" class="notif-dot"></span>
+            </div>
+            <p *ngIf="n.message" class="notif-message">{{ n.message }}</p>
+            <p class="notif-time">
+              <i class="pi pi-clock"></i>
+              {{ n.created_at | date: 'dd.MM.yyyy HH:mm' }}
+            </p>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #empty>
+        <div class="notif-empty">
+          <div class="notif-empty-icon">
+            <i class="pi pi-bell"></i>
+          </div>
+          <p class="notif-empty-title">Sve je ažurno</p>
+          <p class="notif-empty-sub">Nema novih notifikacija</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

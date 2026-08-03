@@ -10,6 +10,7 @@ import { PRIMENG_SR_LOCALE } from './core/theme/primeng-sr-locale';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { routes } from './app.routes';
 
@@ -34,6 +35,7 @@ export const appConfig: ApplicationConfig = {
         loader: { provide: TranslateLoader, useFactory: httpTranslateLoaderFactory, deps: [HttpClient] },
         defaultLanguage: 'sr'
       })
-    )
+    ),
+    importProvidersFrom(AngularSvgIconModule.forRoot())
   ]
 };

@@ -1,0 +1,116 @@
+<div class="gsearch-wrapper">
+  <!-- Mobile: ikonica koja otvara dijalog za pretragu -->
+  <button class="gsearch-mobile-trigger" (click)="expandMobile()" type="button" aria-label="Pretraga">
+    <i class="pi pi-search"></i>
+  </button>
+
+  <!-- Desktop: input polje uvek vidljivo -->
+  <div class="gsearch-input-wrap gsearch-input-wrap--desktop">
+    <i class="pi pi-search gsearch-input-icon"></i>
+    <input
+      type="text"
+      class="gsearch-input"
+      placeholder="Pretraži dobavljače, prijem, posude, radne naloge..."
+      [(ngModel)]="term"
+      (ngModelChange)="onInputChange()"
+      (focus)="onFocus()"
+      (keydown.escape)="onEscape()" />
+    <button *ngIf="term" (click)="close()" class="gsearch-clear" type="button" aria-label="Obriši pretragu">
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+
+  <!-- Desktop: dropdown rezultata -->
+  <div class="gsearch-dropdown" *ngIf="!mobileExpanded && isOpen && term.trim().length > 0">
+    <div *ngIf="isLoading" class="gsearch-loading">
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>Pretraživanje...</span>
+    </div>
+
+    <div *ngIf="!isLoading && term.trim().length < 2" class="gsearch-hint">Unesite bar 2 karaktera</div>
+
+    <div *ngIf="showEmptyState" class="gsearch-empty">
+      <i class="pi pi-search"></i>
+      <p>Nema rezultata za "{{ term }}"</p>
+    </div>
+
+    <div *ngIf="!isLoading && hasResults" class="gsearch-results">
+      <ng-container *ngFor="let group of groups">
+        <div class="gsearch-group" *ngIf="group.items.length > 0">
+          <div class="gsearch-group-label">{{ group.label }}</div>
+          <div *ngFor="let item of group.items" (click)="onResultClick(item)" class="gsearch-item">
+            <div class="gsearch-item-icon">
+              <i [class]="getIcon(group.type)"></i>
+            </div>
+            <div class="gsearch-item-content">
+              <p class="gsearch-item-label">{{ item.label }}</p>
+              <p *ngIf="item.subtitle" class="gsearch-item-subtitle">{{ item.subtitle }}</p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile: pretraga kao pun-ekran dijalog -->
+<p-dialog
+  [(visible)]="mobileExpanded"
+  [modal]="true"
+  [dismissableMask]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="gsearch-mobile-dialog"
+  maskStyleClass="gsearch-mobile-dialog-mask"
+  [style]="{ width: '100vw', height: '100dvh', margin: '0', maxWidth: '100vw', borderRadius: '0' }"
+  [focusTrap]="false"
+  (onShow)="onMobileDialogShow()"
+  (onHide)="close()"
+  appendTo="body">
+  <ng-template #header>
+    <div class="gsearch-input-wrap gsearch-mobile-input-wrap">
+      <i class="pi pi-search gsearch-input-icon"></i>
+      <input
+        #searchInput
+        type="text"
+        class="gsearch-input"
+        placeholder="Pretraži dobavljače, prijem, posude, radne naloge..."
+        [(ngModel)]="term"
+        (ngModelChange)="onInputChange()"
+        (keydown.escape)="onEscape()" />
+      <button *ngIf="term" (click)="term = ''; onInputChange()" class="gsearch-clear" type="button" aria-label="Obriši pretragu">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </ng-template>
+
+  <div *ngIf="isLoading" class="gsearch-loading">
+    <i class="pi pi-spin pi-spinner"></i>
+    <span>Pretraživanje...</span>
+  </div>
+
+  <div *ngIf="!isLoading && term.trim().length < 2" class="gsearch-hint">Unesite bar 2 karaktera</div>
+
+  <div *ngIf="showEmptyState" class="gsearch-empty">
+    <i class="pi pi-search"></i>
+    <p>Nema rezultata za "{{ term }}"</p>
+  </div>
+
+  <div *ngIf="!isLoading && hasResults" class="gsearch-results">
+    <ng-container *ngFor="let group of groups">
+      <div class="gsearch-group" *ngIf="group.items.length > 0">
+        <div class="gsearch-group-label">{{ group.label }}</div>
+        <div *ngFor="let item of group.items" (click)="onResultClick(item)" class="gsearch-item">
+          <div class="gsearch-item-icon">
+            <i [class]="getIcon(group.type)"></i>
+          </div>
+          <div class="gsearch-item-content">
+            <p class="gsearch-item-label">{{ item.label }}</p>
+            <p *ngIf="item.subtitle" class="gsearch-item-subtitle">{{ item.subtitle }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</p-dialog>

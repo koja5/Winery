@@ -1,68 +1,30 @@
-<nav class="sidebar" [class.is-collapsed]="!menuService.showSidebar()">
-  <div class="sidebar__header" (click)="toggle()">
-    <span class="sidebar__logo-mark">é</span>
-    @if (menuService.showSidebar()) {
-      <span class="sidebar__logo-text">Vinarija</span>
-    }
-    <button type="button" class="sidebar__collapse-btn" [class.is-collapsed]="!menuService.showSidebar()">
-      <i class="pi pi-angle-left"></i>
-    </button>
-  </div>
+<nav
+  [ngClass]="menuService.showSidebar() ? 'w-64 xl:w-72' : 'w-[70px]'"
+  class="scrollbar-thumb-rounded scrollbar-track-rounded hidden h-full flex-col overflow-auto bg-background pt-2 transition-all duration-300 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted lg:flex"
+>
+  <div class="px-3">
+    <!-- Logo -->
+    <div class="flex h-14 items-center">
+      <div class="flex flex-1 items-center" *ngIf="menuService.showSidebar()">
+        <a (click)="toggle()" class="flex cursor-pointer items-center justify-center rounded-lg p-1 focus:outline-none">
+          <img src="assets/logo.svg" class="logo" alt="Vinarija" />
+        </a>
+      </div>
+      <button
+        (click)="toggle()"
+        class="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg text-muted-foreground/40 transition-all duration-200 hover:bg-muted hover:text-muted-foreground focus:outline-none"
+        [ngClass]="menuService.showSidebar() ? 'ml-auto' : 'mx-auto rotate-180'"
+      >
+        <svg-icon src="assets/icons/heroicons/solid/chevron-double-left.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+      </button>
+    </div>
 
-  <hr class="sidebar__divider" />
+    <!-- Separator -->
+    <div class="pb-2">
+      <hr class="border-border/50" />
+    </div>
 
-  <div class="sidebar__menu">
-    @for (group of menuService.menu; track $index) {
-      @if (group.label && menuService.showSidebar()) {
-        <div class="sidebar__group-label">{{ group.label | translate }}</div>
-      }
-      <ul class="sidebar__list">
-        @for (item of group.items; track item.title) {
-          <li>
-            @if (item.children) {
-              <button type="button" class="sidebar__item" (click)="toggleItem(item)">
-                <span class="sidebar__item-icon"><i [class]="item.icon"></i></span>
-                @if (menuService.showSidebar()) {
-                  <span class="sidebar__item-label">{{ item.title | translate }}</span>
-                  <i class="pi pi-chevron-right sidebar__chevron" [class.is-expanded]="menuService.isExpanded(item.title)"></i>
-                }
-              </button>
-              @if (menuService.isExpanded(item.title) && menuService.showSidebar()) {
-                <ul class="sidebar__submenu">
-                  @for (child of item.children; track child.route) {
-                    <li>
-                      <a
-                        [routerLink]="child.locked ? '/uskoro' : child.route"
-                        [queryParams]="child.locked ? { from: child.route } : null"
-                        routerLinkActive="is-active"
-                        class="sidebar__subitem"
-                      >
-                        <span class="sidebar__dot"></span>
-                        {{ child.title | translate }}
-                      </a>
-                    </li>
-                  }
-                </ul>
-              }
-            } @else {
-              <a
-                [routerLink]="item.locked ? '/uskoro' : item.route"
-                [queryParams]="item.locked ? { from: item.title } : null"
-                routerLinkActive="is-active"
-                class="sidebar__item"
-              >
-                <span class="sidebar__item-icon"><i [class]="item.icon"></i></span>
-                @if (menuService.showSidebar()) {
-                  <span class="sidebar__item-label">{{ item.title | translate }}</span>
-                  @if (item.badge) {
-                    <span class="sidebar__badge">{{ item.badge | translate }}</span>
-                  }
-                }
-              </a>
-            }
-          </li>
-        }
-      </ul>
-    }
+    <!-- Menu Items -->
+    <app-sidebar-menu></app-sidebar-menu>
   </div>
 </nav>

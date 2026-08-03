@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <!-- Gin bottle cap -->
+  <rect x="3" y="0.5" width="6.5" height="2" rx="0.5"/>
+  <!-- Bottle neck -->
+  <rect x="3.8" y="2.5" width="4.9" height="3.5"/>
+  <!-- Bottle body with shoulders -->
+  <path d="M1.5 9.5L3.8 6h4.9l2.3 3.5V22c0 .6-.4 1-1 1h-8c-.6 0-1-.4-1-1V9.5z"/>
+
+  <!-- Juniper sprig stem -->
+  <rect x="17.8" y="1" width="1.5" height="22" rx="0.7"/>
+  <!-- Left berries + branches -->
+  <rect x="14.3" y="5.3" width="3.5" height="1.4" rx="0.7"/>
+  <circle cx="13.8" cy="6" r="2"/>
+  <rect x="14.3" y="11.3" width="3.5" height="1.4" rx="0.7"/>
+  <circle cx="13.8" cy="12" r="2"/>
+  <rect x="14.3" y="17.3" width="3.5" height="1.4" rx="0.7"/>
+  <circle cx="13.8" cy="18" r="2"/>
+  <!-- Right berries + branches -->
+  <rect x="19.3" y="8.3" width="3" height="1.4" rx="0.7"/>
+  <circle cx="22.3" cy="9" r="2"/>
+  <rect x="19.3" y="14.3" width="3" height="1.4" rx="0.7"/>
+  <circle cx="22.3" cy="15" r="2"/>
+  <rect x="19.3" y="20.3" width="3" height="1.4" rx="0.7"/>
+  <circle cx="22.3" cy="21" r="2"/>
+</svg>

@@ -50,7 +50,8 @@
     },
     "badge": {
       "new": "Novo"
-    }
+    },
+    "locked": "Uskoro"
   },
   "general": {
     "addNew": "Dodaj novo",

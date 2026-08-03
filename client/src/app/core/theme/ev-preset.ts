@@ -1,9 +1,20 @@
 import { definePreset } from '@primeng/themes';
-import Aura from '@primeng/themes/aura';
+import Material from '@primeng/themes/material';
 
-// eVinarija brand palette, extracted from evinarija.com landing page:
-// deep wine burgundy (primary) + sage/olive green (accent).
-export const EvPreset = definePreset(Aura, {
+// eVinarija brend paleta (bordo/vinska), na Material bazi (isti oblik/spacing
+// PrimeNG komponenti kao eDestilerija — dugmad, tabela, paginacija), ali sa
+// vinskom bojom umesto eDestilerija plave/indigo.
+export const EvPreset = definePreset(Material, {
+  primitive: {
+    borderRadius: {
+      none: '0',
+      xs: '2px',
+      sm: '4px',
+      md: '6px',
+      lg: '8px',
+      xl: '12px'
+    }
+  },
   semantic: {
     primary: {
       50: '#f7f2f3',
@@ -25,20 +36,6 @@ export const EvPreset = definePreset(Aura, {
           contrastColor: '#ffffff',
           hoverColor: '#591728',
           activeColor: '#4a1422'
-        },
-        surface: {
-          0: '#ffffff',
-          50: '#faf6f0',
-          100: '#f3ece6',
-          200: '#e2d5c5',
-          300: '#c9b6a6',
-          400: '#a78d80',
-          500: '#7a6a5e',
-          600: '#5c4f46',
-          700: '#453b34',
-          800: '#2a1f1a',
-          900: '#1d1512',
-          950: '#120d0b'
         }
       },
       dark: {

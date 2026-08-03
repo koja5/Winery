@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Table, TableModule } from 'primeng/table';
@@ -12,6 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { GridConfig } from '../../core/models/grid-config';
 import { ColumnConfig, ActionDef } from '../../core/models/column-config';
@@ -36,6 +37,7 @@ import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component'
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    TooltipModule,
     DynamicFormsComponent
   ],
   providers: [ConfirmationService, MessageService, DatePipe],
@@ -62,6 +64,7 @@ export class DynamicTableComponent implements OnInit {
   private messages = inject(MessageService);
   private translate = inject(TranslateService);
   private datePipe = inject(DatePipe);
+  private el = inject(ElementRef);
 
   config: GridConfig | null = null;
   rows: any[] = [];
@@ -78,7 +81,26 @@ export class DynamicTableComponent implements OnInit {
   globalFilterFields: string[] = [];
   optionsMenuItems: MenuItem[] = [];
 
+  /** Grid uvek popunjava dostupnu visinu (toolbar + paginator + layout hrom oduzeti), isto kao eDestilerija. */
+  tableHeight = '60vh';
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.computeTableHeight();
+  }
+
+  private computeTableHeight(): void {
+    const chrome = 300; // navbar + footer + content padding + toolbar + paginator
+    this.tableHeight = Math.max(window.innerHeight - chrome, 320) + 'px';
+    // PrimeNG [scrollHeight] samo postavlja max-height (gornju granicu), ne
+    // primorava kontejner da tu visinu i zauzme kad je sadržaj kraći — zato
+    // eksplicitno postavljamo pravi `height` preko CSS varijable (isti trik
+    // kao eDestilerija: --datatable-scroll-height).
+    this.el.nativeElement.style.setProperty('--datatable-scroll-height', this.tableHeight);
+  }
+
   ngOnInit(): void {
+    this.computeTableHeight();
     this.configService.getGridConfig(this.path, this.file).subscribe((config) => {
       this.config = config;
       this.dataColumns = config.columns.filter((c) => !c.actions);
