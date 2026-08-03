@@ -105,6 +105,16 @@ export class GeoReportsComponent implements OnInit, AfterViewInit {
     }).addTo(this.map);
 
     this.choroplethLayer = L.layerGroup().addTo(this.map);
+
+    // Container height/width isn't settled yet when ngAfterViewInit fires
+    // (toolbar's p-select components render after this), so Leaflet measures
+    // a stale size and only loads tiles for that smaller area.
+    setTimeout(() => this.map.invalidateSize(), 0);
+
+    const container = document.getElementById('geo-reports-map');
+    if (container && 'ResizeObserver' in window) {
+      new ResizeObserver(() => this.map.invalidateSize()).observe(container);
+    }
   }
 
   private renderChoropleth(rows: Record<string, any>[], metricKey: string): void {

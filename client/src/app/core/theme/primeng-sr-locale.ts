@@ -88,6 +88,7 @@ export const PRIMENG_SR_LOCALE: Translation = {
     lastPageLabel: 'Poslednja strana',
     nextPageLabel: 'Sledeća strana',
     prevPageLabel: 'Prethodna strana',
+    pageLabel: 'Strana {page}',
     rowsPerPageLabel: 'Redova po strani',
     selectRow: 'Izaberi red',
     unselectRow: 'Poništi izbor reda'
