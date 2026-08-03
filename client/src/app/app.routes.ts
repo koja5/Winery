@@ -26,6 +26,29 @@ export const routes: Routes = [
           import('./shared/components/coming-soon/coming-soon.component').then((m) => m.ComingSoonComponent)
       },
       {
+        path: 'podrum/berba/dobavljaci',
+        loadComponent: () => import('./features/berba/suppliers/suppliers.component').then((m) => m.SuppliersComponent)
+      },
+      {
+        path: 'podrum/berba/najave',
+        loadComponent: () =>
+          import('./features/berba/harvest-announcements/harvest-announcements.component').then(
+            (m) => m.HarvestAnnouncementsComponent
+          )
+      },
+      {
+        path: 'podrum/berba/prijem',
+        loadComponent: () =>
+          import('./features/berba/grape-receptions/grape-receptions.component').then((m) => m.GrapeReceptionsComponent)
+      },
+      {
+        path: 'podrum/berba/obracuni',
+        loadComponent: () =>
+          import('./features/berba/harvest-settlements/harvest-settlements.component').then(
+            (m) => m.HarvestSettlementsComponent
+          )
+      },
+      {
         path: 'podrum/posude',
         loadComponent: () => import('./features/podrum/vessels/vessels.component').then((m) => m.VesselsComponent)
       },

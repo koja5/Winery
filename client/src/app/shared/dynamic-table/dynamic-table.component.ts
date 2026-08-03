@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { MenuModule } from 'primeng/menu';
 import { Menu } from 'primeng/menu';
 import { MenuItem, ConfirmationService, MessageService } from 'primeng/api';
@@ -9,6 +9,9 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { GridConfig } from '../../core/models/grid-config';
 import { ColumnConfig, ActionDef } from '../../core/models/column-config';
@@ -30,6 +33,9 @@ import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component'
     ButtonModule,
     ConfirmDialogModule,
     ToastModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
     DynamicFormsComponent
   ],
   providers: [ConfirmationService, MessageService, DatePipe],
@@ -44,8 +50,11 @@ export class DynamicTableComponent implements OnInit {
   @Output() rowAction = new EventEmitter<{ key: string | undefined; row: any }>();
 
   @ViewChild('rowActionMenu') rowActionMenu?: Menu;
+  @ViewChild('optionsMenu') optionsMenu?: Menu;
+  @ViewChild('dt') table?: Table;
 
   readonly ColumnType = ColumnType;
+  readonly currentPageReportTemplate = 'Prikazano {first}-{last} od ukupno {totalRecords} podataka.';
 
   private configService = inject(ConfigurationService);
   private api = inject(CallApiService);
@@ -66,13 +75,40 @@ export class DynamicTableComponent implements OnInit {
   editingRow: Record<string, any> | null = null;
   isEdit = false;
 
+  globalFilterFields: string[] = [];
+  optionsMenuItems: MenuItem[] = [];
+
   ngOnInit(): void {
     this.configService.getGridConfig(this.path, this.file).subscribe((config) => {
       this.config = config;
       this.dataColumns = config.columns.filter((c) => !c.actions);
       this.hasRowActions = config.columns.some((c) => !!c.actions?.length);
+      this.globalFilterFields = this.dataColumns.map((c) => c.field);
+      this.optionsMenuItems = [
+        {
+          label: this.translate.instant('general.exportCsv'),
+          icon: 'pi pi-file-export',
+          command: () => this.table?.exportCSV()
+        }
+      ];
       this.loadData();
     });
+  }
+
+  onGlobalFilter(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.table?.filterGlobal(value, 'contains');
+  }
+
+  filterTypeFor(column: ColumnConfig): 'text' | 'numeric' | 'date' {
+    switch (column.type) {
+      case ColumnType.Number:
+        return 'numeric';
+      case ColumnType.Date:
+        return 'date';
+      default:
+        return 'text';
+    }
   }
 
   loadData(): void {

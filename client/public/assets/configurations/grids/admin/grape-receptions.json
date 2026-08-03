@@ -1,0 +1,63 @@
+{
+  "name": "receptions.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/grape-receptions" },
+  "save": { "type": "POST", "api": "/api/admin/grape-receptions" },
+  "delete": { "type": "DELETE", "api": "/api/admin/grape-receptions/:id" },
+  "dialogTitleCreate": "receptions.newReception",
+  "dialogTitleEdit": "receptions.editReception",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "emit", "key": "traceability", "icon": "pi pi-sitemap", "title": "receptions.traceability" },
+        { "type": "emit", "key": "print-receipt", "icon": "pi pi-print", "title": "receptions.printReceipt" },
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "receptions.date", "field": "reception_date", "type": "date" },
+    { "title": "suppliers.name", "field": "supplier_display_name", "type": "string" },
+    { "title": "announcements.parcel", "field": "parcel_name", "type": "string" },
+    { "title": "announcements.grapeVariety", "field": "grape_variety", "type": "string" },
+    { "title": "receptions.quantityKg", "field": "quantity_kg", "type": "number" },
+    { "title": "receptions.quantityKgCurrent", "field": "quantity_kg_current", "type": "number" },
+    { "title": "receptions.sugarDegrees", "field": "sugar_degrees", "type": "number" }
+  ],
+  "fields": [
+    {
+      "type": "combobox",
+      "name": "supplier_id",
+      "title": "suppliers.name",
+      "width": "48%",
+      "request": { "type": "GET", "api": "/api/admin/suppliers" }
+    },
+    {
+      "type": "combobox",
+      "name": "parcel_id",
+      "title": "announcements.parcel",
+      "width": "48%",
+      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" }
+    },
+    {
+      "type": "textbox",
+      "name": "grape_variety",
+      "title": "announcements.grapeVariety",
+      "width": "48%",
+      "required": true,
+      "disabledOnEdit": true
+    },
+    { "type": "date", "name": "reception_date", "title": "receptions.date", "width": "48%", "required": true },
+    {
+      "type": "number",
+      "name": "quantity_kg",
+      "title": "receptions.quantityKg",
+      "width": "48%",
+      "required": true,
+      "min": 0
+    },
+    { "type": "number", "name": "sugar_degrees", "title": "receptions.sugarDegrees", "width": "48%", "min": 0 },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

@@ -17,7 +17,9 @@
     },
     "berba": "Berba",
     "berba.receptions": "Prijem grožđa",
+    "berba.announcements": "Najave berbe",
     "berba.suppliers": "Dobavljači",
+    "berba.settlements": "Obračuni berbe",
     "vino": "Vino",
     "vino.fermentation": "Fermentacija",
     "vino.aging": "Nega/Odležavanje",
@@ -67,7 +69,13 @@
     "confirmDeleteMessage": "Da li ste sigurni da želite da obrišete ovaj zapis?",
     "yes": "Da",
     "no": "Ne",
-    "loading": "Učitavanje..."
+    "loading": "Učitavanje...",
+    "notes": "Napomena",
+    "status": "Status",
+    "searchPlaceholder": "Pretraži po svim kolonama...",
+    "refresh": "Osveži",
+    "options": "Opcije",
+    "exportCsv": "Izvezi CSV"
   },
   "documents": {
     "title": "Prilozi",
@@ -114,13 +122,16 @@
     "fermentationYield": { "label": "Prinos fermentacije" },
     "capacityUtilization": { "label": "Iskorišćenost kapaciteta" },
     "agingLosses": { "label": "Gubici tokom nege" },
+    "harvestSettlements": { "label": "Obračuni berbe i isplate" },
+    "wineProductionCost": { "label": "Trošak proizvodnje vina" },
     "dim": {
       "grapeVariety": "Sorta",
       "parcel": "Parcela",
       "supplier": "Dobavljač",
       "wineVariety": "Sorta vina",
       "vessel": "Posuda",
-      "vesselType": "Tip posude"
+      "vesselType": "Tip posude",
+      "status": "Status"
     },
     "metric": {
       "quantityKg": "Količina (kg)",
@@ -134,7 +145,12 @@
       "utilizationPct": "Iskorišćenost (%)",
       "initialLiters": "Početna količina (L)",
       "lossLiters": "Gubitak (L)",
-      "lossPct": "Gubitak (%)"
+      "lossPct": "Gubitak (%)",
+      "totalAmount": "Ukupan iznos",
+      "paidAmount": "Plaćeno",
+      "balanceDue": "Dugovanje",
+      "costTotal": "Ukupan trošak",
+      "costPerLiter": "Trošak po litru"
     },
     "col": {
       "date": "Datum",
@@ -256,6 +272,81 @@
     "status.inProgress": "U toku",
     "status.done": "Završen",
     "status.cancelled": "Otkazan"
+  },
+  "suppliers": {
+    "title": "Dobavljači",
+    "newSupplier": "Novi dobavljač",
+    "editSupplier": "Izmena dobavljača",
+    "name": "Naziv",
+    "contactPerson": "Kontakt osoba",
+    "phone": "Telefon",
+    "email": "Email",
+    "address": "Adresa"
+  },
+  "announcements": {
+    "title": "Najave berbe",
+    "newAnnouncement": "Nova najava",
+    "editAnnouncement": "Izmena najave",
+    "plannedDate": "Planirani datum",
+    "parcel": "Parcela",
+    "grapeVariety": "Sorta grožđa",
+    "plannedQuantity": "Planirana količina (kg)",
+    "status": "Status",
+    "status.planned": "Planirano",
+    "status.confirmed": "Potvrđeno",
+    "status.received": "Primljeno",
+    "status.cancelled": "Otkazano"
+  },
+  "receptions": {
+    "title": "Prijem grožđa",
+    "newReception": "Novi prijem",
+    "editReception": "Izmena prijema",
+    "date": "Datum prijema",
+    "quantityKg": "Količina (kg)",
+    "quantityKgCurrent": "Preostala količina (kg)",
+    "sugarDegrees": "Šećer (°Oe)",
+    "traceability": "Sledljivost",
+    "printReceipt": "Štampaj potvrdu",
+    "traceability.fermentation": "Fermentacija",
+    "traceability.usedQuantity": "Preuzeta količina",
+    "traceability.aging": "Nega/Odležavanje",
+    "traceability.charging": "Punjenje",
+    "traceability.empty": "Ova partija još nije prerađena."
+  },
+  "settlements": {
+    "title": "Obračuni berbe",
+    "newSettlement": "Novi obračun",
+    "viewPay": "Pregled i uplate",
+    "date": "Datum obračuna",
+    "quantityKg": "Količina (kg)",
+    "pricePerKg": "Cena po kg",
+    "totalAmount": "Ukupan iznos",
+    "paidAmount": "Plaćeno",
+    "balanceDue": "Dugovanje",
+    "status": "Status",
+    "status.unpaid": "Neplaćeno",
+    "status.partiallyPaid": "Delimično plaćeno",
+    "status.paid": "Plaćeno",
+    "form": {
+      "title": "Novi obračun berbe",
+      "selectSupplier": "Izaberite dobavljača",
+      "receptions": "Partije za obračun",
+      "noReceptions": "Nema neobračunatih partija za ovog dobavljača.",
+      "selectedQuantity": "Izabrana količina",
+      "validationError": "Izaberite dobavljača, cenu po kg i bar jednu partiju."
+    },
+    "detail": {
+      "title": "Obračun berbe",
+      "receptions": "Partije u obračunu",
+      "payments": "Uplate",
+      "noPayments": "Još nema evidentiranih uplata."
+    },
+    "payment": {
+      "amount": "Iznos",
+      "method": "Način plaćanja",
+      "add": "Evidentiraj uplatu",
+      "validationError": "Iznos uplate mora biti pozitivan broj."
+    }
   },
   "superadmin": {
     "nav": {

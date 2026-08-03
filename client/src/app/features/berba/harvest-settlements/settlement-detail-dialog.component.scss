@@ -1,0 +1,58 @@
+h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ev-muted);
+  margin: 1rem 0 0.5rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.settlement-detail__summary {
+  background: var(--ev-bg);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.settlement-detail__loading,
+.settlement-detail__empty {
+  color: var(--ev-muted);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.settlement-detail__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.82rem;
+  color: var(--ev-ink);
+
+  li {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--ev-line);
+  }
+}
+
+.settlement-detail__payment-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 0.5rem;
+  margin-top: 1rem;
+
+  input {
+    height: 40px;
+    border-radius: 8px;
+    border: 1.5px solid var(--ev-line);
+    padding: 0 0.6rem;
+    font-size: 0.85rem;
+    background: var(--ev-surface);
+    color: var(--ev-ink);
+  }
+}

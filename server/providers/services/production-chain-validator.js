@@ -221,6 +221,45 @@ class WineProductionChainValidator {
     };
   }
 
+  async canDeleteSupplier(pool, id, tenantId) {
+    const [rows] = await pool.query('SELECT id FROM suppliers WHERE id = ? AND tenant_id = ?', [id, tenantId]);
+    if (!rows.length) {
+      return this._notFound();
+    }
+
+    const receptionCount = await this._countRelatedRecords(pool, 'grape_receptions', 'supplier_id', id);
+    const announcementCount = await this._countRelatedRecords(pool, 'harvest_announcements', 'supplier_id', id);
+    const settlementCount = await this._countRelatedRecords(pool, 'harvest_settlements', 'supplier_id', id);
+
+    if (receptionCount > 0 || settlementCount > 0) {
+      return {
+        canProceed: false,
+        message: 'productionChain.supplierHasHistory',
+        deletionType: 'none',
+        affectedEntities: { receptions: receptionCount, settlements: settlementCount },
+        warnings: []
+      };
+    }
+
+    if (announcementCount > 0) {
+      return {
+        canProceed: true,
+        message: 'productionChain.cascadeDeleteRequired',
+        deletionType: 'cascade',
+        affectedEntities: { announcements: announcementCount },
+        warnings: ['productionChain.warningCascadeDeleteAll']
+      };
+    }
+
+    return {
+      canProceed: true,
+      message: 'productionChain.canSafelyDelete',
+      deletionType: 'both',
+      affectedEntities: {},
+      warnings: []
+    };
+  }
+
   // ---------------------------------------------------------------------
   // EDIT checks
   // ---------------------------------------------------------------------

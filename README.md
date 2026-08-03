@@ -25,4 +25,4 @@ npm run client           # http://localhost:4201, proxy na /api -> server
 
 ## Backlog
 
-Fazni plan razvoja (Faza 0–5, 45 taskova) vodi se odvojeno; trenutna faza: **Faza 0 — Temelj**.
+Fazni plan razvoja (Faza 0–5, 45 taskova) vodi se odvojeno; trenutna faza: **Faza 3 — Vinograd** (Faze 0–2 završene).

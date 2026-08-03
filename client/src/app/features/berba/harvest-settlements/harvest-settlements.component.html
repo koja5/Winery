@@ -1,0 +1,15 @@
+<div class="settlements__toolbar">
+  <app-button impact="bold" tone="primary" shape="rounded" size="small" (click)="formVisible = true">
+    <i class="pi pi-plus"></i>
+    {{ 'settlements.newSettlement' | translate }}
+  </app-button>
+</div>
+
+<app-dynamic-table path="grids/admin" file="harvest-settlements.json" (rowAction)="onRowAction($event)"></app-dynamic-table>
+
+<app-new-settlement-form [(visible)]="formVisible" (saved)="onSaved()"></app-new-settlement-form>
+<app-settlement-detail-dialog
+  [(visible)]="detailVisible"
+  [settlementId]="selectedSettlementId"
+  (changed)="onSaved()"
+></app-settlement-detail-dialog>

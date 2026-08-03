@@ -1,0 +1,32 @@
+{
+  "name": "settlements.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/harvest-settlements" },
+  "delete": { "type": "DELETE", "api": "/api/admin/harvest-settlements/:id" },
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "emit", "key": "view-pay", "icon": "pi pi-wallet", "title": "settlements.viewPay" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "settlements.date", "field": "settlement_date", "type": "date" },
+    { "title": "suppliers.name", "field": "supplier_name", "type": "string" },
+    { "title": "settlements.quantityKg", "field": "total_quantity_kg", "type": "number" },
+    { "title": "settlements.pricePerKg", "field": "price_per_kg", "type": "number" },
+    { "title": "settlements.totalAmount", "field": "total_amount", "type": "number" },
+    { "title": "settlements.paidAmount", "field": "paid_amount", "type": "number" },
+    {
+      "title": "settlements.status",
+      "field": "status",
+      "type": "string",
+      "translateMap": {
+        "unpaid": "settlements.status.unpaid",
+        "partially_paid": "settlements.status.partiallyPaid",
+        "paid": "settlements.status.paid"
+      }
+    }
+  ]
+}

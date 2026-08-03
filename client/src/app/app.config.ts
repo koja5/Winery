@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { providePrimeNG } from 'primeng/config';
 import { EvPreset } from './core/theme/ev-preset';
+import { PRIMENG_SR_LOCALE } from './core/theme/primeng-sr-locale';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
@@ -23,7 +24,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimationsAsync(),
     provideIonicAngular({}),
-    providePrimeNG({ theme: { preset: EvPreset, options: { darkModeSelector: '.dark' } } }),
+    providePrimeNG({
+      theme: { preset: EvPreset, options: { darkModeSelector: '.dark' } },
+      translation: PRIMENG_SR_LOCALE
+    }),
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     importProvidersFrom(
       TranslateModule.forRoot({

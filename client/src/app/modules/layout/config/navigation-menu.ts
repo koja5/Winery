@@ -35,10 +35,11 @@ export const NAVIGATION_MENU: NavGroup[] = [
       {
         title: 'nav.berba',
         icon: 'pi pi-sun',
-        locked: true,
         children: [
-          { title: 'nav.berba.receptions', route: '/podrum/berba/prijem', locked: true },
-          { title: 'nav.berba.suppliers', route: '/podrum/berba/dobavljaci', locked: true }
+          { title: 'nav.berba.receptions', route: '/podrum/berba/prijem' },
+          { title: 'nav.berba.announcements', route: '/podrum/berba/najave' },
+          { title: 'nav.berba.suppliers', route: '/podrum/berba/dobavljaci' },
+          { title: 'nav.berba.settlements', route: '/podrum/berba/obracuni' }
         ]
       },
       {

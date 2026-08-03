@@ -1,0 +1,31 @@
+{
+  "name": "suppliers.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/suppliers" },
+  "save": { "type": "POST", "api": "/api/admin/suppliers" },
+  "delete": { "type": "DELETE", "api": "/api/admin/suppliers/:id" },
+  "dialogTitleCreate": "suppliers.newSupplier",
+  "dialogTitleEdit": "suppliers.editSupplier",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "suppliers.name", "field": "name", "type": "string" },
+    { "title": "suppliers.contactPerson", "field": "contact_person", "type": "string" },
+    { "title": "suppliers.phone", "field": "phone", "type": "string" },
+    { "title": "suppliers.email", "field": "email", "type": "string" }
+  ],
+  "fields": [
+    { "type": "textbox", "name": "name", "title": "suppliers.name", "width": "100%", "required": true },
+    { "type": "textbox", "name": "contact_person", "title": "suppliers.contactPerson", "width": "48%" },
+    { "type": "textbox", "name": "phone", "title": "suppliers.phone", "width": "48%" },
+    { "type": "textbox", "name": "email", "title": "suppliers.email", "width": "100%" },
+    { "type": "textarea", "name": "address", "title": "suppliers.address", "width": "100%" },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

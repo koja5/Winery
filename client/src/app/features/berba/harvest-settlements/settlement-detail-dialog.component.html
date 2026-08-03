@@ -1,0 +1,48 @@
+<p-toast></p-toast>
+
+<p-dialog
+  [(visible)]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [modal]="true"
+  [style]="{ width: '38rem' }"
+  [header]="'settlements.detail.title' | translate"
+>
+  @if (loading) {
+    <p class="settlement-detail__loading">{{ 'general.loading' | translate }}</p>
+  } @else if (detail) {
+    <div class="settlement-detail__summary">
+      <div><strong>{{ 'suppliers.name' | translate }}:</strong> {{ detail.settlement['supplier_name'] }}</div>
+      <div><strong>{{ 'settlements.totalAmount' | translate }}:</strong> {{ detail.settlement['total_amount'] }}</div>
+      <div><strong>{{ 'settlements.balanceDue' | translate }}:</strong> {{ balanceDue }}</div>
+    </div>
+
+    <h4>{{ 'settlements.detail.receptions' | translate }}</h4>
+    <ul class="settlement-detail__list">
+      @for (r of detail.receptions; track r['id']) {
+        <li>{{ r['reception_date'] | date: 'dd.MM.yyyy' }} — {{ r['grape_variety'] || '—' }} ({{ r['quantity_kg'] }} kg)</li>
+      }
+    </ul>
+
+    <h4>{{ 'settlements.detail.payments' | translate }}</h4>
+    @if (!detail.payments.length) {
+      <p class="settlement-detail__empty">{{ 'settlements.detail.noPayments' | translate }}</p>
+    } @else {
+      <ul class="settlement-detail__list">
+        @for (p of detail.payments; track p['id']) {
+          <li>{{ p['payment_date'] | date: 'dd.MM.yyyy' }} — {{ p['amount'] }} ({{ p['method'] || '—' }})</li>
+        }
+      </ul>
+    }
+
+    @if (balanceDue > 0) {
+      <div class="settlement-detail__payment-form">
+        <input type="date" [(ngModel)]="paymentDate" />
+        <input type="number" min="0" step="0.01" [(ngModel)]="amount" [placeholder]="'settlements.payment.amount' | translate" />
+        <input type="text" [(ngModel)]="method" [placeholder]="'settlements.payment.method' | translate" />
+        <app-button impact="bold" tone="primary" shape="rounded" size="small" [loading]="submittingPayment" (click)="submitPayment()">
+          {{ 'settlements.payment.add' | translate }}
+        </app-button>
+      </div>
+    }
+  }
+</p-dialog>

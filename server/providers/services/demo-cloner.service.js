@@ -42,18 +42,32 @@ class DemoClonerService {
       row.active
     ], 'id, tenant_id, name, vessel_type, capacity_liters, location, status, active');
 
+    await this._cloneTable(pool, 'suppliers', demoTenantId, newTenantId, (row) => [
+      newId(row.id),
+      newTenantId,
+      row.name,
+      row.contact_person,
+      row.phone,
+      row.email,
+      row.address,
+      row.notes,
+      row.active
+    ], 'id, tenant_id, name, contact_person, phone, email, address, notes, active');
+
     await this._cloneTable(pool, 'grape_receptions', demoTenantId, newTenantId, (row) => [
       newId(row.id),
       newTenantId,
       newId(row.parcel_id),
       row.supplier_name,
+      newId(row.supplier_id),
+      null,
       row.grape_variety,
       row.reception_date,
       row.quantity_kg,
       row.quantity_kg_current,
       row.sugar_degrees,
       row.notes
-    ], 'id, tenant_id, parcel_id, supplier_name, grape_variety, reception_date, quantity_kg, quantity_kg_current, sugar_degrees, notes');
+    ], 'id, tenant_id, parcel_id, supplier_name, supplier_id, announcement_id, grape_variety, reception_date, quantity_kg, quantity_kg_current, sugar_degrees, notes');
 
     await this._cloneTable(pool, 'must_fermentations', demoTenantId, newTenantId, (row) => [
       newId(row.id),
@@ -94,7 +108,18 @@ class DemoClonerService {
       row.notes
     ], 'id, tenant_id, vessel_id, fermentation_id, name, wine_variety, vintage_year, lot, start_date, end_date, quantity_liters, quantity_liters_current, notes');
 
-    return { cloned: true, tables: ['vineyard_parcels', 'wine_vessels', 'grape_receptions', 'must_fermentations', 'grape_reception_pressings', 'wine_agings'] };
+    return {
+      cloned: true,
+      tables: [
+        'vineyard_parcels',
+        'wine_vessels',
+        'suppliers',
+        'grape_receptions',
+        'must_fermentations',
+        'grape_reception_pressings',
+        'wine_agings'
+      ]
+    };
   }
 
   async _cloneTable(pool, table, demoTenantId, newTenantId, mapRow, insertColumns) {

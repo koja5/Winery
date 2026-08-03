@@ -1,0 +1,68 @@
+{
+  "name": "announcements.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/harvest-announcements" },
+  "save": { "type": "POST", "api": "/api/admin/harvest-announcements" },
+  "delete": { "type": "DELETE", "api": "/api/admin/harvest-announcements/:id" },
+  "dialogTitleCreate": "announcements.newAnnouncement",
+  "dialogTitleEdit": "announcements.editAnnouncement",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "announcements.plannedDate", "field": "planned_date", "type": "date" },
+    { "title": "suppliers.name", "field": "supplier_name", "type": "string" },
+    { "title": "announcements.parcel", "field": "parcel_name", "type": "string" },
+    { "title": "announcements.grapeVariety", "field": "grape_variety", "type": "string" },
+    { "title": "announcements.plannedQuantity", "field": "planned_quantity_kg", "type": "number" },
+    {
+      "title": "announcements.status",
+      "field": "status",
+      "type": "string",
+      "translateMap": {
+        "planned": "announcements.status.planned",
+        "confirmed": "announcements.status.confirmed",
+        "received": "announcements.status.received",
+        "cancelled": "announcements.status.cancelled"
+      }
+    }
+  ],
+  "fields": [
+    {
+      "type": "combobox",
+      "name": "supplier_id",
+      "title": "suppliers.name",
+      "width": "48%",
+      "required": true,
+      "request": { "type": "GET", "api": "/api/admin/suppliers" }
+    },
+    {
+      "type": "combobox",
+      "name": "parcel_id",
+      "title": "announcements.parcel",
+      "width": "48%",
+      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" }
+    },
+    { "type": "textbox", "name": "grape_variety", "title": "announcements.grapeVariety", "width": "48%" },
+    { "type": "date", "name": "planned_date", "title": "announcements.plannedDate", "width": "48%", "required": true },
+    { "type": "number", "name": "planned_quantity_kg", "title": "announcements.plannedQuantity", "width": "48%", "min": 0 },
+    {
+      "type": "combobox",
+      "name": "status",
+      "title": "announcements.status",
+      "width": "48%",
+      "options": [
+        { "text": "announcements.status.planned", "value": "planned" },
+        { "text": "announcements.status.confirmed", "value": "confirmed" },
+        { "text": "announcements.status.received", "value": "received" },
+        { "text": "announcements.status.cancelled", "value": "cancelled" }
+      ]
+    },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

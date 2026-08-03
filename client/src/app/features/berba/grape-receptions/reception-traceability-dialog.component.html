@@ -1,0 +1,52 @@
+<p-dialog
+  [(visible)]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [modal]="true"
+  [style]="{ width: '40rem' }"
+  [header]="'receptions.traceability' | translate"
+>
+  @if (loading) {
+    <p class="traceability__loading">{{ 'general.loading' | translate }}</p>
+  } @else if (data) {
+    <div class="traceability__block">
+      <div><strong>{{ 'announcements.grapeVariety' | translate }}:</strong> {{ data.reception['grape_variety'] || '—' }}</div>
+      <div><strong>{{ 'receptions.quantityKg' | translate }}:</strong> {{ data.reception['quantity_kg'] }} kg</div>
+      <div><strong>{{ 'receptions.date' | translate }}:</strong> {{ data.reception['reception_date'] | date: 'dd.MM.yyyy' }}</div>
+    </div>
+
+    @if (data.pressings.length) {
+      <h4>{{ 'receptions.traceability.fermentation' | translate }}</h4>
+      @for (p of data.pressings; track p['id']) {
+        <div class="traceability__block">
+          <div><strong>{{ 'receptions.traceability.usedQuantity' | translate }}:</strong> {{ p['quantity_kg'] }} kg</div>
+          <div><strong>{{ 'announcements.grapeVariety' | translate }}:</strong> {{ p['wine_type'] }}</div>
+          <div><strong>{{ 'general.status' | translate }}:</strong> {{ p['fermentation_status'] }}</div>
+        </div>
+      }
+    }
+
+    @if (data.agings.length) {
+      <h4>{{ 'receptions.traceability.aging' | translate }}</h4>
+      @for (a of data.agings; track a['id']) {
+        <div class="traceability__block">
+          <div><strong>{{ 'vessels.currentContent' | translate }}:</strong> {{ a['wine_variety'] || '—' }} ({{ a['vintage_year'] || '—' }})</div>
+          <div><strong>{{ 'vessels.name' | translate }}:</strong> {{ a['vessel_name'] || '—' }}</div>
+          <div><strong>{{ 'vessels.currentQuantity' | translate }}:</strong> {{ a['quantity_liters_current'] }} L</div>
+        </div>
+      }
+    }
+
+    @if (data.chargings.length) {
+      <h4>{{ 'receptions.traceability.charging' | translate }}</h4>
+      <ul class="traceability__chargings">
+        @for (c of data.chargings; track c['id']) {
+          <li>{{ c['charging_date'] | date: 'dd.MM.yyyy' }} — {{ c['number_of_bottles'] }} × {{ c['bottle_volume_ml'] }} ml ({{ c['lot'] || '—' }})</li>
+        }
+      </ul>
+    }
+
+    @if (!data.pressings.length) {
+      <p class="traceability__empty">{{ 'receptions.traceability.empty' | translate }}</p>
+    }
+  }
+</p-dialog>

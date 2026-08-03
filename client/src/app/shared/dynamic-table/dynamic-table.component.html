@@ -2,21 +2,58 @@
 <p-confirmDialog></p-confirmDialog>
 
 @if (config) {
-  <div class="dynamic-table-header">
-    <h2>{{ config.name | translate }}</h2>
+  <div class="dynamic-table-toolbar">
     @if (config.save) {
       <button pButton icon="pi pi-plus" [label]="'general.addNew' | translate" (click)="createNewEntry()"></button>
     }
+
+    <p-iconfield class="dynamic-table-toolbar__search">
+      <p-inputicon styleClass="pi pi-search" />
+      <input pInputText type="text" [placeholder]="'general.searchPlaceholder' | translate" (input)="onGlobalFilter($event)" />
+    </p-iconfield>
+
+    <button
+      type="button"
+      class="dynamic-table-toolbar__icon-btn"
+      (click)="loadData()"
+      [attr.aria-label]="'general.refresh' | translate"
+      [attr.title]="'general.refresh' | translate"
+    >
+      <i class="pi pi-refresh"></i>
+    </button>
+
+    <button type="button" class="dynamic-table-toolbar__options" (click)="optionsMenu.toggle($event)">
+      {{ 'general.options' | translate }}
+      <i class="pi pi-chevron-down"></i>
+    </button>
+    <p-menu #optionsMenu [popup]="true" [model]="optionsMenuItems" appendTo="body"></p-menu>
   </div>
 
-  <p-table [value]="rows" [loading]="loading" [dataKey]="config.dataKey" [paginator]="true" [rows]="20" responsiveLayout="scroll">
+  <p-table
+    #dt
+    [value]="rows"
+    [loading]="loading"
+    [dataKey]="config.dataKey"
+    [paginator]="true"
+    [rows]="20"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="currentPageReportTemplate"
+    [globalFilterFields]="globalFilterFields"
+    responsiveLayout="scroll"
+  >
     <ng-template pTemplate="header">
       <tr>
         @if (hasRowActions) {
           <th class="row-actions-col"></th>
         }
         @for (col of dataColumns; track col.field) {
-          <th>{{ col.title | translate }}</th>
+          <th>
+            <div class="dynamic-table-col-header">
+              <span>{{ col.title | translate }}</span>
+              <p-columnFilter [field]="col.field" [type]="filterTypeFor(col)" display="menu"></p-columnFilter>
+            </div>
+          </th>
         }
       </tr>
     </ng-template>

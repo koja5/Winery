@@ -1,0 +1,68 @@
+<p-toast></p-toast>
+
+<p-dialog
+  [(visible)]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [modal]="true"
+  [style]="{ width: '40rem' }"
+  [header]="'settlements.form.title' | translate"
+>
+  <div class="settlement-form">
+    <div class="settlement-form__row">
+      <label>
+        {{ 'suppliers.name' | translate }}
+        <select [(ngModel)]="supplierId" (ngModelChange)="onSupplierChange()">
+          <option value="">{{ 'settlements.form.selectSupplier' | translate }}</option>
+          @for (s of suppliers; track s['id']) {
+            <option [ngValue]="s['id']">{{ s['name'] }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        {{ 'settlements.date' | translate }}
+        <input type="date" [(ngModel)]="settlementDate" />
+      </label>
+      <label>
+        {{ 'settlements.pricePerKg' | translate }}
+        <input type="number" min="0" step="0.01" [(ngModel)]="pricePerKg" />
+      </label>
+    </div>
+
+    @if (supplierId) {
+      <h4>{{ 'settlements.form.receptions' | translate }}</h4>
+
+      @if (!receptions.length) {
+        <p class="settlement-form__empty">{{ 'settlements.form.noReceptions' | translate }}</p>
+      } @else {
+        <div class="settlement-form__receptions">
+          @for (r of receptions; track r.id) {
+            <label class="settlement-form__reception">
+              <input type="checkbox" [checked]="selectedIds.has(r.id)" (change)="toggleReception(r.id)" />
+              <span>{{ r.reception_date | date: 'dd.MM.yyyy' }} — {{ r.grape_variety || '—' }} ({{ r.quantity_kg }} kg)</span>
+            </label>
+          }
+        </div>
+      }
+
+      <div class="settlement-form__total">
+        {{ 'settlements.form.selectedQuantity' | translate }}: <strong>{{ selectedQuantity }} kg</strong>
+        &nbsp;·&nbsp;
+        {{ 'settlements.totalAmount' | translate }}: <strong>{{ totalAmount }}</strong>
+      </div>
+    }
+
+    <label class="settlement-form__notes">
+      {{ 'general.notes' | translate }}
+      <input type="text" [(ngModel)]="notes" />
+    </label>
+
+    <div class="settlement-form__actions">
+      <app-button impact="bold" tone="primary" shape="rounded" size="medium" [loading]="loading" (click)="submit()">
+        {{ 'general.save' | translate }}
+      </app-button>
+      <app-button impact="bold" tone="light" shape="rounded" size="medium" (click)="close()">
+        {{ 'general.cancel' | translate }}
+      </app-button>
+    </div>
+  </div>
+</p-dialog>
