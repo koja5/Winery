@@ -1,0 +1,51 @@
+<p-dialog
+  [(visible)]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [modal]="true"
+  [style]="{ width: '36rem' }"
+  [header]="content?.vessel?.['name'] || ('vessels.viewContent' | translate)"
+>
+  @if (loading) {
+    <p class="vessel-content__loading">{{ 'general.loading' | translate }}</p>
+  } @else if (content) {
+    @if (content.fermentations.length) {
+      <h4>{{ 'vessels.content.fermentation' | translate }}</h4>
+      @for (f of content.fermentations; track f['id']) {
+        <div class="vessel-content__block">
+          <div><strong>{{ 'vessels.content.wineType' | translate }}:</strong> {{ f['wine_type'] }}</div>
+          <div><strong>{{ 'vessels.content.quantity' | translate }}:</strong> {{ f['quantity_liters_current'] }} L</div>
+          <div><strong>{{ 'vessels.content.startDate' | translate }}:</strong> {{ f['start_date'] | date: 'dd.MM.yyyy' }}</div>
+        </div>
+      }
+    }
+
+    @if (content.agings.length) {
+      <h4>{{ 'vessels.content.aging' | translate }}</h4>
+      @for (a of content.agings; track a['id']) {
+        <div class="vessel-content__block">
+          <div><strong>{{ 'vessels.content.wineVariety' | translate }}:</strong> {{ a['wine_variety'] || '—' }}</div>
+          <div><strong>{{ 'vessels.content.vintage' | translate }}:</strong> {{ a['vintage_year'] || '—' }}</div>
+          <div><strong>{{ 'vessels.content.quantity' | translate }}:</strong> {{ a['quantity_liters_current'] }} L</div>
+          <div><strong>{{ 'vessels.content.lot' | translate }}:</strong> {{ a['lot'] || '—' }}</div>
+        </div>
+      }
+    }
+
+    @if (!content.fermentations.length && !content.agings.length) {
+      <p class="vessel-content__empty">{{ 'vessels.content.empty' | translate }}</p>
+    }
+
+    @if (content.recentTransfers.length) {
+      <h4>{{ 'vessels.content.recentTransfers' | translate }}</h4>
+      <ul class="vessel-content__transfers">
+        @for (t of content.recentTransfers; track t['id']) {
+          <li>
+            {{ t['transfer_date'] | date: 'dd.MM.yyyy' }} —
+            {{ t['from_vessel_id'] === vesselId ? ('vessels.content.transferOut' | translate) : ('vessels.content.transferIn' | translate) }}
+            ({{ t['quantity_liters'] }} L)
+          </li>
+        }
+      </ul>
+    }
+  }
+</p-dialog>

@@ -1,6 +1,7 @@
 import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/services/auth.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { providePrimeNG } from 'primeng/config';
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideIonicAngular({}),
     providePrimeNG({ theme: { preset: EvPreset, options: { darkModeSelector: '.dark' } } }),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: { provide: TranslateLoader, useFactory: httpTranslateLoaderFactory, deps: [HttpClient] },

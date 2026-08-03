@@ -1,0 +1,7 @@
+<button [class]="classes" [type]="type" [disabled]="disabled || loading">
+  @if (loading) {
+    <i class="pi pi-spin pi-spinner"></i>
+  } @else {
+    <ng-content></ng-content>
+  }
+</button>

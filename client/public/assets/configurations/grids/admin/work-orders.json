@@ -1,0 +1,73 @@
+{
+  "name": "workOrders.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/work-orders" },
+  "save": { "type": "POST", "api": "/api/admin/work-orders" },
+  "delete": { "type": "DELETE", "api": "/api/admin/work-orders/:id" },
+  "dialogTitleCreate": "workOrders.newOrder",
+  "dialogTitleEdit": "workOrders.editOrder",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "workOrders.dueDate", "field": "due_date", "type": "date" },
+    { "title": "workOrders.taskTitle", "field": "title", "type": "string" },
+    { "title": "workOrders.vessel", "field": "vessel_name", "type": "string" },
+    {
+      "title": "workOrders.priority",
+      "field": "priority",
+      "type": "string",
+      "translateMap": {
+        "low": "workOrders.priority.low",
+        "normal": "workOrders.priority.normal",
+        "high": "workOrders.priority.high"
+      }
+    },
+    {
+      "title": "workOrders.status",
+      "field": "status",
+      "type": "string",
+      "translateMap": {
+        "pending": "workOrders.status.pending",
+        "in_progress": "workOrders.status.inProgress",
+        "done": "workOrders.status.done",
+        "cancelled": "workOrders.status.cancelled"
+      }
+    }
+  ],
+  "fields": [
+    { "type": "textbox", "name": "title", "title": "workOrders.taskTitle", "width": "100%", "required": true },
+    { "type": "textarea", "name": "description", "title": "workOrders.description", "width": "100%" },
+    { "type": "combobox", "name": "vessel_id", "title": "workOrders.vessel", "width": "48%", "request": { "type": "GET", "api": "/api/admin/wine-vessels" } },
+    { "type": "combobox", "name": "assigned_to", "title": "workOrders.assignedTo", "width": "48%", "request": { "type": "GET", "api": "/api/admin/team-members" } },
+    { "type": "date", "name": "due_date", "title": "workOrders.dueDate", "width": "48%", "required": true },
+    {
+      "type": "combobox",
+      "name": "priority",
+      "title": "workOrders.priority",
+      "width": "48%",
+      "options": [
+        { "text": "workOrders.priority.low", "value": "low" },
+        { "text": "workOrders.priority.normal", "value": "normal" },
+        { "text": "workOrders.priority.high", "value": "high" }
+      ]
+    },
+    {
+      "type": "combobox",
+      "name": "status",
+      "title": "workOrders.status",
+      "width": "48%",
+      "options": [
+        { "text": "workOrders.status.pending", "value": "pending" },
+        { "text": "workOrders.status.inProgress", "value": "in_progress" },
+        { "text": "workOrders.status.done", "value": "done" },
+        { "text": "workOrders.status.cancelled", "value": "cancelled" }
+      ]
+    }
+  ]
+}

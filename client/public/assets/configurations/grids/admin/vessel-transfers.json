@@ -1,0 +1,18 @@
+{
+  "name": "transfers.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/vessel-transfers" },
+  "delete": { "type": "DELETE", "api": "/api/admin/vessel-transfers/:id" },
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [{ "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }]
+    },
+    { "title": "transfers.date", "field": "transfer_date", "type": "date" },
+    { "title": "transfers.from", "field": "from_vessel_name", "type": "string" },
+    { "title": "transfers.to", "field": "to_vessel_name", "type": "string" },
+    { "title": "transfers.quantity", "field": "quantity_liters", "type": "number" },
+    { "title": "transfers.reason", "field": "reason", "type": "string" }
+  ]
+}

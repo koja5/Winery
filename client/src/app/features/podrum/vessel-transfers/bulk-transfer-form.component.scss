@@ -1,0 +1,108 @@
+.bulk-transfer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.bulk-transfer-form__row {
+  display: flex;
+  gap: 1rem;
+
+  label {
+    flex: 1;
+  }
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ev-ink);
+}
+
+select,
+input[type='text'],
+input[type='date'],
+input[type='number'] {
+  height: 42px;
+  border-radius: 10px;
+  border: 1.5px solid var(--ev-line);
+  padding: 0 0.75rem;
+  font-size: 0.88rem;
+  background: var(--ev-surface);
+  color: var(--ev-ink);
+  outline: none;
+
+  &:focus {
+    border-color: var(--ev-primary);
+  }
+}
+
+h4 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ev-muted);
+  margin: 0.3rem 0 0;
+}
+
+.bulk-transfer-form__line {
+  display: grid;
+  grid-template-columns: 1fr 120px 40px;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.bulk-transfer-form__remove {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: var(--ev-bg);
+  color: var(--ev-muted);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: rgba(220, 38, 38, 0.1);
+    color: hsl(var(--destructive));
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.bulk-transfer-form__add {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1.5px dashed var(--ev-line);
+  border-radius: 10px;
+  padding: 0.5rem 0.9rem;
+  color: var(--ev-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(125, 31, 54, 0.05);
+  }
+}
+
+.bulk-transfer-form__total {
+  font-size: 0.9rem;
+  color: var(--ev-ink);
+  text-align: right;
+}
+
+.bulk-transfer-form__actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}

@@ -1,0 +1,40 @@
+<div class="auth-shell">
+  <aside class="auth-showcase" (mouseenter)="stop()" (mouseleave)="start()">
+    <a routerLink="/" class="auth-showcase__brand">
+      <span class="auth-showcase__brand-mark">é</span>Vinarija
+    </a>
+
+    <div class="auth-showcase__slides">
+      @for (slide of slides; track slide.titleKey; let i = $index) {
+        <div class="auth-showcase__slide" [class.is-active]="i === activeSlide">
+          <div class="auth-showcase__icon-wrap">
+            <i [class]="slide.icon"></i>
+          </div>
+          <h2 class="auth-showcase__title">{{ slide.titleKey | translate }}</h2>
+          <p class="auth-showcase__text">{{ slide.textKey | translate }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="auth-showcase__dots">
+      @for (slide of slides; track slide.titleKey; let i = $index) {
+        <button type="button" class="auth-showcase__dot" [class.is-active]="i === activeSlide" (click)="goTo(i)"></button>
+      }
+    </div>
+  </aside>
+
+  <main class="auth-panel">
+    <div class="auth-panel__mobile-brand">
+      <span class="auth-panel__mobile-brand-mark">é</span>Vinarija
+    </div>
+    <div class="auth-panel__inner">
+      <div class="auth-panel__card">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="auth-panel__support">
+        {{ 'auth.needHelp' | translate }}
+        <a href="mailto:podrska&#64;evinarija.com">podrska&#64;evinarija.com</a>
+      </div>
+    </div>
+  </main>
+</div>

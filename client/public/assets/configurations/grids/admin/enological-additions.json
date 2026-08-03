@@ -1,0 +1,19 @@
+{
+  "name": "additions.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/enological-additions" },
+  "delete": { "type": "DELETE", "api": "/api/admin/enological-additions/:id" },
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [{ "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }]
+    },
+    { "title": "additions.date", "field": "addition_date", "type": "date" },
+    { "title": "additions.vessel", "field": "vessel_name", "type": "string" },
+    { "title": "additions.additive", "field": "additive_name", "type": "string" },
+    { "title": "additions.quantity", "field": "quantity", "type": "number" },
+    { "title": "additions.unit", "field": "unit", "type": "string" },
+    { "title": "additions.notes", "field": "notes", "type": "string" }
+  ]
+}

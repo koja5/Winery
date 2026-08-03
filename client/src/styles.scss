@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,7 +11,27 @@
 @import 'primeicons/primeicons.css';
 
 :root {
-  /* eVinarija brend paleta (izvučena sa evinarija.com) */
+  /* eVinarija brend paleta (izvučena sa evinarija.com), HSL trojke da rade
+     sa Tailwind opacity utility-jima (bg-primary/10 i sl.) — isti sistem kao
+     eDestilerija, samo bordo/zelena umesto pink/indigo. */
+  --background: 30 40% 97%;
+  --foreground: 20 30% 12%;
+  --card: 28 30% 95%;
+  --card-foreground: 20 30% 10%;
+  --primary: 345 60% 31%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 89 25% 48%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 26 24% 89%;
+  --muted-foreground: 25 12% 42%;
+  --destructive: 350 84% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 25 22% 86%;
+
+  /* brend "wordmark" boje, odvojene od --primary (isto kao eDestilerija #242B80) */
+  --brand-color: #7d1f36;
+  --brand-accent: #7c9a5c;
+
   --ev-primary: #7d1f36;
   --ev-primary-soft: #a76776;
   --ev-primary-dark: #4a1422;
@@ -19,10 +41,35 @@
   --ev-ink: #2a1f1a;
   --ev-muted: #7a6a5e;
   --ev-line: #e2d5c5;
+
+  /* fiksna tamna pozadina za sidebar/auth-showcase — ostaje ista u oba
+     režima (svetli/tamni), ne meša se sa --ev-primary-dark koji se menja
+     po temi za dugmad/hover stanja. */
+  --ev-sidebar-bg: #4a1422;
+  --ev-sidebar-bg-end: #7d1f36;
+
+  --shadow-custom: 0 0 50px 0 rgba(82, 30, 45, 0.15);
 }
 
 html.dark,
 .dark {
+  --background: 20 18% 9%;
+  --foreground: 30 20% 92%;
+  --card: 20 16% 13%;
+  --card-foreground: 30 20% 92%;
+  --primary: 345 65% 71%;
+  --primary-foreground: 20 18% 9%;
+  --secondary: 89 25% 65%;
+  --secondary-foreground: 20 18% 9%;
+  --muted: 20 14% 20%;
+  --muted-foreground: 28 12% 65%;
+  --destructive: 350 70% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 20 14% 22%;
+
+  --brand-color: #e0899a;
+  --brand-accent: #a6ba90;
+
   --ev-primary: #e0899a;
   --ev-primary-soft: #c1495f;
   --ev-primary-dark: #f2c3cc;
@@ -38,6 +85,232 @@ html,
 body {
   height: 100%;
   margin: 0;
-  background: var(--ev-bg);
-  color: var(--ev-ink);
+  font-family: 'Poppins', 'Nunito Sans', -apple-system, sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------
+   Auth pages — shared field/link/message atoms (login, sign-up, forgot/
+   reset password, 2FA). Global (not per-component) because every auth
+   page reuses the exact same classes.
+   --------------------------------------------------------------------- */
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+
+  h2 {
+    font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: var(--ev-ink);
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: var(--ev-muted);
+    margin: 0;
+  }
+}
+
+.auth-banner {
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+
+  &--warning {
+    background: rgba(217, 119, 6, 0.1);
+    color: #92400e;
+    border: 1px solid rgba(217, 119, 6, 0.25);
+  }
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ev-ink);
+  }
+}
+
+.auth-field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  i.auth-field__icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--ev-muted);
+    font-size: 0.95rem;
+    pointer-events: none;
+  }
+
+  input {
+    width: 100%;
+    height: 48px;
+    padding: 0 1rem 0 2.75rem;
+    border-radius: 12px;
+    border: 1.5px solid var(--ev-line);
+    background: var(--ev-surface);
+    color: var(--ev-ink);
+    font-size: 0.92rem;
+    outline: none;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+
+    &:focus {
+      border-color: var(--ev-primary);
+      box-shadow: 0 0 0 4px rgba(125, 31, 54, 0.12);
+    }
+
+    &::placeholder {
+      color: var(--ev-muted);
+    }
+  }
+
+  &.is__invalid-input input {
+    border-color: hsl(var(--destructive));
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+  }
+}
+
+.auth-field__toggle {
+  position: absolute;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ev-muted);
+  display: flex;
+  align-items: center;
+  padding: 0.3rem;
+
+  &:hover {
+    color: var(--ev-ink);
+  }
+}
+
+.auth-field__error {
+  font-size: 0.78rem;
+  color: hsl(var(--destructive));
+}
+
+.auth-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--ev-primary);
+  cursor: pointer;
+}
+
+.auth-link-small {
+  font-size: 0.85rem;
+  color: var(--ev-primary);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.auth-footer-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  color: var(--ev-muted);
+
+  a {
+    color: var(--ev-primary);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+  color: var(--ev-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ev-line);
+  }
+}
+
+.auth-actions {
+  display: flex;
+  gap: 0.75rem;
+
+  .app-button {
+    flex: 1;
+  }
+}
+
+.responsive-message {
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.1rem;
+
+  &.is__invalid-error {
+    background: rgba(220, 38, 38, 0.08);
+    color: #991b1b;
+    border: 1px solid rgba(220, 38, 38, 0.2);
+  }
+
+  &.is__invalid-success {
+    background: rgba(124, 154, 92, 0.12);
+    color: #3f5a2a;
+    border: 1px solid rgba(124, 154, 92, 0.3);
+  }
+}
+
+.otp-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+
+  input {
+    height: 56px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 1.5px solid var(--ev-line);
+    background: var(--ev-surface);
+    color: var(--ev-ink);
+    outline: none;
+
+    &:focus {
+      border-color: var(--ev-primary);
+      box-shadow: 0 0 0 4px rgba(125, 31, 54, 0.12);
+    }
+  }
 }

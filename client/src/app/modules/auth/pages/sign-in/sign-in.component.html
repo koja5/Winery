@@ -1,0 +1,62 @@
+@if (sessionExpired) {
+  <div class="auth-banner auth-banner--warning">{{ 'auth.sessionExpired' | translate }}</div>
+}
+
+<div class="auth-header">
+  <h2>{{ 'auth.signIn.title' | translate }}</h2>
+  <p>{{ 'auth.signIn.subtitle' | translate }}</p>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="auth-field" [class.is__invalid-input]="form.get('email')?.invalid && form.get('email')?.touched">
+    <label for="email">{{ 'auth.field.email' | translate }}</label>
+    <div class="auth-field__control" [class.is__invalid-input]="form.get('email')?.invalid && form.get('email')?.touched">
+      <i class="pi pi-envelope auth-field__icon"></i>
+      <input id="email" type="text" formControlName="email" autocomplete="email" placeholder="ime@primer.com" />
+    </div>
+    @if (form.get('email')?.invalid && form.get('email')?.touched) {
+      <span class="auth-field__error">{{ 'auth.field.emailError' | translate }}</span>
+    }
+  </div>
+
+  <div class="auth-field">
+    <label for="password">{{ 'auth.field.password' | translate }}</label>
+    <div class="auth-field__control" [class.is__invalid-input]="form.get('password')?.invalid && form.get('password')?.touched">
+      <i class="pi pi-lock auth-field__icon"></i>
+      <input
+        id="password"
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+        autocomplete="current-password"
+        placeholder="••••••••"
+      />
+      <button type="button" class="auth-field__toggle" (click)="togglePassword()">
+        <i class="pi" [class.pi-eye]="!showPassword" [class.pi-eye-slash]="showPassword"></i>
+      </button>
+    </div>
+    @if (form.get('password')?.invalid && form.get('password')?.touched) {
+      <span class="auth-field__error">{{ 'auth.field.required' | translate }}</span>
+    }
+  </div>
+
+  @if (error) {
+    <div class="responsive-message is__invalid-error">{{ error | translate }}</div>
+  }
+
+  <div class="flex items-center justify-between mb-5">
+    <label class="flex items-center gap-2 text-sm" style="color: var(--ev-ink)">
+      <input type="checkbox" class="auth-checkbox" formControlName="rememberMe" />
+      {{ 'auth.rememberMe' | translate }}
+    </label>
+    <a routerLink="/auth/forgot-password" class="auth-link-small">{{ 'auth.forgotPasswordLink' | translate }}</a>
+  </div>
+
+  <app-button type="submit" full impact="bold" tone="primary" shape="rounded" size="medium" [loading]="loading">
+    {{ 'auth.signIn.submit' | translate }}
+  </app-button>
+</form>
+
+<div class="auth-footer-link">
+  {{ 'auth.signIn.noAccount' | translate }}
+  <a routerLink="/auth/sign-up">{{ 'auth.signIn.createAccount' | translate }}</a>
+</div>

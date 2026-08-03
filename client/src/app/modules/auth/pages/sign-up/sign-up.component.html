@@ -1,0 +1,92 @@
+<div class="auth-header">
+  <h2>{{ 'auth.signUp.title' | translate }}</h2>
+  <p>{{ 'auth.signUp.subtitle' | translate }}</p>
+</div>
+
+@if (message) {
+  <div class="responsive-message" [class.is__invalid-success]="message.type === 'success'" [class.is__invalid-error]="message.type === 'error'">
+    {{ message.text | translate }}
+  </div>
+}
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <div class="auth-field">
+    <label for="tenantName">{{ 'auth.field.tenantName' | translate }}</label>
+    <div class="auth-field__control" [class.is__invalid-input]="form.get('tenantName')?.invalid && form.get('tenantName')?.touched">
+      <i class="pi pi-building auth-field__icon"></i>
+      <input id="tenantName" type="text" formControlName="tenantName" placeholder="Vinarija Podrum d.o.o." />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-3">
+    <div class="auth-field">
+      <label for="firstname">{{ 'auth.field.firstname' | translate }}</label>
+      <div class="auth-field__control" [class.is__invalid-input]="form.get('firstname')?.invalid && form.get('firstname')?.touched">
+        <i class="pi pi-user auth-field__icon"></i>
+        <input id="firstname" type="text" formControlName="firstname" autocomplete="given-name" />
+      </div>
+    </div>
+    <div class="auth-field">
+      <label for="lastname">{{ 'auth.field.lastname' | translate }}</label>
+      <div class="auth-field__control" [class.is__invalid-input]="form.get('lastname')?.invalid && form.get('lastname')?.touched">
+        <i class="pi pi-user auth-field__icon"></i>
+        <input id="lastname" type="text" formControlName="lastname" autocomplete="family-name" />
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-field">
+    <label for="email">{{ 'auth.field.email' | translate }}</label>
+    <div class="auth-field__control" [class.is__invalid-input]="form.get('email')?.invalid && form.get('email')?.touched">
+      <i class="pi pi-envelope auth-field__icon"></i>
+      <input id="email" type="text" formControlName="email" autocomplete="email" placeholder="ime@primer.com" />
+    </div>
+  </div>
+
+  <div class="auth-field">
+    <label for="password">{{ 'auth.field.password' | translate }}</label>
+    <div class="auth-field__control" [class.is__invalid-input]="form.get('password')?.invalid && form.get('password')?.touched">
+      <i class="pi pi-lock auth-field__icon"></i>
+      <input id="password" [type]="showPassword ? 'text' : 'password'" formControlName="password" autocomplete="new-password" />
+      <button type="button" class="auth-field__toggle" (click)="togglePassword()">
+        <i class="pi" [class.pi-eye]="!showPassword" [class.pi-eye-slash]="showPassword"></i>
+      </button>
+    </div>
+    @if (form.get('password')?.hasError('minlength') && form.get('password')?.touched) {
+      <span class="auth-field__error">{{ 'auth.field.passwordMinLength' | translate }}</span>
+    }
+  </div>
+
+  <div class="auth-field">
+    <label for="confirmPassword">{{ 'auth.field.confirmPassword' | translate }}</label>
+    <div class="auth-field__control" [class.is__invalid-input]="form.hasError('passwordsMismatch') && form.get('confirmPassword')?.touched">
+      <i class="pi pi-lock auth-field__icon"></i>
+      <input
+        id="confirmPassword"
+        [type]="showConfirmPassword ? 'text' : 'password'"
+        formControlName="confirmPassword"
+        autocomplete="new-password"
+      />
+      <button type="button" class="auth-field__toggle" (click)="toggleConfirmPassword()">
+        <i class="pi" [class.pi-eye]="!showConfirmPassword" [class.pi-eye-slash]="showConfirmPassword"></i>
+      </button>
+    </div>
+    @if (form.hasError('passwordsMismatch') && form.get('confirmPassword')?.touched) {
+      <span class="auth-field__error">{{ 'auth.field.passwordsMismatch' | translate }}</span>
+    }
+  </div>
+
+  <p class="auth-terms">
+    {{ 'auth.signUp.acceptTerms' | translate }}
+    <a href="#" class="auth-link-small">{{ 'auth.signUp.terms' | translate }}</a>
+  </p>
+
+  <app-button type="submit" full impact="bold" tone="primary" shape="rounded" size="medium" [loading]="loading">
+    {{ 'auth.signUp.submit' | translate }}
+  </app-button>
+</form>
+
+<div class="auth-footer-link">
+  {{ 'auth.signUp.haveAccount' | translate }}
+  <a routerLink="/auth/sign-in">{{ 'auth.signUp.signIn' | translate }}</a>
+</div>

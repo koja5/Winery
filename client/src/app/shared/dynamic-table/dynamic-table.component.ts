@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TableModule } from 'primeng/table';
@@ -11,7 +11,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 
 import { GridConfig } from '../../core/models/grid-config';
-import { ColumnConfig } from '../../core/models/column-config';
+import { ColumnConfig, ActionDef } from '../../core/models/column-config';
 import { ColumnType } from '../../core/enums/column-type.enum';
 import { Action, DANGER_ACTIONS } from '../../core/enums/action.enum';
 import { ConfigurationService } from '../../core/services/configuration.service';
@@ -39,6 +39,9 @@ import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component'
 export class DynamicTableComponent implements OnInit {
   @Input({ required: true }) path!: string;
   @Input({ required: true }) file!: string;
+
+  /** fired for row actions of type "emit" — host page handles them by action.key */
+  @Output() rowAction = new EventEmitter<{ key: string | undefined; row: any }>();
 
   @ViewChild('rowActionMenu') rowActionMenu?: Menu;
 
@@ -124,7 +127,7 @@ export class DynamicTableComponent implements OnInit {
       const item: MenuItem = {
         label: this.translate.instant(action.title),
         icon: action.icon,
-        command: () => this.handleAction(action.type, row)
+        command: () => this.handleAction(action, row)
       };
       if (DANGER_ACTIONS.has(action.type)) {
         item.styleClass = 'menu-item-danger';
@@ -140,11 +143,13 @@ export class DynamicTableComponent implements OnInit {
     return [...primary, ...danger];
   }
 
-  private handleAction(type: Action, row: any): void {
-    if (type === Action.Edit) {
+  private handleAction(action: ActionDef, row: any): void {
+    if (action.type === Action.Edit) {
       this.openEdit(row);
-    } else if (type === Action.Delete) {
+    } else if (action.type === Action.Delete) {
       this.confirmDelete(row);
+    } else if (action.type === Action.Emit) {
+      this.rowAction.emit({ key: action.key, row });
     }
   }
 

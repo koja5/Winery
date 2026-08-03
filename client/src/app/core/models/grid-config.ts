@@ -18,4 +18,5 @@ export interface GridConfig {
   delete?: RequestModel;
   dialogTitleCreate?: string;
   dialogTitleEdit?: string;
+  dialogWidth?: string;
 }

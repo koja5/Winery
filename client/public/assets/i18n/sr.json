@@ -4,7 +4,51 @@
   },
   "nav": {
     "vessels": "Posude",
-    "superadmin": "Superadmin"
+    "superadmin": "Superadmin",
+    "dashboard": "Kontrolna tabla",
+    "searchPlaceholder": "Pretraži...",
+    "notifications": "Notifikacije",
+    "toggleTheme": "Promeni temu",
+    "logout": "Odjava",
+    "group": {
+      "podrum": "Podrum",
+      "finance": "Finansije",
+      "collaborators": "Saradnici"
+    },
+    "berba": "Berba",
+    "berba.receptions": "Prijem grožđa",
+    "berba.suppliers": "Dobavljači",
+    "vino": "Vino",
+    "vino.fermentation": "Fermentacija",
+    "vino.aging": "Nega/Odležavanje",
+    "vino.charging": "Punjenje",
+    "vino.analyses": "Analize",
+    "posude": "Posude",
+    "posude.list": "Pregled posuda",
+    "posude.transfers": "Pretoci",
+    "posude.additions": "Enološki dodaci",
+    "workOrders": "Radni nalozi",
+    "evidencije": "Evidencije",
+    "evidencije.cleaning": "Čišćenje",
+    "evidencije.analysis": "Analize",
+    "quotes": "Ponude",
+    "invoices": "Fakture",
+    "invoices.sales": "Prodajne",
+    "invoices.purchase": "Nabavne",
+    "customers": "Kupci",
+    "suppliers": "Dobavljači",
+    "employees": "Zaposleni",
+    "documents": "Dokumenti",
+    "vinograd": "Vinograd",
+    "settings": "Podešavanja",
+    "settings.vessels": "Tipovi posuda",
+    "settings.varieties": "Sorte",
+    "reports": {
+      "dynamic": "Izveštaji"
+    },
+    "badge": {
+      "new": "Novo"
+    }
   },
   "general": {
     "addNew": "Dodaj novo",
@@ -46,17 +90,37 @@
     "status.empty": "Prazna",
     "status.inUse": "U upotrebi",
     "status.maintenance": "Na održavanju",
-    "status.reserved": "Rezervisana"
+    "status.reserved": "Rezervisana",
+    "viewContent": "Prikaži sadržaj",
+    "currentContent": "Trenutni sadržaj",
+    "currentQuantity": "Trenutna količina (L)",
+    "content": {
+      "fermentation": "Fermentacija u toku",
+      "aging": "Nega/Odležavanje",
+      "wineType": "Tip vina",
+      "wineVariety": "Sorta",
+      "vintage": "Godište",
+      "quantity": "Količina",
+      "lot": "Lot",
+      "startDate": "Datum početka",
+      "empty": "Posuda je trenutno prazna.",
+      "recentTransfers": "Poslednji pretoci",
+      "transferIn": "Uliv",
+      "transferOut": "Odliv"
+    }
   },
   "reports": {
     "grapeReceptions": { "label": "Prijem grožđa" },
     "fermentationYield": { "label": "Prinos fermentacije" },
+    "capacityUtilization": { "label": "Iskorišćenost kapaciteta" },
+    "agingLosses": { "label": "Gubici tokom nege" },
     "dim": {
       "grapeVariety": "Sorta",
       "parcel": "Parcela",
       "supplier": "Dobavljač",
       "wineVariety": "Sorta vina",
-      "vessel": "Posuda"
+      "vessel": "Posuda",
+      "vesselType": "Tip posude"
     },
     "metric": {
       "quantityKg": "Količina (kg)",
@@ -64,12 +128,134 @@
       "receptionsCount": "Broj prijema",
       "inputKg": "Ulaz — grožđe (kg)",
       "outputL": "Izlaz — vino (L)",
-      "yieldPct": "Prinos (%)"
+      "yieldPct": "Prinos (%)",
+      "capacityLiters": "Kapacitet (L)",
+      "currentLiters": "Trenutno popunjeno (L)",
+      "utilizationPct": "Iskorišćenost (%)",
+      "initialLiters": "Početna količina (L)",
+      "lossLiters": "Gubitak (L)",
+      "lossPct": "Gubitak (%)"
     },
     "col": {
       "date": "Datum",
       "sugarDegrees": "Šećer (°)"
+    },
+    "datasets": "Izveštaji",
+    "dimensions": "Grupisanje",
+    "metrics": "Pokazatelji",
+    "from": "Od",
+    "to": "Do",
+    "run": "Prikaži",
+    "noResultsYet": "Izaberite pokazatelje i pokrenite izveštaj."
+  },
+  "transfers": {
+    "title": "Pretoci",
+    "newTransfer": "Novi pretok",
+    "date": "Datum",
+    "from": "Iz posude",
+    "to": "U posudu",
+    "quantity": "Količina (L)",
+    "reason": "Razlog",
+    "form": {
+      "title": "Novi pretok",
+      "fromVessel": "Izvorna posuda",
+      "fromVesselNone": "— nije primenljivo —",
+      "date": "Datum pretoka",
+      "reason": "Razlog",
+      "reasonPlaceholder": "npr. pretakanje sa taloga",
+      "destinations": "Destinacije",
+      "selectVessel": "Izaberite posudu",
+      "addDestination": "Dodaj destinaciju",
+      "total": "Ukupno",
+      "validationError": "Unesite bar jednu destinaciju sa količinom većom od 0."
     }
+  },
+  "additions": {
+    "title": "Enološki dodaci",
+    "newAddition": "Novi unos",
+    "date": "Datum",
+    "vessel": "Posuda",
+    "additive": "Dodatak",
+    "quantity": "Količina",
+    "unit": "Jedinica",
+    "notes": "Napomena",
+    "form": {
+      "title": "Masovni unos enološkog dodatka",
+      "additiveName": "Naziv dodatka",
+      "additiveNamePlaceholder": "npr. SO2, kvasac, enzim...",
+      "quantity": "Količina",
+      "unit": "Jedinica",
+      "date": "Datum unosa",
+      "notes": "Napomena",
+      "selectVessels": "Izaberite posude",
+      "validationError": "Izaberite bar jednu posudu i unesite naziv dodatka."
+    }
+  },
+  "analyses": {
+    "title": "Hemijske analize",
+    "newAnalysis": "Nova analiza",
+    "editAnalysis": "Izmena analize",
+    "sampleDate": "Datum uzorkovanja",
+    "vessel": "Posuda",
+    "labName": "Laboratorija",
+    "notes": "Napomena",
+    "alcoholPct": "Alkohol (% vol)",
+    "density": "Gustina",
+    "ph": "pH",
+    "totalAcidity": "Ukupne kiseline (g/L)",
+    "volatileAcidity": "Isparljive kiseline (g/L)",
+    "residualSugar": "Rezidualni šećer (g/L)",
+    "reducingSugars": "Reduktivni šećeri (g/L)",
+    "co2": "CO2 (g/L)",
+    "freeSo2": "Slobodni SO2 (mg/L)",
+    "totalSo2": "Ukupni SO2 (mg/L)",
+    "boundSo2": "Vezani SO2 (mg/L)",
+    "tartaricAcid": "Vinska kiselina (g/L)",
+    "malicAcid": "Jabučna kiselina (g/L)",
+    "lacticAcid": "Mlečna kiselina (g/L)",
+    "citricAcid": "Limunska kiselina (g/L)",
+    "aceticAcid": "Sirćetna kiselina (g/L)",
+    "totalExtract": "Ukupni ekstrakt (g/L)",
+    "dryExtract": "Suvi ekstrakt (g/L)",
+    "sugarFreeExtract": "Bezšećerni ekstrakt (g/L)",
+    "ash": "Pepeo (g/L)",
+    "alkalinityOfAsh": "Alkalnost pepela",
+    "glycerol": "Glicerol (g/L)",
+    "totalPolyphenols": "Ukupni polifenoli (mg/L)",
+    "totalAnthocyanins": "Ukupni antocijani (mg/L)",
+    "totalTannins": "Ukupni tanini (g/L)",
+    "colorIntensity": "Intenzitet boje",
+    "colorHue": "Nijansa boje",
+    "potassium": "Kalijum (mg/L)",
+    "sodium": "Natrijum (mg/L)",
+    "calcium": "Kalcijum (mg/L)",
+    "iron": "Gvožđe (mg/L)",
+    "copper": "Bakar (mg/L)",
+    "chlorides": "Hloridi (mg/L)",
+    "sulphates": "Sulfati (mg/L)",
+    "methanol": "Metanol (mg/L)",
+    "acetaldehyde": "Acetaldehid (mg/L)"
+  },
+  "workOrders": {
+    "title": "Radni nalozi",
+    "newOrder": "Novi nalog",
+    "editOrder": "Izmena naloga",
+    "taskTitle": "Naziv zadatka",
+    "description": "Opis",
+    "vessel": "Posuda",
+    "assignedTo": "Dodeljeno",
+    "dueDate": "Rok",
+    "priority": "Prioritet",
+    "status": "Status",
+    "viewGrid": "Tabela",
+    "viewCalendar": "Kalendar",
+    "priority.low": "Nizak",
+    "priority.normal": "Srednji",
+    "priority.high": "Visok",
+    "status.pending": "Na čekanju",
+    "status.inProgress": "U toku",
+    "status.done": "Završen",
+    "status.cancelled": "Otkazan"
   },
   "superadmin": {
     "nav": {
@@ -107,6 +293,90 @@
       "status.open": "Otvoren",
       "status.inProgress": "U toku",
       "status.closed": "Zatvoren"
+    }
+  },
+  "dashboard": {
+    "welcome": "Dobrodošli u eVinarija",
+    "subtitle": "Pregled stanja vinarije će biti dostupan ovde."
+  },
+  "comingSoon": {
+    "title": "Uskoro dostupno",
+    "text": "Ova stranica je u izradi. Radimo na tome da bude dostupna u narednim fazama razvoja."
+  },
+  "footer": {
+    "reportProblem": "Prijavi problem",
+    "help": "Pomoć"
+  },
+  "auth": {
+    "needHelp": "Treba vam pomoć?",
+    "forgotPasswordLink": "Zaboravili ste lozinku?",
+    "sessionExpired": "Vaša sesija je istekla. Prijavite se ponovo.",
+    "rememberMe": "Zapamti me",
+    "forgotPassword": {
+      "title": "Zaboravili ste lozinku?",
+      "subtitle": "Unesite email adresu i poslaćemo vam link za resetovanje.",
+      "submit": "Pošalji link",
+      "successMessage": "Ako nalog postoji, poslali smo link za resetovanje lozinke.",
+      "genericError": "Došlo je do greške. Pokušajte ponovo."
+    },
+    "recoveryPassword": {
+      "title": "Nova lozinka",
+      "subtitle": "Unesite novu lozinku za vaš nalog.",
+      "submit": "Sačuvaj novu lozinku",
+      "successMessage": "Lozinka je uspešno promenjena.",
+      "genericError": "Link nije validan ili je istekao."
+    },
+    "twoSteps": {
+      "title": "Dvofaktorska verifikacija",
+      "subtitleTotp": "Unesite 6-cifreni kod iz vaše aplikacije za autentifikaciju.",
+      "subtitleEmail": "Poslali smo 6-cifreni kod na vaš email.",
+      "submit": "Potvrdi",
+      "backToLogin": "Nazad na prijavu",
+      "genericError": "Kod nije ispravan."
+    },
+    "signIn": {
+      "title": "Prijavite se",
+      "subtitle": "Dobrodošli nazad u eVinarija",
+      "submit": "Prijavi se",
+      "noAccount": "Nemate nalog?",
+      "createAccount": "Napravite nalog",
+      "genericError": "Pogrešan email ili lozinka."
+    },
+    "signUp": {
+      "title": "Napravite nalog",
+      "subtitle": "Počnite besplatno da koristite eVinarija",
+      "submit": "Napravi nalog",
+      "haveAccount": "Već imate nalog?",
+      "signIn": "Prijavite se",
+      "successfullyCreateAccount": "Nalog je uspešno kreiran! Prijavljujemo vas...",
+      "genericError": "Došlo je do greške pri registraciji.",
+      "acceptTerms": "Registracijom prihvatate",
+      "terms": "uslove korišćenja."
+    },
+    "field": {
+      "email": "Email adresa",
+      "emailError": "Unesite ispravnu email adresu.",
+      "password": "Lozinka",
+      "newPassword": "Nova lozinka",
+      "confirmPassword": "Potvrdite lozinku",
+      "passwordsMismatch": "Lozinke se ne poklapaju.",
+      "passwordMinLength": "Lozinka mora imati bar 8 karaktera.",
+      "required": "Ovo polje je obavezno.",
+      "tenantName": "Naziv vinarije",
+      "firstname": "Ime",
+      "lastname": "Prezime"
+    },
+    "slide1": {
+      "title": "Pratite ceo proces proizvodnje",
+      "text": "Od prijema grožđa do flaširanja — kompletna sledljivost kroz podrum na jednom mestu."
+    },
+    "slide2": {
+      "title": "Upravljajte vinogradom i berbom",
+      "text": "Evidentirajte parcele, dobavljače i prinose bez papirologije."
+    },
+    "slide3": {
+      "title": "Izveštaji i analitika u realnom vremenu",
+      "text": "Pratite prinose, iskorišćenost kapaciteta i troškove proizvodnje."
     }
   }
 }

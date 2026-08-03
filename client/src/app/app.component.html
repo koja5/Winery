@@ -1,26 +1,3 @@
 <ion-app>
-  <div class="app-shell">
-    <aside class="app-sidebar">
-      <div class="app-logo">
-        <span class="app-logo-mark">é</span>Vinarija
-      </div>
-      <nav class="app-nav">
-        @for (item of navItems; track item.link) {
-          <a [routerLink]="item.link" routerLinkActive="active" class="app-nav-item">
-            <i [class]="item.icon"></i>
-            <span>{{ item.label | translate }}</span>
-          </a>
-        }
-      </nav>
-    </aside>
-
-    <div class="app-main">
-      <header class="app-topbar">
-        <span class="app-topbar-title">{{ 'app.title' | translate }}</span>
-      </header>
-      <main class="app-content">
-        <router-outlet></router-outlet>
-      </main>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
 </ion-app>

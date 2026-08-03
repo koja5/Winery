@@ -11,11 +11,14 @@
       "title": "",
       "field": "",
       "actions": [
+        { "type": "emit", "key": "view-content", "icon": "pi pi-eye", "title": "vessels.viewContent" },
         { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
         { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
       ]
     },
     { "title": "vessels.name", "field": "name", "type": "string" },
+    { "title": "vessels.currentContent", "field": "current_variety", "type": "string" },
+    { "title": "vessels.currentQuantity", "field": "current_quantity_liters", "type": "number" },
     {
       "title": "vessels.type",
       "field": "vessel_type",

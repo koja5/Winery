@@ -1,0 +1,42 @@
+<header class="navbar">
+  <button type="button" class="navbar__mobile-toggle" (click)="menuService.toggleMobileMenu()">
+    <i class="pi pi-bars"></i>
+  </button>
+
+  <div class="navbar__search">
+    <i class="pi pi-search"></i>
+    <input type="text" [placeholder]="'nav.searchPlaceholder' | translate" disabled />
+  </div>
+
+  <div class="navbar__actions">
+    <button type="button" class="navbar__icon-btn" [attr.aria-label]="'nav.notifications' | translate">
+      <i class="pi pi-bell"></i>
+    </button>
+
+    <button type="button" class="navbar__icon-btn" (click)="theme.toggle()" [attr.aria-label]="'nav.toggleTheme' | translate">
+      <i class="pi" [class.pi-moon]="theme.theme() === 'light'" [class.pi-sun]="theme.theme() === 'dark'"></i>
+    </button>
+
+    <div class="navbar__profile">
+      <button type="button" class="navbar__avatar-btn" (click)="toggleProfileMenu()">
+        <div class="navbar__avatar">{{ (user?.role || '?').charAt(0).toUpperCase() }}</div>
+      </button>
+
+      @if (profileMenuOpen) {
+        <div class="navbar__profile-menu" (mouseleave)="closeProfileMenu()">
+          <div class="navbar__profile-menu-header">
+            <div class="navbar__avatar navbar__avatar--large">{{ (user?.role || '?').charAt(0).toUpperCase() }}</div>
+            <div>
+              <div class="navbar__profile-role">{{ user?.role }}</div>
+            </div>
+          </div>
+          <hr />
+          <button type="button" class="navbar__profile-menu-item navbar__profile-menu-item--danger" (click)="logout()">
+            <i class="pi pi-sign-out"></i>
+            {{ 'nav.logout' | translate }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</header>

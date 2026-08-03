@@ -1,0 +1,28 @@
+<div class="work-calendar">
+  <div class="work-calendar__header">
+    <button type="button" (click)="prevMonth()"><i class="pi pi-chevron-left"></i></button>
+    <h3>{{ monthLabel }}</h3>
+    <button type="button" (click)="nextMonth()"><i class="pi pi-chevron-right"></i></button>
+  </div>
+
+  <div class="work-calendar__weekdays">
+    @for (d of weekdayLabels; track d) {
+      <div>{{ d }}</div>
+    }
+  </div>
+
+  <div class="work-calendar__grid">
+    @for (week of weeks; track $index) {
+      @for (day of week; track day.date.getTime()) {
+        <div class="work-calendar__day" [class.is-outside]="!day.inCurrentMonth" [class.is-today]="day.isToday">
+          <span class="work-calendar__day-number">{{ day.date.getDate() }}</span>
+          @for (order of day.orders; track order['id']) {
+            <div class="work-calendar__chip" [class]="'priority-' + order['priority']" [title]="order['title']">
+              {{ order['title'] }}
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>

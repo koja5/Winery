@@ -1,0 +1,106 @@
+<div class="reports">
+  <h1>{{ 'nav.reports.dynamic' | translate }}</h1>
+
+  <div class="reports__layout">
+    <aside class="reports__sidebar">
+      <h3>{{ 'reports.datasets' | translate }}</h3>
+      <ul class="reports__dataset-list">
+        @for (dataset of datasets; track dataset.name) {
+          <li>
+            <button
+              type="button"
+              class="reports__dataset-btn"
+              [class.is-active]="selectedDataset?.name === dataset.name"
+              (click)="selectDataset(dataset)"
+            >
+              {{ dataset.label | translate }}
+            </button>
+          </li>
+        }
+      </ul>
+    </aside>
+
+    <section class="reports__panel">
+      @if (selectedDataset) {
+        <div class="reports__controls">
+          <div class="reports__control-group">
+            <span>{{ 'reports.dimensions' | translate }}</span>
+            <div class="reports__chips">
+              @for (dim of selectedDataset.dimensions | keyvalue; track dim.key) {
+                <button
+                  type="button"
+                  class="reports__chip"
+                  [class.is-active]="selectedDimensions.includes(dim.key)"
+                  (click)="toggleDimension(dim.key)"
+                >
+                  {{ dim.value.label | translate }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="reports__control-group">
+            <span>{{ 'reports.metrics' | translate }}</span>
+            <div class="reports__chips">
+              @for (metric of selectedDataset.metrics | keyvalue; track metric.key) {
+                <button
+                  type="button"
+                  class="reports__chip"
+                  [class.is-active]="selectedMetrics.includes(metric.key)"
+                  (click)="toggleMetric(metric.key)"
+                >
+                  {{ metric.value.label | translate }}
+                </button>
+              }
+            </div>
+          </div>
+
+          @if (selectedDataset.hasDateRange) {
+            <div class="reports__control-group reports__dates">
+              <label>
+                {{ 'reports.from' | translate }}
+                <input type="date" [(ngModel)]="from" />
+              </label>
+              <label>
+                {{ 'reports.to' | translate }}
+                <input type="date" [(ngModel)]="to" />
+              </label>
+            </div>
+          }
+
+          <button type="button" class="reports__run-btn" (click)="run()" [disabled]="!selectedMetrics.length || loading">
+            <i class="pi pi-play"></i>
+            {{ 'reports.run' | translate }}
+          </button>
+        </div>
+
+        <div class="reports__results">
+          @if (loading) {
+            <p class="reports__empty">{{ 'general.loading' | translate }}</p>
+          } @else if (!rows.length) {
+            <p class="reports__empty">{{ 'reports.noResultsYet' | translate }}</p>
+          } @else {
+            <table class="reports__table">
+              <thead>
+                <tr>
+                  @for (col of columns; track col) {
+                    <th>{{ col }}</th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of rows; track $index) {
+                  <tr>
+                    @for (col of columns; track col) {
+                      <td>{{ row[col] }}</td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+        </div>
+      }
+    </section>
+  </div>
+</div>

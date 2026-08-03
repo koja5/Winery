@@ -86,6 +86,85 @@ const datasets = {
       { key: 'input_kg', label: 'reports.metric.inputKg', sql: 'ROUND(row.input_kg_allocated, 2)' },
       { key: 'output_l', label: 'reports.metric.outputL', sql: 'ROUND(row.output_l, 2)' }
     ]
+  },
+
+  // Iskorišćenost kapaciteta posuda — trenutno stanje (nema dateColumn, pa
+  // query-engine preskače filter po datumu i uvek vraća "sad").
+  capacity_utilization: {
+    label: 'reports.capacityUtilization.label',
+    kind: 'sql',
+    from: `FROM wine_vessels v
+           LEFT JOIN must_fermentations f ON f.vessel_id = v.id AND f.status = 'in_progress'
+           LEFT JOIN wine_agings a ON a.vessel_id = v.id AND a.quantity_liters_current > 0`,
+    where: 'v.tenant_id = ?',
+    dimensions: {
+      vessel: { label: 'reports.dim.vessel', sql: 'v.name' },
+      vessel_type: { label: 'reports.dim.vesselType', sql: 'v.vessel_type' }
+    },
+    metrics: {
+      capacity_liters: { label: 'reports.metric.capacityLiters', sql: 'ROUND(SUM(v.capacity_liters), 2)' },
+      current_liters: {
+        label: 'reports.metric.currentLiters',
+        sql: 'ROUND(SUM(COALESCE(f.quantity_liters_current, a.quantity_liters_current, 0)), 2)'
+      },
+      utilization_pct: {
+        label: 'reports.metric.utilizationPct',
+        sql: 'ROUND(SUM(COALESCE(f.quantity_liters_current, a.quantity_liters_current, 0)) / NULLIF(SUM(v.capacity_liters), 0) * 100, 2)'
+      }
+    },
+    drilldownColumns: [
+      { key: 'vessel', label: 'reports.dim.vessel', sql: 'v.name' },
+      { key: 'vessel_type', label: 'reports.dim.vesselType', sql: 'v.vessel_type' },
+      { key: 'capacity_liters', label: 'reports.metric.capacityLiters', sql: 'v.capacity_liters' },
+      {
+        key: 'current_liters',
+        label: 'reports.metric.currentLiters',
+        sql: 'COALESCE(f.quantity_liters_current, a.quantity_liters_current, 0)'
+      }
+    ]
+  },
+
+  // Gubici tokom nege (isparavanje i sl.): initial - trenutno - flaширано.
+  // Uprošćeno za MVP — ne modeluje zapreminu dodatu naknadnim pretocima u
+  // ovu negu, samo prirodni pad polazne količine.
+  aging_losses: {
+    label: 'reports.agingLosses.label',
+    kind: 'sql',
+    from: `FROM (
+             SELECT
+               a.id, a.tenant_id, a.start_date AS creation_date, a.wine_variety, a.vessel_id,
+               a.quantity_liters AS initial_liters,
+               a.quantity_liters_current AS current_liters,
+               COALESCE(ch.bottled_liters, 0) AS bottled_liters,
+               (a.quantity_liters - a.quantity_liters_current - COALESCE(ch.bottled_liters, 0)) AS loss_liters
+             FROM wine_agings a
+             LEFT JOIN (
+               SELECT aging_id, SUM(number_of_bottles * bottle_volume_ml / 1000) AS bottled_liters
+               FROM wine_chargings GROUP BY aging_id
+             ) ch ON ch.aging_id = a.id
+           ) row
+           LEFT JOIN wine_vessels v ON v.id = row.vessel_id`,
+    where: 'row.tenant_id = ?',
+    dateColumn: 'row.creation_date',
+    dimensions: {
+      wine_variety: { label: 'reports.dim.wineVariety', sql: 'row.wine_variety' },
+      vessel: { label: 'reports.dim.vessel', sql: 'v.name' }
+    },
+    metrics: {
+      initial_liters: { label: 'reports.metric.initialLiters', sql: 'ROUND(SUM(row.initial_liters), 2)' },
+      loss_liters: { label: 'reports.metric.lossLiters', sql: 'ROUND(SUM(row.loss_liters), 2)' },
+      loss_pct: {
+        label: 'reports.metric.lossPct',
+        sql: 'ROUND(SUM(row.loss_liters) / NULLIF(SUM(row.initial_liters), 0) * 100, 2)'
+      }
+    },
+    drilldownColumns: [
+      { key: 'creation_date', label: 'reports.col.date', sql: 'row.creation_date' },
+      { key: 'wine_variety', label: 'reports.dim.wineVariety', sql: 'row.wine_variety' },
+      { key: 'vessel', label: 'reports.dim.vessel', sql: 'v.name' },
+      { key: 'initial_liters', label: 'reports.metric.initialLiters', sql: 'row.initial_liters' },
+      { key: 'loss_liters', label: 'reports.metric.lossLiters', sql: 'row.loss_liters' }
+    ]
   }
 };
 

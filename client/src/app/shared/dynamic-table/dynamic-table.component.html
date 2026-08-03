@@ -48,7 +48,7 @@
   <p-dialog
     [(visible)]="dialogVisible"
     [modal]="true"
-    [style]="{ width: '32rem' }"
+    [style]="{ width: config.dialogWidth || '32rem' }"
     [header]="(isEdit ? config.dialogTitleEdit || 'general.edit' : config.dialogTitleCreate || 'general.addNew') | translate"
   >
     @if (dialogVisible && config.fields) {

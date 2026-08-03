@@ -1,0 +1,68 @@
+<nav class="sidebar" [class.is-collapsed]="!menuService.showSidebar()">
+  <div class="sidebar__header" (click)="toggle()">
+    <span class="sidebar__logo-mark">é</span>
+    @if (menuService.showSidebar()) {
+      <span class="sidebar__logo-text">Vinarija</span>
+    }
+    <button type="button" class="sidebar__collapse-btn" [class.is-collapsed]="!menuService.showSidebar()">
+      <i class="pi pi-angle-left"></i>
+    </button>
+  </div>
+
+  <hr class="sidebar__divider" />
+
+  <div class="sidebar__menu">
+    @for (group of menuService.menu; track $index) {
+      @if (group.label && menuService.showSidebar()) {
+        <div class="sidebar__group-label">{{ group.label | translate }}</div>
+      }
+      <ul class="sidebar__list">
+        @for (item of group.items; track item.title) {
+          <li>
+            @if (item.children) {
+              <button type="button" class="sidebar__item" (click)="toggleItem(item)">
+                <span class="sidebar__item-icon"><i [class]="item.icon"></i></span>
+                @if (menuService.showSidebar()) {
+                  <span class="sidebar__item-label">{{ item.title | translate }}</span>
+                  <i class="pi pi-chevron-right sidebar__chevron" [class.is-expanded]="menuService.isExpanded(item.title)"></i>
+                }
+              </button>
+              @if (menuService.isExpanded(item.title) && menuService.showSidebar()) {
+                <ul class="sidebar__submenu">
+                  @for (child of item.children; track child.route) {
+                    <li>
+                      <a
+                        [routerLink]="child.locked ? '/uskoro' : child.route"
+                        [queryParams]="child.locked ? { from: child.route } : null"
+                        routerLinkActive="is-active"
+                        class="sidebar__subitem"
+                      >
+                        <span class="sidebar__dot"></span>
+                        {{ child.title | translate }}
+                      </a>
+                    </li>
+                  }
+                </ul>
+              }
+            } @else {
+              <a
+                [routerLink]="item.locked ? '/uskoro' : item.route"
+                [queryParams]="item.locked ? { from: item.title } : null"
+                routerLinkActive="is-active"
+                class="sidebar__item"
+              >
+                <span class="sidebar__item-icon"><i [class]="item.icon"></i></span>
+                @if (menuService.showSidebar()) {
+                  <span class="sidebar__item-label">{{ item.title | translate }}</span>
+                  @if (item.badge) {
+                    <span class="sidebar__badge">{{ item.badge | translate }}</span>
+                  }
+                }
+              </a>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</nav>

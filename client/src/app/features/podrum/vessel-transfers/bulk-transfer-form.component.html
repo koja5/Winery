@@ -1,0 +1,66 @@
+<p-toast></p-toast>
+
+<p-dialog
+  [(visible)]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [modal]="true"
+  [style]="{ width: '38rem' }"
+  [header]="'transfers.form.title' | translate"
+>
+  <div class="bulk-transfer-form">
+    <div class="bulk-transfer-form__row">
+      <label>
+        {{ 'transfers.form.fromVessel' | translate }}
+        <select [(ngModel)]="fromVesselId">
+          <option [ngValue]="null">{{ 'transfers.form.fromVesselNone' | translate }}</option>
+          @for (v of vessels; track v['id']) {
+            <option [ngValue]="v['id']">{{ v['name'] }}</option>
+          }
+        </select>
+      </label>
+      <label>
+        {{ 'transfers.form.date' | translate }}
+        <input type="date" [(ngModel)]="transferDate" />
+      </label>
+    </div>
+
+    <label class="bulk-transfer-form__reason">
+      {{ 'transfers.form.reason' | translate }}
+      <input type="text" [(ngModel)]="reason" [placeholder]="'transfers.form.reasonPlaceholder' | translate" />
+    </label>
+
+    <h4>{{ 'transfers.form.destinations' | translate }}</h4>
+
+    @for (line of lines; track $index) {
+      <div class="bulk-transfer-form__line">
+        <select [(ngModel)]="line.to_vessel_id">
+          <option value="">{{ 'transfers.form.selectVessel' | translate }}</option>
+          @for (v of vessels; track v['id']) {
+            <option [value]="v['id']">{{ v['name'] }}</option>
+          }
+        </select>
+        <input type="number" min="0" step="0.01" [(ngModel)]="line.quantity_liters" placeholder="L" />
+        <button type="button" class="bulk-transfer-form__remove" (click)="removeLine($index)" [disabled]="lines.length === 1">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+    }
+
+    <button type="button" class="bulk-transfer-form__add" (click)="addLine()">
+      <i class="pi pi-plus"></i> {{ 'transfers.form.addDestination' | translate }}
+    </button>
+
+    <div class="bulk-transfer-form__total">
+      {{ 'transfers.form.total' | translate }}: <strong>{{ totalQuantity }} L</strong>
+    </div>
+
+    <div class="bulk-transfer-form__actions">
+      <app-button impact="bold" tone="primary" shape="rounded" size="medium" [loading]="loading" (click)="submit()">
+        {{ 'general.save' | translate }}
+      </app-button>
+      <app-button impact="bold" tone="light" shape="rounded" size="medium" (click)="close()">
+        {{ 'general.cancel' | translate }}
+      </app-button>
+    </div>
+  </div>
+</p-dialog>

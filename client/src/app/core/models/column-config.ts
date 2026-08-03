@@ -10,6 +10,8 @@ export interface ActionDef {
   request?: RequestModel;
   confirmRequired?: boolean;
   confirmMessage?: string;
+  /** identifies this action for Action.Emit — the host page switches on it */
+  key?: string;
 }
 
 export interface ColumnConfig {

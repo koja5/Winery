@@ -1,0 +1,10 @@
+<div class="vessel-transfers__toolbar">
+  <app-button impact="bold" tone="primary" shape="rounded" size="small" (click)="formVisible = true">
+    <i class="pi pi-plus"></i>
+    {{ 'transfers.newTransfer' | translate }}
+  </app-button>
+</div>
+
+<app-dynamic-table path="grids/admin" file="vessel-transfers.json"></app-dynamic-table>
+
+<app-bulk-transfer-form [(visible)]="formVisible" (saved)="onSaved()"></app-bulk-transfer-form>

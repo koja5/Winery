@@ -15,7 +15,7 @@
               <p-select
                 [inputId]="field.name"
                 [formControlName]="field.name"
-                [options]="field.options || []"
+                [options]="optionsFor(field)"
                 optionValue="value"
                 [placeholder]="field.placeholder || ''"
               >

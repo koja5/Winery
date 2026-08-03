@@ -1,0 +1,60 @@
+<p-toast></p-toast>
+
+<p-dialog
+  [(visible)]="visible"
+  (visibleChange)="visibleChange.emit($event)"
+  [modal]="true"
+  [style]="{ width: '38rem' }"
+  [header]="'additions.form.title' | translate"
+>
+  <div class="bulk-addition-form">
+    <div class="bulk-addition-form__row">
+      <label>
+        {{ 'additions.form.additiveName' | translate }}
+        <input type="text" [(ngModel)]="additiveName" [placeholder]="'additions.form.additiveNamePlaceholder' | translate" />
+      </label>
+      <label class="bulk-addition-form__quantity">
+        {{ 'additions.form.quantity' | translate }}
+        <input type="number" min="0" step="0.01" [(ngModel)]="quantity" />
+      </label>
+      <label class="bulk-addition-form__unit">
+        {{ 'additions.form.unit' | translate }}
+        <select [(ngModel)]="unit">
+          <option value="g">g</option>
+          <option value="kg">kg</option>
+          <option value="ml">ml</option>
+          <option value="L">L</option>
+        </select>
+      </label>
+    </div>
+
+    <label>
+      {{ 'additions.form.date' | translate }}
+      <input type="date" [(ngModel)]="additionDate" />
+    </label>
+
+    <label>
+      {{ 'additions.form.notes' | translate }}
+      <input type="text" [(ngModel)]="notes" />
+    </label>
+
+    <h4>{{ 'additions.form.selectVessels' | translate }} ({{ selectedVesselIds.size }})</h4>
+    <div class="bulk-addition-form__vessels">
+      @for (v of vessels; track v['id']) {
+        <label class="bulk-addition-form__vessel-item">
+          <input type="checkbox" [checked]="isSelected(v['id'])" (change)="toggleVessel(v['id'])" />
+          {{ v['name'] }}
+        </label>
+      }
+    </div>
+
+    <div class="bulk-addition-form__actions">
+      <app-button impact="bold" tone="primary" shape="rounded" size="medium" [loading]="loading" (click)="submit()">
+        {{ 'general.save' | translate }}
+      </app-button>
+      <app-button impact="bold" tone="light" shape="rounded" size="medium" (click)="close()">
+        {{ 'general.cancel' | translate }}
+      </app-button>
+    </div>
+  </div>
+</p-dialog>

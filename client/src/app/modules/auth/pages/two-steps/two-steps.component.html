@@ -1,0 +1,30 @@
+<div class="auth-header">
+  <h2>{{ 'auth.twoSteps.title' | translate }}</h2>
+  <p>{{ (method === 'email' ? 'auth.twoSteps.subtitleEmail' : 'auth.twoSteps.subtitleTotp') | translate }}</p>
+</div>
+
+<div class="otp-grid" (paste)="onPaste($event)">
+  @for (d of digits; track $index) {
+    <input
+      #digit
+      type="text"
+      inputmode="numeric"
+      maxlength="1"
+      [value]="d"
+      (input)="onDigitInput($index, $event)"
+      (keydown)="onKeyDown($index, $event)"
+    />
+  }
+</div>
+
+@if (error) {
+  <div class="responsive-message is__invalid-error">{{ error | translate }}</div>
+}
+
+<app-button full impact="bold" tone="primary" shape="rounded" size="medium" [loading]="loading" (click)="submit()">
+  {{ 'auth.twoSteps.submit' | translate }}
+</app-button>
+
+<div class="auth-footer-link">
+  <a routerLink="/auth/sign-in">{{ 'auth.twoSteps.backToLogin' | translate }}</a>
+</div>

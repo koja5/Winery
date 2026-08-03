@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { randomUUID } = require('crypto');
+const { randomUUID, randomBytes } = require('crypto');
+const bcrypt = require('bcryptjs');
 const router = express.Router();
 const pool = require('../config/sql-database').connect();
 const authenticateToken = require('../helpers/authenticate-token');
@@ -99,6 +100,84 @@ router.post('/login', async (req, res, next) => {
     }
 
     res.json({ token: issueToken(user), onboarded: !!user.onboarded_at });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// POST /auth/forgot-password -> emails a reset link if the address exists.
+// Always responds { sent: true } regardless, to avoid leaking which emails
+// are registered.
+// ---------------------------------------------------------------------------
+router.post('/forgot-password', async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).json({ message: 'email je obavezan.' });
+    }
+
+    const [rows] = await pool.query('SELECT id FROM users WHERE email = ? AND active = 1', [email]);
+    if (rows.length) {
+      const user = rows[0];
+      const token = randomBytes(32).toString('hex');
+      const tokenHash = await bcrypt.hash(token, 10);
+      const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+
+      await pool.query('INSERT INTO password_resets (id, user_id, token_hash, expires_at) VALUES (?,?,?,?)', [
+        randomUUID(),
+        user.id,
+        tokenHash,
+        expiresAt
+      ]);
+
+      const resetUrl = `${process.env.CLIENT_ORIGIN || ''}/auth/recovery-password/${token}`;
+      await mailService.send({
+        to: email,
+        subject: 'eVinarija — resetovanje lozinke',
+        html: `<p>Kliknite na link da resetujete lozinku (važi 30 minuta): <a href="${resetUrl}">${resetUrl}</a></p>`
+      });
+    }
+
+    res.json({ sent: true });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// POST /auth/reset-password -> consumes a forgot-password token and sets a
+// new password.
+// ---------------------------------------------------------------------------
+router.post('/reset-password', async (req, res, next) => {
+  try {
+    const { token, password } = req.body;
+    if (!token || !password) {
+      return res.status(400).json({ message: 'token i password su obavezni.' });
+    }
+
+    const [candidates] = await pool.query(
+      `SELECT id, user_id, token_hash FROM password_resets
+       WHERE consumed_at IS NULL AND expires_at > NOW()`
+    );
+
+    let match = null;
+    for (const candidate of candidates) {
+      if (await bcrypt.compare(token, candidate.token_hash)) {
+        match = candidate;
+        break;
+      }
+    }
+
+    if (!match) {
+      return res.status(400).json({ message: 'Link za reset nije validan ili je istekao.' });
+    }
+
+    const passwordHash = await passwordService.hash(password);
+    await pool.query('UPDATE users SET password_hash = ? WHERE id = ?', [passwordHash, match.user_id]);
+    await pool.query('UPDATE password_resets SET consumed_at = NOW() WHERE id = ?', [match.id]);
+
+    res.json({ reset: true });
   } catch (err) {
     next(err);
   }
