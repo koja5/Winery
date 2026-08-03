@@ -1,0 +1,23 @@
+.superadmin-shell {
+  padding: 1.5rem;
+}
+
+.superadmin-nav {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--surface-200, #e5e7eb);
+  padding-bottom: 0.75rem;
+
+  a {
+    text-decoration: none;
+    color: var(--text-color-secondary, #6b7280);
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+
+    &.active {
+      color: var(--primary-color, #7d1f36);
+      border-bottom: 2px solid var(--primary-color, #7d1f36);
+    }
+  }
+}

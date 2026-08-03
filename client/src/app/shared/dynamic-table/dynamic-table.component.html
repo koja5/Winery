@@ -1,0 +1,58 @@
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+@if (config) {
+  <div class="dynamic-table-header">
+    <h2>{{ config.name | translate }}</h2>
+    @if (config.save) {
+      <button pButton icon="pi pi-plus" [label]="'general.addNew' | translate" (click)="createNewEntry()"></button>
+    }
+  </div>
+
+  <p-table [value]="rows" [loading]="loading" [dataKey]="config.dataKey" [paginator]="true" [rows]="20" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        @if (hasRowActions) {
+          <th class="row-actions-col"></th>
+        }
+        @for (col of dataColumns; track col.field) {
+          <th>{{ col.title | translate }}</th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        @if (hasRowActions) {
+          <td class="row-actions-col">
+            <button type="button" class="row-actions-kebab" (click)="openRowMenu($event, row)">
+              <i class="pi pi-ellipsis-v"></i>
+            </button>
+          </td>
+        }
+        @for (col of dataColumns; track col.field) {
+          <td>{{ formatValue(row, col) }}</td>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="dataColumns.length + (hasRowActions ? 1 : 0)">
+          {{ 'general.noData' | translate }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-menu #rowActionMenu [popup]="true" [model]="rowMenuItems" appendTo="body"></p-menu>
+
+  <p-dialog
+    [(visible)]="dialogVisible"
+    [modal]="true"
+    [style]="{ width: '32rem' }"
+    [header]="(isEdit ? config.dialogTitleEdit || 'general.edit' : config.dialogTitleCreate || 'general.addNew') | translate"
+  >
+    @if (dialogVisible && config.fields) {
+      <app-dynamic-forms [fields]="config.fields" [data]="editingRow" [isEdit]="isEdit" (save)="onFormSave($event)" (cancel)="onFormCancel()"></app-dynamic-forms>
+    }
+  </p-dialog>
+}

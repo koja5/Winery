@@ -1,0 +1,74 @@
+{
+  "name": "vessels.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/wine-vessels" },
+  "save": { "type": "POST", "api": "/api/admin/wine-vessels" },
+  "delete": { "type": "DELETE", "api": "/api/admin/wine-vessels/:id" },
+  "dialogTitleCreate": "vessels.newVessel",
+  "dialogTitleEdit": "vessels.editVessel",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "vessels.name", "field": "name", "type": "string" },
+    {
+      "title": "vessels.type",
+      "field": "vessel_type",
+      "type": "string",
+      "translateMap": {
+        "inox_tank": "vessels.type.inoxTank",
+        "wood_barrel": "vessels.type.woodBarrel",
+        "concrete_vat": "vessels.type.concreteVat",
+        "other": "vessels.type.other"
+      }
+    },
+    { "title": "vessels.capacity", "field": "capacity_liters", "type": "number" },
+    { "title": "vessels.location", "field": "location", "type": "string" },
+    {
+      "title": "vessels.status",
+      "field": "status",
+      "type": "string",
+      "translateMap": {
+        "empty": "vessels.status.empty",
+        "in_use": "vessels.status.inUse",
+        "maintenance": "vessels.status.maintenance",
+        "reserved": "vessels.status.reserved"
+      }
+    }
+  ],
+  "fields": [
+    { "type": "textbox", "name": "name", "title": "vessels.name", "width": "100%", "required": true },
+    {
+      "type": "combobox",
+      "name": "vessel_type",
+      "title": "vessels.type",
+      "width": "100%",
+      "required": true,
+      "options": [
+        { "text": "vessels.type.inoxTank", "value": "inox_tank" },
+        { "text": "vessels.type.woodBarrel", "value": "wood_barrel" },
+        { "text": "vessels.type.concreteVat", "value": "concrete_vat" },
+        { "text": "vessels.type.other", "value": "other" }
+      ]
+    },
+    { "type": "number", "name": "capacity_liters", "title": "vessels.capacity", "width": "100%", "required": true, "min": 0 },
+    { "type": "textbox", "name": "location", "title": "vessels.location", "width": "100%" },
+    {
+      "type": "combobox",
+      "name": "status",
+      "title": "vessels.status",
+      "width": "100%",
+      "options": [
+        { "text": "vessels.status.empty", "value": "empty" },
+        { "text": "vessels.status.inUse", "value": "in_use" },
+        { "text": "vessels.status.maintenance", "value": "maintenance" },
+        { "text": "vessels.status.reserved", "value": "reserved" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "superadmin.tickets.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/superadmin/support-tickets" },
+  "save": { "type": "POST", "api": "/api/superadmin/support-tickets" },
+  "dialogTitleEdit": "superadmin.tickets.edit",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [{ "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" }]
+    },
+    { "title": "superadmin.tickets.subject", "field": "subject", "type": "string" },
+    { "title": "superadmin.tickets.tenant", "field": "tenant_name", "type": "string" },
+    { "title": "superadmin.tickets.userEmail", "field": "user_email", "type": "string" },
+    {
+      "title": "superadmin.tickets.status",
+      "field": "status",
+      "type": "string",
+      "translateMap": {
+        "open": "superadmin.tickets.status.open",
+        "in_progress": "superadmin.tickets.status.inProgress",
+        "closed": "superadmin.tickets.status.closed"
+      }
+    },
+    { "title": "superadmin.tickets.createdAt", "field": "created_at", "type": "date" }
+  ],
+  "fields": [
+    {
+      "type": "combobox",
+      "name": "status",
+      "title": "superadmin.tickets.status",
+      "width": "100%",
+      "required": true,
+      "options": [
+        { "text": "superadmin.tickets.status.open", "value": "open" },
+        { "text": "superadmin.tickets.status.inProgress", "value": "in_progress" },
+        { "text": "superadmin.tickets.status.closed", "value": "closed" }
+      ]
+    }
+  ]
+}

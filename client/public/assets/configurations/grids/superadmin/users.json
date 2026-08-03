@@ -1,0 +1,21 @@
+{
+  "name": "superadmin.users.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/superadmin/users" },
+  "save": { "type": "POST", "api": "/api/superadmin/users" },
+  "dialogTitleEdit": "superadmin.users.edit",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [{ "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" }]
+    },
+    { "title": "superadmin.users.email", "field": "email", "type": "string" },
+    { "title": "superadmin.users.tenant", "field": "tenant_name", "type": "string" },
+    { "title": "superadmin.users.role", "field": "role_code", "type": "string" },
+    { "title": "superadmin.users.active", "field": "active", "type": "boolean" },
+    { "title": "superadmin.users.twoFactor", "field": "two_factor_enabled", "type": "boolean" },
+    { "title": "superadmin.users.createdAt", "field": "created_at", "type": "date" }
+  ],
+  "fields": [{ "type": "switch", "name": "active", "title": "superadmin.users.active", "width": "100%" }]
+}

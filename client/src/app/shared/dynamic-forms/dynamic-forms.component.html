@@ -1,0 +1,52 @@
+<form [formGroup]="form" class="dynamic-form" (ngSubmit)="submit()">
+  <div class="dynamic-form-grid">
+    @for (field of fields; track field.name) {
+      @if (field.type !== FieldType.Label) {
+        <div class="dynamic-form-field" [style.width]="field.width || '100%'">
+          <label [for]="field.name">{{ field.title | translate }}@if (field.required) {
+            <span class="required-marker">*</span>
+          }</label>
+
+          @switch (field.type) {
+            @case (FieldType.Number) {
+              <p-inputNumber [inputId]="field.name" [formControlName]="field.name" [min]="field.min" [max]="field.max" [step]="field.step || 1" />
+            }
+            @case (FieldType.Combobox) {
+              <p-select
+                [inputId]="field.name"
+                [formControlName]="field.name"
+                [options]="field.options || []"
+                optionValue="value"
+                [placeholder]="field.placeholder || ''"
+              >
+                <ng-template let-option pTemplate="item">{{ option.text | translate }}</ng-template>
+                <ng-template let-option pTemplate="selectedItem">{{ option.text | translate }}</ng-template>
+              </p-select>
+            }
+            @case (FieldType.Switch) {
+              <p-checkbox [inputId]="field.name" [formControlName]="field.name" [binary]="true" />
+            }
+            @case (FieldType.Date) {
+              <p-datepicker [inputId]="field.name" [formControlName]="field.name" dateFormat="dd.mm.yy" [showIcon]="true" />
+            }
+            @case (FieldType.TextArea) {
+              <textarea pInputTextarea [id]="field.name" [formControlName]="field.name" rows="3"></textarea>
+            }
+            @default {
+              <input pInputText [id]="field.name" [formControlName]="field.name" />
+            }
+          }
+
+          @if (form.get(field.name)?.invalid && form.get(field.name)?.touched) {
+            <small class="field-error">{{ 'general.requiredField' | translate }}</small>
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <div class="dynamic-form-actions">
+    <button pButton type="button" class="p-button-text" [label]="'general.cancel' | translate" (click)="cancel.emit()"></button>
+    <button pButton type="submit" [label]="'general.save' | translate"></button>
+  </div>
+</form>

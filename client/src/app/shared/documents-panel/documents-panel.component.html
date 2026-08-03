@@ -1,0 +1,28 @@
+<div class="documents-panel">
+  <div class="documents-panel-header">
+    <span>{{ 'documents.title' | translate }}</span>
+    <label class="upload-button">
+      <input type="file" multiple hidden (change)="onFilesSelected($event)" />
+      <button pButton type="button" icon="pi pi-upload" [label]="'documents.upload' | translate"></button>
+    </label>
+  </div>
+
+  @if (loading) {
+    <p class="documents-panel-loading">{{ 'general.loading' | translate }}</p>
+  } @else if (!documents.length) {
+    <p class="documents-panel-empty">{{ 'documents.empty' | translate }}</p>
+  } @else {
+    <ul class="documents-panel-list">
+      @for (doc of documents; track doc.link_id) {
+        <li>
+          <a [href]="downloadUrl(doc)" target="_blank" rel="noopener">
+            <i class="pi pi-file"></i> {{ doc.name }}
+          </a>
+          <button type="button" class="remove-button" (click)="remove(doc)" [attr.aria-label]="'general.delete' | translate">
+            <i class="pi pi-times"></i>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>

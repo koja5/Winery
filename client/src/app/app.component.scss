@@ -1,0 +1,100 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--ev-primary-dark);
+  color: #f2e8dd;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+}
+
+.app-logo {
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+
+  .app-logo-mark {
+    color: var(--ev-accent-green);
+    margin-right: 0.15rem;
+  }
+}
+
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.app-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  color: #e5d8ce;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: background 0.15s ease;
+
+  i {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &.active {
+    background: var(--ev-primary);
+    color: #ffffff;
+  }
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-topbar {
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  background: var(--ev-surface);
+  border-bottom: 1px solid var(--ev-line);
+}
+
+.app-topbar-title {
+  font-weight: 600;
+  color: var(--ev-ink);
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--ev-bg);
+}
+
+@media (max-width: 720px) {
+  .app-sidebar {
+    width: 72px;
+    padding: 1rem 0.4rem;
+  }
+  .app-logo span:not(.app-logo-mark) {
+    display: none;
+  }
+  .app-nav-item span {
+    display: none;
+  }
+}

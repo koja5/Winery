@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@ionic/angular/css/core.css';
+@import '@ionic/angular/css/normalize.css';
+@import '@ionic/angular/css/structure.css';
+@import '@ionic/angular/css/typography.css';
+@import 'primeicons/primeicons.css';
+
+:root {
+  /* eVinarija brend paleta (izvučena sa evinarija.com) */
+  --ev-primary: #7d1f36;
+  --ev-primary-soft: #a76776;
+  --ev-primary-dark: #4a1422;
+  --ev-accent-green: #7c9a5c;
+  --ev-bg: #faf6f0;
+  --ev-surface: #ffffff;
+  --ev-ink: #2a1f1a;
+  --ev-muted: #7a6a5e;
+  --ev-line: #e2d5c5;
+}
+
+html.dark,
+.dark {
+  --ev-primary: #e0899a;
+  --ev-primary-soft: #c1495f;
+  --ev-primary-dark: #f2c3cc;
+  --ev-accent-green: #a6ba90;
+  --ev-bg: #1b1512;
+  --ev-surface: #241c18;
+  --ev-ink: #f2e8dd;
+  --ev-muted: #b7a698;
+  --ev-line: #3c2f28;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--ev-bg);
+  color: var(--ev-ink);
+}

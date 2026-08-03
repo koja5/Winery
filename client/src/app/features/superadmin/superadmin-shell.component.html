@@ -1,0 +1,10 @@
+<div class="superadmin-shell">
+  <nav class="superadmin-nav">
+    <a routerLink="tenants" routerLinkActive="active">{{ 'superadmin.nav.tenants' | translate }}</a>
+    <a routerLink="users" routerLinkActive="active">{{ 'superadmin.nav.users' | translate }}</a>
+    <a routerLink="tickets" routerLinkActive="active">{{ 'superadmin.nav.tickets' | translate }}</a>
+  </nav>
+  <div class="superadmin-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

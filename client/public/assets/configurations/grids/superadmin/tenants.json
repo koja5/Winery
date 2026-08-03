@@ -1,0 +1,23 @@
+{
+  "name": "superadmin.tenants.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/superadmin/tenants" },
+  "save": { "type": "POST", "api": "/api/superadmin/tenants" },
+  "dialogTitleEdit": "superadmin.tenants.edit",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [{ "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" }]
+    },
+    { "title": "superadmin.tenants.name", "field": "name", "type": "string" },
+    { "title": "superadmin.tenants.usersCount", "field": "users_count", "type": "number" },
+    { "title": "superadmin.tenants.active", "field": "active", "type": "boolean" },
+    { "title": "superadmin.tenants.isDemo", "field": "is_demo", "type": "boolean" },
+    { "title": "superadmin.tenants.createdAt", "field": "created_at", "type": "date" }
+  ],
+  "fields": [
+    { "type": "switch", "name": "active", "title": "superadmin.tenants.active", "width": "100%" },
+    { "type": "switch", "name": "is_demo", "title": "superadmin.tenants.isDemo", "width": "100%" }
+  ]
+}

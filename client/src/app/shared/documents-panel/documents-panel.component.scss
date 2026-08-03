@@ -1,0 +1,46 @@
+.documents-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.documents-panel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--surface-200, #e5e7eb);
+    border-radius: 6px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color-secondary, #6b7280);
+}
+
+.documents-panel-empty,
+.documents-panel-loading {
+  color: var(--text-color-secondary, #6b7280);
+  font-size: 0.9rem;
+}

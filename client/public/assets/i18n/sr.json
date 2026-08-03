@@ -1,0 +1,112 @@
+{
+  "app": {
+    "title": "eVinarija"
+  },
+  "nav": {
+    "vessels": "Posude",
+    "superadmin": "Superadmin"
+  },
+  "general": {
+    "addNew": "Dodaj novo",
+    "edit": "Izmeni",
+    "delete": "Obriši",
+    "save": "Sačuvaj",
+    "cancel": "Otkaži",
+    "saved": "Sačuvano.",
+    "deleted": "Obrisano.",
+    "loadError": "Greška pri učitavanju podataka.",
+    "saveError": "Greška pri čuvanju.",
+    "deleteError": "Greška pri brisanju.",
+    "noData": "Nema podataka.",
+    "requiredField": "Ovo polje je obavezno.",
+    "confirmDeleteTitle": "Potvrda brisanja",
+    "confirmDeleteMessage": "Da li ste sigurni da želite da obrišete ovaj zapis?",
+    "yes": "Da",
+    "no": "Ne",
+    "loading": "Učitavanje..."
+  },
+  "documents": {
+    "title": "Prilozi",
+    "upload": "Otpremi fajl",
+    "empty": "Nema priloženih fajlova."
+  },
+  "vessels": {
+    "title": "Posude",
+    "newVessel": "Nova posuda",
+    "editVessel": "Izmena posude",
+    "name": "Naziv",
+    "type": "Tip",
+    "capacity": "Zapremina (L)",
+    "location": "Lokacija",
+    "status": "Status",
+    "type.inoxTank": "Inox cisterna",
+    "type.woodBarrel": "Drveno bure",
+    "type.concreteVat": "Betonski bazen",
+    "type.other": "Ostalo",
+    "status.empty": "Prazna",
+    "status.inUse": "U upotrebi",
+    "status.maintenance": "Na održavanju",
+    "status.reserved": "Rezervisana"
+  },
+  "reports": {
+    "grapeReceptions": { "label": "Prijem grožđa" },
+    "fermentationYield": { "label": "Prinos fermentacije" },
+    "dim": {
+      "grapeVariety": "Sorta",
+      "parcel": "Parcela",
+      "supplier": "Dobavljač",
+      "wineVariety": "Sorta vina",
+      "vessel": "Posuda"
+    },
+    "metric": {
+      "quantityKg": "Količina (kg)",
+      "avgSugarDegrees": "Prosečan šećer (°)",
+      "receptionsCount": "Broj prijema",
+      "inputKg": "Ulaz — grožđe (kg)",
+      "outputL": "Izlaz — vino (L)",
+      "yieldPct": "Prinos (%)"
+    },
+    "col": {
+      "date": "Datum",
+      "sugarDegrees": "Šećer (°)"
+    }
+  },
+  "superadmin": {
+    "nav": {
+      "tenants": "Vinarije",
+      "users": "Korisnici",
+      "tickets": "Support tiketi"
+    },
+    "tenants": {
+      "title": "Vinarije",
+      "edit": "Izmena vinarije",
+      "name": "Naziv",
+      "usersCount": "Broj korisnika",
+      "active": "Aktivna",
+      "isDemo": "Demo nalog",
+      "createdAt": "Kreirana"
+    },
+    "users": {
+      "title": "Korisnici",
+      "edit": "Izmena korisnika",
+      "email": "Email",
+      "tenant": "Vinarija",
+      "role": "Uloga",
+      "active": "Aktivan",
+      "twoFactor": "2FA",
+      "createdAt": "Registrovan"
+    },
+    "tickets": {
+      "title": "Support tiketi",
+      "edit": "Izmena tiketa",
+      "subject": "Naslov",
+      "tenant": "Vinarija",
+      "userEmail": "Korisnik",
+      "status": "Status",
+      "createdAt": "Kreiran",
+      "status.open": "Otvoren",
+      "status.inProgress": "U toku",
+      "status.closed": "Zatvoren"
+    }
+  }
+}
