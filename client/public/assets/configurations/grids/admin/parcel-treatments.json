@@ -40,7 +40,9 @@
       "title": "parcelTreatments.parcel",
       "width": "48%",
       "required": true,
-      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" }
+      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" },
+      "allowCreate": true,
+      "createConfigFile": "vineyard-parcels.json"
     },
     { "type": "date", "name": "treatment_date", "title": "parcelTreatments.date", "width": "48%", "required": true },
     {

@@ -1,0 +1,94 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="max-w-2xl">
+  <div class="flex items-start gap-2 mb-3">
+    <div class="text-xl leading-none">🔒</div>
+    <div>
+      <h2 class="text-base font-semibold m-0">{{ 'accountSettings.twoFactor.title' | translate }}</h2>
+      <p class="text-sm text-ev-muted m-0">{{ 'accountSettings.twoFactor.subtitle' | translate }}</p>
+    </div>
+  </div>
+
+  @if (enabled) {
+    <div class="border border-green-200 bg-green-50 rounded-lg px-4 py-3">
+      <div class="flex items-center gap-2 mb-1">
+        <i class="pi pi-check-circle text-green-600"></i>
+        <span class="font-semibold">{{ 'accountSettings.twoFactor.enabledStatus' | translate }}</span>
+        <span class="text-sm text-ev-muted"
+          >({{ (method === 'totp' ? 'accountSettings.twoFactor.methodTotp' : 'accountSettings.twoFactor.methodEmail') | translate }})</span
+        >
+      </div>
+      <p class="text-sm text-ev-muted mb-4">{{ 'accountSettings.twoFactor.disableHint' | translate }}</p>
+      <p-button
+        [label]="'accountSettings.twoFactor.disableButton' | translate"
+        icon="pi pi-lock-open"
+        severity="danger"
+        [disabled]="processing"
+        (onClick)="confirmDisable()"
+      ></p-button>
+    </div>
+  } @else {
+    <div class="border border-ev-line bg-ev-surface rounded-lg px-4 py-3">
+      <p class="text-sm text-ev-muted mb-4">{{ 'accountSettings.twoFactor.enableHint' | translate }}</p>
+      <div class="flex flex-wrap gap-2">
+        <p-button
+          [label]="'accountSettings.twoFactor.enableEmailButton' | translate"
+          icon="pi pi-envelope"
+          [disabled]="processing"
+          (onClick)="enableEmail()"
+        ></p-button>
+        <p-button
+          [label]="'accountSettings.twoFactor.enableTotpButton' | translate"
+          icon="pi pi-shield"
+          severity="secondary"
+          [disabled]="processing"
+          (onClick)="openTotpSetup()"
+        ></p-button>
+      </div>
+    </div>
+  }
+</div>
+
+<p-dialog
+  [modal]="true"
+  [(visible)]="setupVisible"
+  [style]="{ width: '420px' }"
+  [header]="'accountSettings.twoFactor.setupTitle' | translate"
+>
+  @if (step === 2) {
+    <div class="text-center">
+      <p class="text-sm mb-3">{{ 'accountSettings.twoFactor.scanQr' | translate }}</p>
+      @if (qr) {
+        <img [src]="qr" alt="QR" class="w-[200px] h-[200px] mx-auto mb-3 block" />
+      }
+      <p class="text-xs text-ev-muted mb-4 break-all">
+        {{ 'accountSettings.twoFactor.manualEntry' | translate }}: <strong>{{ secret }}</strong>
+      </p>
+
+      <label class="block text-sm font-semibold mb-2">{{ 'accountSettings.twoFactor.enterCode' | translate }}</label>
+      <input
+        pInputText
+        type="text"
+        inputmode="numeric"
+        maxlength="6"
+        [(ngModel)]="code"
+        class="w-full text-center text-lg tracking-[6px]"
+      />
+      @if (codeError) {
+        <div class="text-red-600 text-sm mt-2">{{ 'accountSettings.twoFactor.wrongCode' | translate }}</div>
+      }
+    </div>
+  }
+
+  <ng-template pTemplate="footer">
+    <p-button [label]="'accountSettings.twoFactor.cancel' | translate" [text]="true" (onClick)="setupVisible = false"></p-button>
+    <p-button
+      [label]="'accountSettings.twoFactor.confirm' | translate"
+      severity="primary"
+      [disabled]="processing"
+      [loading]="processing"
+      (onClick)="confirmTotp()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

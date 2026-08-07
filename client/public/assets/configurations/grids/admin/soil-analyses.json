@@ -39,7 +39,9 @@
       "title": "soilAnalyses.parcel",
       "width": "48%",
       "required": true,
-      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" }
+      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" },
+      "allowCreate": true,
+      "createConfigFile": "vineyard-parcels.json"
     },
     { "type": "date", "name": "sample_date", "title": "soilAnalyses.sampleDate", "width": "48%", "required": true },
     {
@@ -56,14 +58,14 @@
     },
     { "type": "textbox", "name": "lab_name", "title": "soilAnalyses.labName", "width": "48%" },
 
-    { "type": "number", "name": "ph", "title": "soilAnalyses.ph", "width": "31%", "step": 0.01 },
-    { "type": "number", "name": "organic_matter_pct", "title": "soilAnalyses.organicMatterPct", "width": "31%", "step": 0.01 },
-    { "type": "number", "name": "cec", "title": "soilAnalyses.cec", "width": "31%", "step": 0.01 },
-    { "type": "number", "name": "nitrogen", "title": "soilAnalyses.nitrogen", "width": "31%", "step": 0.01 },
-    { "type": "number", "name": "phosphorus", "title": "soilAnalyses.phosphorus", "width": "31%", "step": 0.01 },
-    { "type": "number", "name": "potassium", "title": "soilAnalyses.potassium", "width": "31%", "step": 0.01 },
-    { "type": "number", "name": "calcium", "title": "soilAnalyses.calcium", "width": "31%", "step": 0.01 },
-    { "type": "number", "name": "magnesium", "title": "soilAnalyses.magnesium", "width": "31%", "step": 0.01 },
+    { "type": "number", "name": "ph", "title": "soilAnalyses.ph", "width": "33.33%", "step": 0.01 },
+    { "type": "number", "name": "organic_matter_pct", "title": "soilAnalyses.organicMatterPct", "width": "33.33%", "step": 0.01 },
+    { "type": "number", "name": "cec", "title": "soilAnalyses.cec", "width": "33.33%", "step": 0.01 },
+    { "type": "number", "name": "nitrogen", "title": "soilAnalyses.nitrogen", "width": "33.33%", "step": 0.01 },
+    { "type": "number", "name": "phosphorus", "title": "soilAnalyses.phosphorus", "width": "33.33%", "step": 0.01 },
+    { "type": "number", "name": "potassium", "title": "soilAnalyses.potassium", "width": "33.33%", "step": 0.01 },
+    { "type": "number", "name": "calcium", "title": "soilAnalyses.calcium", "width": "33.33%", "step": 0.01 },
+    { "type": "number", "name": "magnesium", "title": "soilAnalyses.magnesium", "width": "33.33%", "step": 0.01 },
 
     { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
   ]

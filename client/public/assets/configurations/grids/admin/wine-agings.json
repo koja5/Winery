@@ -1,0 +1,63 @@
+{
+  "name": "wineAgings.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/wine-agings" },
+  "save": { "type": "POST", "api": "/api/admin/wine-agings" },
+  "delete": { "type": "DELETE", "api": "/api/admin/wine-agings/:id" },
+  "dialogTitleCreate": "wineAgings.newAging",
+  "dialogTitleEdit": "wineAgings.editAging",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "wineAgings.vessel", "field": "vessel_name", "type": "string" },
+    { "title": "wineAgings.wineVariety", "field": "wine_variety", "type": "string" },
+    { "title": "wineAgings.vintageYear", "field": "vintage_year", "type": "number" },
+    { "title": "wineAgings.lot", "field": "lot", "type": "string" },
+    { "title": "wineAgings.startDate", "field": "start_date", "type": "date" },
+    { "title": "wineAgings.quantityLiters", "field": "quantity_liters_current", "type": "number" }
+  ],
+  "fields": [
+    {
+      "type": "combobox",
+      "name": "fermentation_id",
+      "title": "wineAgings.sourceFermentation",
+      "width": "48%",
+      "disabledOnEdit": true,
+      "request": { "type": "GET", "api": "/api/admin/must-fermentations" },
+      "allowCreate": true,
+      "createConfigFile": "fermentations.json"
+    },
+    {
+      "type": "combobox",
+      "name": "vessel_id",
+      "title": "wineAgings.vessel",
+      "width": "48%",
+      "required": true,
+      "disabledOnEdit": true,
+      "request": { "type": "GET", "api": "/api/admin/wine-vessels" },
+      "allowCreate": true,
+      "createConfigFile": "wine-vessels.json"
+    },
+    { "type": "textbox", "name": "wine_variety", "title": "wineAgings.wineVariety", "width": "33.33%" },
+    { "type": "number", "name": "vintage_year", "title": "wineAgings.vintageYear", "width": "33.33%" },
+    { "type": "textbox", "name": "lot", "title": "wineAgings.lot", "width": "33.33%" },
+    { "type": "date", "name": "start_date", "title": "wineAgings.startDate", "width": "48%", "required": true },
+    { "type": "date", "name": "end_date", "title": "wineAgings.endDate", "width": "48%" },
+    {
+      "type": "number",
+      "name": "quantity_liters_current",
+      "title": "wineAgings.quantityLiters",
+      "width": "48%",
+      "required": true,
+      "min": 0
+    },
+    { "type": "textbox", "name": "name", "title": "commonFields.name", "width": "48%" },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

@@ -22,4 +22,11 @@ export interface FieldConfig {
   /** static options for a combobox, or a request that fetches them */
   options?: ComboboxOption[];
   request?: RequestModel;
+  /** adds a trailing "+ Dodaj novo..." option that opens a quick-create dialog
+   *  for the referenced entity (built from `createConfigFile`'s own fields/save),
+   *  then selects the newly created record. Only meaningful alongside `request`. */
+  allowCreate?: boolean;
+  /** grid config file (same `grids/admin` folder) providing the fields/save
+   *  request used to build the quick-create dialog for this combobox. */
+  createConfigFile?: string;
 }

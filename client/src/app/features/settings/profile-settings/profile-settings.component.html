@@ -1,0 +1,43 @@
+<p-toast></p-toast>
+
+@if (loaded) {
+  <div class="settings-form">
+    <div class="flex justify-center mb-5">
+      <div
+        class="w-16 h-16 rounded-full bg-ev-primary text-white flex items-center justify-center text-lg font-semibold shadow-[0_0_30px_0_rgba(125,31,54,0.25)]"
+      >
+        {{ initials }}
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <p-floatlabel variant="on">
+          <input pInputText id="firstname" formControlName="firstname" class="w-full" />
+          <label for="firstname">{{ 'accountSettings.profile.firstname' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="lastname" formControlName="lastname" class="w-full" />
+          <label for="lastname">{{ 'accountSettings.profile.lastname' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="email" [value]="email" disabled class="w-full" />
+          <label for="email">{{ 'accountSettings.profile.email' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="phone" formControlName="phone" class="w-full" />
+          <label for="phone">{{ 'accountSettings.profile.phone' | translate }}</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="flex justify-end">
+        <p-button type="submit" [label]="'general.save' | translate" icon="pi pi-save"></p-button>
+      </div>
+    </form>
+
+    <app-two-factor-settings class="block mt-5" [enabled]="twoFactorEnabled" [method]="twoFactorMethod"></app-two-factor-settings>
+  </div>
+}

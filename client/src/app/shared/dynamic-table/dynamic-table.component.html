@@ -129,7 +129,20 @@
   <p-dialog
     [(visible)]="dialogVisible"
     [modal]="true"
-    [style]="{ width: config.dialogWidth || '32rem' }"
+    [style]="{
+      width: config.dialogWidth || '32rem',
+      'max-height': '90vh',
+      display: 'flex',
+      'flex-direction': 'column'
+    }"
+    [contentStyle]="{
+      overflow: 'hidden',
+      padding: '0',
+      display: 'flex',
+      'flex-direction': 'column',
+      flex: '1',
+      'min-height': '0'
+    }"
     [header]="(isEdit ? config.dialogTitleEdit || 'general.edit' : config.dialogTitleCreate || 'general.addNew') | translate"
   >
     @if (dialogVisible && config.fields) {

@@ -1,0 +1,77 @@
+<p-toast></p-toast>
+
+@if (loaded) {
+  <div class="settings-form">
+    <div class="flex justify-center mb-5">
+      <div
+        class="w-16 h-16 rounded-full bg-ev-primary text-white flex items-center justify-center text-lg font-semibold shadow-[0_0_30px_0_rgba(125,31,54,0.25)]"
+      >
+        {{ initial }}
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="grid grid-cols-1 gap-3 mb-4">
+        <p-floatlabel variant="on">
+          <input pInputText id="name" formControlName="name" class="w-full" />
+          <label for="name">{{ 'accountSettings.tenant.name' | translate }}</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <p-floatlabel variant="on">
+          <input pInputText id="pib" formControlName="pib" class="w-full" />
+          <label for="pib">{{ 'accountSettings.tenant.pib' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="mb" formControlName="mb" class="w-full" />
+          <label for="mb">{{ 'accountSettings.tenant.mb' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="tenantEmail" formControlName="email" class="w-full" />
+          <label for="tenantEmail">{{ 'accountSettings.tenant.email' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="tenantPhone" formControlName="phone" class="w-full" />
+          <label for="tenantPhone">{{ 'accountSettings.tenant.phone' | translate }}</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="grid grid-cols-1 gap-3 mb-4">
+        <p-floatlabel variant="on">
+          <input pInputText id="address" formControlName="address" class="w-full" />
+          <label for="address">{{ 'accountSettings.tenant.address' | translate }}</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        <p-floatlabel variant="on">
+          <input pInputText id="zip" formControlName="zip" class="w-full" />
+          <label for="zip">{{ 'accountSettings.tenant.zip' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="city" formControlName="city" class="w-full" />
+          <label for="city">{{ 'accountSettings.tenant.city' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="responsible_person" formControlName="responsible_person" class="w-full" />
+          <label for="responsible_person">{{ 'accountSettings.tenant.responsiblePerson' | translate }}</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <input pInputText id="bank_account" formControlName="bank_account" class="w-full" />
+          <label for="bank_account">{{ 'accountSettings.tenant.bankAccount' | translate }}</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="flex justify-end">
+        <p-button type="submit" [label]="'general.save' | translate" icon="pi pi-save"></p-button>
+      </div>
+    </form>
+  </div>
+}

@@ -31,14 +31,18 @@
       "name": "supplier_id",
       "title": "suppliers.name",
       "width": "48%",
-      "request": { "type": "GET", "api": "/api/admin/suppliers" }
+      "request": { "type": "GET", "api": "/api/admin/suppliers" },
+      "allowCreate": true,
+      "createConfigFile": "suppliers.json"
     },
     {
       "type": "combobox",
       "name": "parcel_id",
       "title": "announcements.parcel",
       "width": "48%",
-      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" }
+      "request": { "type": "GET", "api": "/api/admin/vineyard-parcels" },
+      "allowCreate": true,
+      "createConfigFile": "vineyard-parcels.json"
     },
     {
       "type": "textbox",

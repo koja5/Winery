@@ -1,0 +1,39 @@
+// Panel puni celu preostalu visinu sadržaja (isto ponašanje kao eDestilerija
+// dynamic-tab, samo kroz flex umesto fiksnog vh/px izračunavanja).
+:host {
+  display: block;
+  height: 100%;
+}
+
+:host ::ng-deep {
+  .p-tabs {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .p-tabpanels {
+    background: hsl(var(--card));
+    padding: 1.25rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    flex: 1;
+  }
+
+  .p-tabpanel {
+    height: 100%;
+  }
+
+  .p-tablist {
+    background: hsl(var(--card));
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  .p-tablist-tab-list {
+    background: hsl(var(--card));
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  .p-tablist-nav-button {
+    background: hsl(var(--card));
+  }
+}

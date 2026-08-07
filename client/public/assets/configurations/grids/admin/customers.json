@@ -1,0 +1,36 @@
+{
+  "name": "customers.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/customers" },
+  "save": { "type": "POST", "api": "/api/admin/customers" },
+  "delete": { "type": "DELETE", "api": "/api/admin/customers/:id" },
+  "dialogTitleCreate": "customers.newCustomer",
+  "dialogTitleEdit": "customers.editCustomer",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "customers.name", "field": "name", "type": "string" },
+    { "title": "customers.pibOrJmbg", "field": "pib_or_jmbg", "type": "string" },
+    { "title": "customers.phone", "field": "phone", "type": "string" },
+    { "title": "customers.email", "field": "email", "type": "string" },
+    { "title": "customers.city", "field": "city", "type": "string" }
+  ],
+  "fields": [
+    { "type": "textbox", "name": "name", "title": "customers.name", "width": "100%", "required": true },
+    { "type": "textbox", "name": "pib_or_jmbg", "title": "customers.pibOrJmbg", "width": "48%" },
+    { "type": "textbox", "name": "mb", "title": "customers.mb", "width": "48%" },
+    { "type": "textbox", "name": "phone", "title": "customers.phone", "width": "48%" },
+    { "type": "textbox", "name": "email", "title": "customers.email", "width": "48%" },
+    { "type": "textbox", "name": "address", "title": "customers.address", "width": "70%" },
+    { "type": "textbox", "name": "zip", "title": "customers.zip", "width": "28%" },
+    { "type": "textbox", "name": "city", "title": "customers.city", "width": "100%" },
+    { "type": "switch", "name": "active", "title": "commonFields.active", "width": "100%" },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

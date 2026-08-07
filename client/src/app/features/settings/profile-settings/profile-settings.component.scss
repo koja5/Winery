@@ -1,0 +1,9 @@
+// Isti obrazac kao eDestilerija settings.component.scss: forma ne zauzima
+// nasilno fiksnu širinu na svakoj rezoluciji, samo se ograniči i centrira
+// na jako širokim ekranima da linije teksta ne budu beskonačno duge.
+@media (min-width: 1600px) {
+  .settings-form {
+    max-width: 65%;
+    margin: auto;
+  }
+}

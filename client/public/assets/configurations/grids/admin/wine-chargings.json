@@ -1,0 +1,59 @@
+{
+  "name": "wineChargings.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/wine-chargings" },
+  "save": { "type": "POST", "api": "/api/admin/wine-chargings" },
+  "delete": { "type": "DELETE", "api": "/api/admin/wine-chargings/:id" },
+  "dialogTitleCreate": "wineChargings.newCharging",
+  "dialogTitleEdit": "wineChargings.editCharging",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "wineChargings.chargingDate", "field": "charging_date", "type": "date" },
+    { "title": "wineChargings.productName", "field": "product_name", "type": "string" },
+    { "title": "wineAgings.wineVariety", "field": "wine_variety", "type": "string" },
+    { "title": "wineChargings.numberOfBottles", "field": "number_of_bottles", "type": "number" },
+    { "title": "wineChargings.bottleVolume", "field": "bottle_volume_ml", "type": "number" },
+    { "title": "wineChargings.totalLiters", "field": "total_liters", "type": "number" },
+    { "title": "wineChargings.lot", "field": "lot", "type": "string" }
+  ],
+  "fields": [
+    {
+      "type": "combobox",
+      "name": "aging_id",
+      "title": "wineChargings.sourceAging",
+      "width": "100%",
+      "required": true,
+      "disabledOnEdit": true,
+      "request": { "type": "GET", "api": "/api/admin/wine-agings" },
+      "allowCreate": true,
+      "createConfigFile": "wine-agings.json"
+    },
+    { "type": "textbox", "name": "product_name", "title": "wineChargings.productName", "width": "48%" },
+    { "type": "date", "name": "charging_date", "title": "wineChargings.chargingDate", "width": "48%", "required": true },
+    {
+      "type": "number",
+      "name": "number_of_bottles",
+      "title": "wineChargings.numberOfBottles",
+      "width": "48%",
+      "required": true,
+      "min": 0,
+      "disabledOnEdit": true
+    },
+    {
+      "type": "number",
+      "name": "bottle_volume_ml",
+      "title": "wineChargings.bottleVolume",
+      "width": "48%",
+      "min": 0,
+      "disabledOnEdit": true
+    },
+    { "type": "textbox", "name": "lot", "title": "wineChargings.lot", "width": "48%" }
+  ]
+}

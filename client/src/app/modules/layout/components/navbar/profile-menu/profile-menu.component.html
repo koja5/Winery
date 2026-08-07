@@ -13,7 +13,7 @@
     <hr class="profile-divider" />
 
     <ul class="profile-menu-list">
-      <li class="profile-menu-item" [routerLink]="'/uskoro'" [queryParams]="{ from: 'settings' }">
+      <li class="profile-menu-item" [routerLink]="'/settings'" (click)="toggleMenu()">
         <i class="pi pi-cog"></i>
         Podešavanja
       </li>

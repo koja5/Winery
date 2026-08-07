@@ -12,6 +12,17 @@ export interface DocumentLink {
   created_at: string;
 }
 
+export interface DocumentLibraryItem {
+  id: string;
+  name: string;
+  path: string;
+  mime_type: string;
+  size_bytes: number;
+  created_at: string;
+  entity_types: string | null;
+  links_count: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DocumentsService {
   private http = inject(HttpClient);
@@ -35,5 +46,21 @@ export class DocumentsService {
 
   downloadUrl(documentId: string): string {
     return `${this.base}/${documentId}/download`;
+  }
+
+  /** Global document library for a tenant (the standalone "Dokumentacija" page), ?search= by name. */
+  library(search?: string): Observable<DocumentLibraryItem[]> {
+    const params: Record<string, string> = search ? { search } : {};
+    return this.http.get<DocumentLibraryItem[]>(`${this.base}/library`, { params });
+  }
+
+  uploadLibrary(files: File[]): Observable<{ id: string; name: string; path: string }[]> {
+    const form = new FormData();
+    files.forEach((file) => form.append('files', file));
+    return this.http.post<{ id: string; name: string; path: string }[]>(`${this.base}/upload-library`, form);
+  }
+
+  remove(documentId: string): Observable<{ deleted: boolean }> {
+    return this.http.delete<{ deleted: boolean }>(`${this.base}/${documentId}`);
   }
 }

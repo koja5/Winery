@@ -61,6 +61,7 @@
   },
   "general": {
     "addNew": "Dodaj novo",
+    "addNewOption": "+ Dodaj novo...",
     "edit": "Izmeni",
     "delete": "Obriši",
     "save": "Sačuvaj",
@@ -87,7 +88,41 @@
   "documents": {
     "title": "Prilozi",
     "upload": "Otpremi fajl",
-    "empty": "Nema priloženih fajlova."
+    "empty": "Nema priloženih fajlova.",
+    "uploadNew": "Otpremi dokument",
+    "searchPlaceholder": "Pretraži dokumente...",
+    "size": "Veličina",
+    "attachedTo": "Povezano sa",
+    "notAttached": "Nije povezano",
+    "noFiles": "Nema otpremljenih dokumenata.",
+    "downloadTooltip": "Otvori / preuzmi",
+    "deleteTooltip": "Obriši",
+    "confirmDeleteMessage": "Da li ste sigurni da želite da obrišete ovaj dokument? Fajl će biti trajno uklonjen."
+  },
+  "commonFields": {
+    "firstname": "Ime",
+    "lastname": "Prezime",
+    "active": "Aktivan",
+    "name": "Naziv",
+    "creationDate": "Datum kreiranja"
+  },
+  "customers": {
+    "title": "Kupci",
+    "newCustomer": "Novi kupac",
+    "editCustomer": "Izmena kupca",
+    "name": "Naziv",
+    "pibOrJmbg": "PIB / JMBG",
+    "mb": "Matični broj",
+    "phone": "Telefon",
+    "email": "Email",
+    "address": "Adresa",
+    "zip": "Poštanski broj",
+    "city": "Grad"
+  },
+  "employees": {
+    "title": "Zaposleni",
+    "newEmployee": "Novi zaposleni",
+    "editEmployee": "Izmena zaposlenog"
   },
   "vessels": {
     "title": "Posude",
@@ -262,6 +297,50 @@
     "sulphates": "Sulfati (mg/L)",
     "methanol": "Metanol (mg/L)",
     "acetaldehyde": "Acetaldehid (mg/L)"
+  },
+  "fermentations": {
+    "title": "Fermentacija",
+    "newFermentation": "Nova fermentacija",
+    "editFermentation": "Izmena fermentacije",
+    "vessel": "Posuda",
+    "reception": "Partija grožđa",
+    "quantityKg": "Količina grožđa (kg)",
+    "wineType": "Tip vina",
+    "wineType.red": "Crno",
+    "wineType.white": "Belo",
+    "wineType.rose": "Roze",
+    "startDate": "Datum početka",
+    "endDate": "Datum završetka",
+    "quantityLiters": "Količina (L)",
+    "status": "Status",
+    "status.inProgress": "U toku",
+    "status.completed": "Završeno",
+    "status.stopped": "Zaustavljeno"
+  },
+  "wineAgings": {
+    "title": "Nega / odležavanje",
+    "newAging": "Nova nega",
+    "editAging": "Izmena nege",
+    "sourceFermentation": "Izvorna fermentacija",
+    "vessel": "Posuda",
+    "wineVariety": "Sorta vina",
+    "vintageYear": "Godište",
+    "lot": "Lot",
+    "startDate": "Datum početka",
+    "endDate": "Datum završetka",
+    "quantityLiters": "Trenutna količina (L)"
+  },
+  "wineChargings": {
+    "title": "Punjenje",
+    "newCharging": "Novo punjenje",
+    "editCharging": "Izmena punjenja",
+    "sourceAging": "Izvorna nega",
+    "productName": "Naziv proizvoda",
+    "chargingDate": "Datum punjenja",
+    "numberOfBottles": "Broj boca",
+    "bottleVolume": "Zapremina boce (ml)",
+    "totalLiters": "Ukupno (L)",
+    "lot": "Lot"
   },
   "workOrders": {
     "title": "Radni nalozi",
@@ -465,6 +544,74 @@
   "comingSoon": {
     "title": "Uskoro dostupno",
     "text": "Ova stranica je u izradi. Radimo na tome da bude dostupna u narednim fazama razvoja."
+  },
+  "accountSettings": {
+    "title": "Podešavanja naloga",
+    "tabs": {
+      "profile": "Nalog",
+      "license": "Paket",
+      "partner": "Partner",
+      "tenant": "Vinarija",
+      "finance": "Finansije",
+      "inoInvoice": "Izvozna faktura",
+      "bankAccounts": "Bankovni računi",
+      "changePassword": "Promena lozinke",
+      "quotes": "Ponude",
+      "efaktura": "eFaktura",
+      "eotpremnica": "eOtpremnica",
+      "demoData": "Demo podaci"
+    },
+    "profile": {
+      "firstname": "Ime",
+      "lastname": "Prezime",
+      "email": "Email",
+      "phone": "Telefon"
+    },
+    "tenant": {
+      "name": "Naziv vinarije",
+      "pib": "PIB",
+      "mb": "Matični broj",
+      "email": "Email",
+      "phone": "Telefon",
+      "address": "Adresa",
+      "zip": "Poštanski broj",
+      "city": "Grad",
+      "responsiblePerson": "Odgovorno lice",
+      "bankAccount": "Tekući račun"
+    },
+    "changePassword": {
+      "current": "Trenutna lozinka",
+      "new": "Nova lozinka",
+      "confirm": "Potvrda nove lozinke",
+      "submit": "Promeni lozinku",
+      "success": "Lozinka je uspešno promenjena.",
+      "mismatch": "Nova lozinka i potvrda se ne poklapaju.",
+      "error": "Greška pri promeni lozinke."
+    },
+    "twoFactor": {
+      "title": "Dvofaktorska autentifikacija (2FA)",
+      "subtitle": "Zaštitite svoj nalog dodatnim korakom verifikacije prilikom prijave.",
+      "enabledStatus": "2FA je uključena",
+      "methodTotp": "Autentifikator aplikacija",
+      "methodEmail": "Email kod",
+      "disableHint": "Isključivanjem 2FA vaš nalog će biti zaštićen samo lozinkom.",
+      "disableButton": "Isključi 2FA",
+      "enableHint": "Vaš nalog je zaštićen samo lozinkom. Uključite dvofaktorsku autentifikaciju za dodatni nivo sigurnosti.",
+      "enableEmailButton": "Uključi 2FA (email)",
+      "enableTotpButton": "Uključi 2FA (aplikacija)",
+      "setupTitle": "Podešavanje 2FA aplikacije",
+      "scanQr": "Skenirajte QR kod aplikacijom za autentifikaciju (npr. Google Authenticator).",
+      "manualEntry": "Ili unesite ključ ručno",
+      "enterCode": "Unesite 6-cifreni kod",
+      "wrongCode": "Kod nije ispravan.",
+      "cancel": "Otkaži",
+      "confirm": "Potvrdi",
+      "enabledToast": "2FA je uspešno uključena.",
+      "disabledToast": "2FA je isključena.",
+      "genericError": "Došlo je do greške. Pokušajte ponovo.",
+      "confirmDisableTitle": "Isključivanje 2FA",
+      "confirmDisableMessage": "Da li ste sigurni da želite da isključite dvofaktorsku autentifikaciju?"
+    }
   },
   "footer": {
     "reportProblem": "Prijavi problem",

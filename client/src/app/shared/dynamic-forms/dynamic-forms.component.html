@@ -1,48 +1,78 @@
 <form [formGroup]="form" class="dynamic-form" (ngSubmit)="submit()">
-  <div class="dynamic-form-grid">
-    @for (field of fields; track field.name) {
-      @if (field.type !== FieldType.Label) {
-        <div class="dynamic-form-field" [style.width]="field.width || '100%'">
-          <label [for]="field.name">{{ field.title | translate }}@if (field.required) {
-            <span class="required-marker">*</span>
-          }</label>
+  <div class="dynamic-form-scroll">
+    <div class="dynamic-form-grid">
+      @for (field of fields; track field.name) {
+        @if (field.type !== FieldType.Label) {
+          <div
+            class="dynamic-form-field"
+            [class.dynamic-form-field--switch]="field.type === FieldType.Switch"
+            [style.grid-column]="'span ' + fieldSpan(field)"
+          >
+            @if (field.type === FieldType.Switch) {
+              <label [for]="field.name" class="dynamic-form-switch-label">{{ field.title | translate }}</label>
+              <p-toggleswitch [inputId]="field.name" [formControlName]="field.name" />
+            } @else {
+              <label [for]="field.name"
+                >{{ field.title | translate }}
+                @if (field.required) {
+                  <span class="required-marker">*</span>
+                }
+              </label>
 
-          @switch (field.type) {
-            @case (FieldType.Number) {
-              <p-inputNumber [inputId]="field.name" [formControlName]="field.name" [min]="field.min" [max]="field.max" [step]="field.step || 1" />
-            }
-            @case (FieldType.Combobox) {
-              <p-select
-                [inputId]="field.name"
-                [formControlName]="field.name"
-                [options]="optionsFor(field)"
-                optionValue="value"
-                [placeholder]="field.placeholder || ''"
-              >
-                <ng-template let-option pTemplate="item">{{ option.text | translate }}</ng-template>
-                <ng-template let-option pTemplate="selectedItem">{{ option.text | translate }}</ng-template>
-              </p-select>
-            }
-            @case (FieldType.Switch) {
-              <p-checkbox [inputId]="field.name" [formControlName]="field.name" [binary]="true" />
-            }
-            @case (FieldType.Date) {
-              <p-datepicker [inputId]="field.name" [formControlName]="field.name" dateFormat="dd.mm.yy" [showIcon]="true" />
-            }
-            @case (FieldType.TextArea) {
-              <textarea pInputTextarea [id]="field.name" [formControlName]="field.name" rows="3"></textarea>
-            }
-            @default {
-              <input pInputText [id]="field.name" [formControlName]="field.name" />
-            }
-          }
+              @switch (field.type) {
+                @case (FieldType.Number) {
+                  <p-inputNumber
+                    [inputId]="field.name"
+                    [formControlName]="field.name"
+                    [min]="field.min"
+                    [max]="field.max"
+                    [step]="field.step || 1"
+                    [style]="{ width: '100%' }"
+                    inputStyleClass="dynamic-form-full-width"
+                  />
+                }
+                @case (FieldType.Combobox) {
+                  <p-select
+                    [inputId]="field.name"
+                    [formControlName]="field.name"
+                    [options]="optionsFor(field)"
+                    optionValue="value"
+                    [placeholder]="field.placeholder || ''"
+                    [style]="{ width: '100%' }"
+                    (onChange)="onSelectChange(field, $event)"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <span [class.add-new-option]="option.value === ADD_NEW_VALUE">{{ option.text | translate }}</span>
+                    </ng-template>
+                    <ng-template let-option pTemplate="selectedItem">{{ option.text | translate }}</ng-template>
+                  </p-select>
+                }
+                @case (FieldType.Date) {
+                  <p-datepicker
+                    [inputId]="field.name"
+                    [formControlName]="field.name"
+                    dateFormat="dd.mm.yy"
+                    [showIcon]="true"
+                    [style]="{ width: '100%' }"
+                    inputStyleClass="dynamic-form-full-width"
+                  />
+                }
+                @case (FieldType.TextArea) {
+                  <textarea pInputTextarea [id]="field.name" [formControlName]="field.name" rows="3"></textarea>
+                }
+                @default {
+                  <input pInputText [id]="field.name" [formControlName]="field.name" />
+                }
+              }
 
-          @if (form.get(field.name)?.invalid && form.get(field.name)?.touched) {
-            <small class="field-error">{{ 'general.requiredField' | translate }}</small>
-          }
-        </div>
+              @if (form.get(field.name)?.invalid && form.get(field.name)?.touched) {
+                <small class="field-error">{{ 'general.requiredField' | translate }}</small>
+              }
+            }
+          </div>
+        }
       }
-    }
+    </div>
   </div>
 
   <div class="dynamic-form-actions">
@@ -50,3 +80,16 @@
     <button pButton type="submit" [label]="'general.save' | translate"></button>
   </div>
 </form>
+
+<p-dialog
+  [(visible)]="createDialogVisible"
+  [modal]="true"
+  appendTo="body"
+  [style]="{ width: createConfig?.dialogWidth || '32rem', 'max-height': '90vh', display: 'flex', 'flex-direction': 'column' }"
+  [contentStyle]="{ overflow: 'hidden', padding: '0', display: 'flex', 'flex-direction': 'column', flex: '1', 'min-height': '0' }"
+  [header]="(createConfig?.dialogTitleCreate || 'general.addNew') | translate"
+>
+  @if (createDialogVisible && createConfig?.fields) {
+    <app-dynamic-forms [fields]="createConfig!.fields!" (save)="onCreateSave($event)" (cancel)="onCreateCancel()"></app-dynamic-forms>
+  }
+</p-dialog>

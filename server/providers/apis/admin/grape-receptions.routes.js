@@ -4,8 +4,13 @@ const router = express.Router();
 const pool = require('../../config/sql-database').connect();
 const validator = require('../../services/production-chain-validator');
 
+// `name` is additive — a synthesized label so this endpoint also works as a
+// combobox source (fermentations.json -> reception_id) without touching the
+// columns the grape-receptions grid itself already relies on.
 const LIST_SQL = `
-  SELECT gr.*, COALESCE(s.name, gr.supplier_name) AS supplier_display_name, vp.name AS parcel_name
+  SELECT gr.*, COALESCE(s.name, gr.supplier_name) AS supplier_display_name, vp.name AS parcel_name,
+         CONCAT(COALESCE(gr.grape_variety, 'Grožđe'), ' – ', DATE_FORMAT(gr.reception_date, '%d.%m.%Y'),
+                ' (', gr.quantity_kg_current, 'kg)') AS name
   FROM grape_receptions gr
   LEFT JOIN suppliers s ON s.id = gr.supplier_id
   LEFT JOIN vineyard_parcels vp ON vp.id = gr.parcel_id

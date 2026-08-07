@@ -26,6 +26,10 @@ export const routes: Routes = [
           import('./shared/components/coming-soon/coming-soon.component').then((m) => m.ComingSoonComponent)
       },
       {
+        path: 'settings',
+        loadComponent: () => import('./features/settings/settings.component').then((m) => m.SettingsComponent)
+      },
+      {
         path: 'podrum/berba/dobavljaci',
         loadComponent: () => import('./features/berba/suppliers/suppliers.component').then((m) => m.SuppliersComponent)
       },
@@ -98,6 +102,21 @@ export const routes: Routes = [
           )
       },
       {
+        path: 'podrum/vino/fermentacija',
+        loadComponent: () =>
+          import('./features/podrum/fermentations/fermentations.component').then((m) => m.FermentationsComponent)
+      },
+      {
+        path: 'podrum/vino/nega',
+        loadComponent: () =>
+          import('./features/podrum/wine-agings/wine-agings.component').then((m) => m.WineAgingsComponent)
+      },
+      {
+        path: 'podrum/vino/punjenje',
+        loadComponent: () =>
+          import('./features/podrum/wine-chargings/wine-chargings.component').then((m) => m.WineChargingsComponent)
+      },
+      {
         path: 'podrum/vino/analize',
         loadComponent: () =>
           import('./features/podrum/wine-analyses/wine-analyses.component').then((m) => m.WineAnalysesComponent)
@@ -106,6 +125,23 @@ export const routes: Routes = [
         path: 'podrum/radni-nalozi',
         loadComponent: () =>
           import('./features/podrum/work-orders/work-orders.component').then((m) => m.WorkOrdersComponent)
+      },
+      {
+        path: 'dokumenti',
+        loadComponent: () => import('./features/documents/documents.component').then((m) => m.DocumentsComponent)
+      },
+      {
+        path: 'saradnici/kupci',
+        loadComponent: () => import('./features/saradnici/customers/customers.component').then((m) => m.CustomersComponent)
+      },
+      {
+        path: 'saradnici/dobavljaci',
+        loadComponent: () =>
+          import('./features/saradnici/suppliers/suppliers.component').then((m) => m.SaradniciSuppliersComponent)
+      },
+      {
+        path: 'saradnici/zaposleni',
+        loadComponent: () => import('./features/saradnici/employees/employees.component').then((m) => m.EmployeesComponent)
       },
       {
         path: 'superadmin',

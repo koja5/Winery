@@ -6,11 +6,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
-import { CheckboxModule } from 'primeng/checkbox';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ButtonModule } from 'primeng/button';
+import { TextareaModule } from 'primeng/textarea';
+import { DialogModule } from 'primeng/dialog';
 import { FieldConfig, ComboboxOption } from '../../core/models/field-config';
 import { FieldType } from '../../core/enums/field-type.enum';
 import { CallApiService } from '../../core/services/call-api.service';
+import { ConfigurationService } from '../../core/services/configuration.service';
+import { GridConfig } from '../../core/models/grid-config';
+
+/** Sentinel option value rendered as the trailing "+ Dodaj novo..." row on
+ *  any combobox with `allowCreate: true` — intercepted in onSelectChange
+ *  before it ever reaches the form control. */
+const ADD_NEW_VALUE = '__add_new__';
 
 @Component({
   selector: 'app-dynamic-forms',
@@ -23,8 +32,11 @@ import { CallApiService } from '../../core/services/call-api.service';
     InputNumberModule,
     SelectModule,
     DatePickerModule,
-    CheckboxModule,
-    ButtonModule
+    ToggleSwitchModule,
+    ButtonModule,
+    TextareaModule,
+    DialogModule,
+    DynamicFormsComponent
   ],
   templateUrl: './dynamic-forms.component.html',
   styleUrl: './dynamic-forms.component.scss'
@@ -37,14 +49,24 @@ export class DynamicFormsComponent implements OnChanges {
   @Output() cancel = new EventEmitter<void>();
 
   readonly FieldType = FieldType;
+  readonly ADD_NEW_VALUE = ADD_NEW_VALUE;
 
   private fb = inject(FormBuilder);
   private api = inject(CallApiService);
+  private configService = inject(ConfigurationService);
   form: FormGroup = this.fb.group({});
 
   /** resolved options for combobox fields whose options come from `field.request`
    *  instead of a static list — response rows are mapped {id,name} -> {value,text}. */
   fieldOptions: Record<string, ComboboxOption[]> = {};
+
+  // "Quick add" dialog state: lets any request-backed combobox create a new
+  // referenced record inline (e.g. picking a Posuda without leaving the
+  // Fermentacija form) via a nested instance of this same component, built
+  // from the target entity's own grid config (fields + save request).
+  createDialogVisible = false;
+  createField: FieldConfig | null = null;
+  createConfig: GridConfig | null = null;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['fields'] || changes['data']) {
@@ -54,7 +76,59 @@ export class DynamicFormsComponent implements OnChanges {
   }
 
   optionsFor(field: FieldConfig): ComboboxOption[] {
-    return this.fieldOptions[field.name] || field.options || [];
+    const base = this.fieldOptions[field.name] || field.options || [];
+    if (field.allowCreate && field.request) {
+      return [...base, { text: 'general.addNewOption', value: ADD_NEW_VALUE }];
+    }
+    return base;
+  }
+
+  onSelectChange(field: FieldConfig, event: { value: any }): void {
+    if (event.value !== ADD_NEW_VALUE) return;
+    this.form.get(field.name)?.setValue(null);
+    this.createField = field;
+    this.configService.getGridConfig('grids/admin', field.createConfigFile!).subscribe((config) => {
+      this.createConfig = config;
+      this.createDialogVisible = true;
+    });
+  }
+
+  onCreateSave(value: Record<string, any>): void {
+    const field = this.createField;
+    const config = this.createConfig;
+    if (!field || !config?.save) return;
+
+    this.api.call<{ id: string }>(config.save, value).subscribe((res) => {
+      this.createDialogVisible = false;
+      this.api.call<any[]>(field.request!).subscribe((rows) => {
+        this.fieldOptions[field.name] = (rows || []).map((row) => ({ text: row.name, value: row.id }));
+        this.form.get(field.name)?.setValue(res?.id ?? null);
+      });
+      this.createField = null;
+      this.createConfig = null;
+    });
+  }
+
+  onCreateCancel(): void {
+    this.createDialogVisible = false;
+    this.createField = null;
+    this.createConfig = null;
+  }
+
+  /** Percentage widths in a flex row fight with `gap` (flexbox doesn't
+   *  exclude gap from % math, so 48%+48% either overflows into a wrap or,
+   *  with flex-grow, un-wraps everything onto one line). A 24-unit CSS grid
+   *  sidesteps both: `gap` is a first-class part of grid track sizing, and
+   *  fields wrap to a new row exactly when their spans fill the 24 columns
+   *  (e.g. 48%+48% → 12+12, 70%+28% → 17+7), always reaching the same right
+   *  edge as a full-width field. */
+  fieldSpan(field: FieldConfig): number {
+    const width = field.width || '100%';
+    if (width === '100%') {
+      return 24;
+    }
+    const pct = parseFloat(width) || 100;
+    return Math.max(1, Math.min(24, Math.round((pct / 100) * 24)));
   }
 
   private loadRequestOptions(): void {

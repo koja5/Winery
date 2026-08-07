@@ -1,0 +1,31 @@
+<p-tabs value="profile" [scrollable]="true">
+  <p-tablist>
+    @for (tab of tabs; track tab.id) {
+      <p-tab [value]="tab.id">
+        <span class="flex items-center gap-2">
+          <i [class]="tab.icon"></i>
+          <span>{{ tab.labelKey | translate }}</span>
+          @if (tab.locked) {
+            <span class="text-[10px] uppercase font-semibold text-ev-muted border border-ev-line rounded px-1.5 py-0.5">{{
+              'nav.locked' | translate
+            }}</span>
+          }
+        </span>
+      </p-tab>
+    }
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="profile"><app-profile-settings></app-profile-settings></p-tabpanel>
+    <p-tabpanel value="license"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="partner"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="tenant"><app-tenant-settings></app-tenant-settings></p-tabpanel>
+    <p-tabpanel value="finance"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="inoInvoice"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="bankAccounts"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="changePassword"><app-change-password-settings></app-change-password-settings></p-tabpanel>
+    <p-tabpanel value="quotes"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="efaktura"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="eotpremnica"><app-coming-soon></app-coming-soon></p-tabpanel>
+    <p-tabpanel value="demoData"><app-coming-soon></app-coming-soon></p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

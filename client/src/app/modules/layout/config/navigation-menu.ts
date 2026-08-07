@@ -46,11 +46,10 @@ export const NAVIGATION_MENU: NavGroup[] = [
       {
         title: 'nav.vino',
         icon: 'assets/icons/heroicons/outline/destillation.svg',
-        locked: true,
         children: [
-          { title: 'nav.vino.fermentation', route: '/podrum/vino/fermentacija', locked: true },
-          { title: 'nav.vino.aging', route: '/podrum/vino/nega', locked: true },
-          { title: 'nav.vino.charging', route: '/podrum/vino/punjenje', locked: true },
+          { title: 'nav.vino.fermentation', route: '/podrum/vino/fermentacija' },
+          { title: 'nav.vino.aging', route: '/podrum/vino/nega' },
+          { title: 'nav.vino.charging', route: '/podrum/vino/punjenje' },
           { title: 'nav.vino.analyses', route: '/podrum/vino/analize' }
         ]
       },
@@ -93,14 +92,14 @@ export const NAVIGATION_MENU: NavGroup[] = [
   {
     label: 'nav.group.collaborators',
     items: [
-      { title: 'nav.customers', icon: 'assets/icons/heroicons/outline/user-circle.svg', route: '/saradnici/kupci', locked: true },
-      { title: 'nav.suppliers', icon: 'assets/icons/heroicons/outline/supplier.svg', route: '/saradnici/dobavljaci', locked: true },
-      { title: 'nav.employees', icon: 'assets/icons/heroicons/outline/employee.svg', route: '/saradnici/zaposleni', locked: true }
+      { title: 'nav.customers', icon: 'assets/icons/heroicons/outline/user-circle.svg', route: '/saradnici/kupci' },
+      { title: 'nav.suppliers', icon: 'assets/icons/heroicons/outline/supplier.svg', route: '/saradnici/dobavljaci' },
+      { title: 'nav.employees', icon: 'assets/icons/heroicons/outline/employee.svg', route: '/saradnici/zaposleni' }
     ]
   },
   {
     items: [
-      { title: 'nav.documents', icon: 'assets/icons/heroicons/outline/folder.svg', route: '/dokumenti', locked: true }
+      { title: 'nav.documents', icon: 'assets/icons/heroicons/outline/folder.svg', route: '/dokumenti' }
     ]
   },
   {

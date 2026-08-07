@@ -1,0 +1,34 @@
+{
+  "name": "employees.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/employees" },
+  "save": { "type": "POST", "api": "/api/admin/employees" },
+  "delete": { "type": "DELETE", "api": "/api/admin/employees/:id" },
+  "dialogTitleCreate": "employees.newEmployee",
+  "dialogTitleEdit": "employees.editEmployee",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "commonFields.firstname", "field": "firstname", "type": "string" },
+    { "title": "commonFields.lastname", "field": "lastname", "type": "string" },
+    { "title": "customers.phone", "field": "phone", "type": "string" },
+    { "title": "customers.email", "field": "email", "type": "string" }
+  ],
+  "fields": [
+    { "type": "textbox", "name": "firstname", "title": "commonFields.firstname", "width": "48%", "required": true },
+    { "type": "textbox", "name": "lastname", "title": "commonFields.lastname", "width": "48%" },
+    { "type": "textbox", "name": "phone", "title": "customers.phone", "width": "48%" },
+    { "type": "textbox", "name": "email", "title": "customers.email", "width": "48%" },
+    { "type": "textbox", "name": "address", "title": "customers.address", "width": "70%" },
+    { "type": "textbox", "name": "zip", "title": "customers.zip", "width": "28%" },
+    { "type": "textbox", "name": "city", "title": "customers.city", "width": "100%" },
+    { "type": "switch", "name": "active", "title": "commonFields.active", "width": "100%" },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

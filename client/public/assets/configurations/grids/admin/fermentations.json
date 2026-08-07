@@ -1,0 +1,113 @@
+{
+  "name": "fermentations.title",
+  "dataKey": "id",
+  "request": { "type": "GET", "api": "/api/admin/must-fermentations" },
+  "save": { "type": "POST", "api": "/api/admin/must-fermentations" },
+  "delete": { "type": "DELETE", "api": "/api/admin/must-fermentations/:id" },
+  "dialogTitleCreate": "fermentations.newFermentation",
+  "dialogTitleEdit": "fermentations.editFermentation",
+  "columns": [
+    {
+      "title": "",
+      "field": "",
+      "actions": [
+        { "type": "edit", "icon": "pi pi-pencil", "title": "general.edit" },
+        { "type": "delete", "icon": "pi pi-trash", "title": "general.delete" }
+      ]
+    },
+    { "title": "fermentations.vessel", "field": "vessel_name", "type": "string" },
+    {
+      "title": "fermentations.wineType",
+      "field": "wine_type",
+      "type": "string",
+      "translateMap": {
+        "red": "fermentations.wineType.red",
+        "white": "fermentations.wineType.white",
+        "rose": "fermentations.wineType.rose"
+      }
+    },
+    { "title": "fermentations.reception", "field": "reception_grape_variety", "type": "string" },
+    { "title": "fermentations.startDate", "field": "start_date", "type": "date" },
+    { "title": "fermentations.endDate", "field": "end_date", "type": "date" },
+    { "title": "fermentations.quantityLiters", "field": "quantity_liters_current", "type": "number" },
+    {
+      "title": "fermentations.status",
+      "field": "status",
+      "type": "string",
+      "translateMap": {
+        "in_progress": "fermentations.status.inProgress",
+        "completed": "fermentations.status.completed",
+        "stopped": "fermentations.status.stopped"
+      }
+    }
+  ],
+  "fields": [
+    {
+      "type": "combobox",
+      "name": "vessel_id",
+      "title": "fermentations.vessel",
+      "width": "48%",
+      "required": true,
+      "disabledOnEdit": true,
+      "request": { "type": "GET", "api": "/api/admin/wine-vessels" },
+      "allowCreate": true,
+      "createConfigFile": "wine-vessels.json"
+    },
+    {
+      "type": "combobox",
+      "name": "reception_id",
+      "title": "fermentations.reception",
+      "width": "48%",
+      "required": true,
+      "disabledOnEdit": true,
+      "request": { "type": "GET", "api": "/api/admin/grape-receptions" },
+      "allowCreate": true,
+      "createConfigFile": "grape-receptions.json"
+    },
+    {
+      "type": "number",
+      "name": "quantity_kg",
+      "title": "fermentations.quantityKg",
+      "width": "48%",
+      "required": true,
+      "min": 0,
+      "disabledOnEdit": true
+    },
+    {
+      "type": "combobox",
+      "name": "wine_type",
+      "title": "fermentations.wineType",
+      "width": "48%",
+      "required": true,
+      "disabledOnEdit": true,
+      "options": [
+        { "text": "fermentations.wineType.red", "value": "red" },
+        { "text": "fermentations.wineType.white", "value": "white" },
+        { "text": "fermentations.wineType.rose", "value": "rose" }
+      ]
+    },
+    { "type": "textbox", "name": "name", "title": "commonFields.name", "width": "48%" },
+    {
+      "type": "combobox",
+      "name": "status",
+      "title": "fermentations.status",
+      "width": "48%",
+      "options": [
+        { "text": "fermentations.status.inProgress", "value": "in_progress" },
+        { "text": "fermentations.status.completed", "value": "completed" },
+        { "text": "fermentations.status.stopped", "value": "stopped" }
+      ]
+    },
+    { "type": "date", "name": "start_date", "title": "fermentations.startDate", "width": "48%", "required": true, "disabledOnEdit": true },
+    { "type": "date", "name": "end_date", "title": "fermentations.endDate", "width": "48%" },
+    {
+      "type": "number",
+      "name": "quantity_liters",
+      "title": "fermentations.quantityLiters",
+      "width": "48%",
+      "required": true,
+      "min": 0
+    },
+    { "type": "textarea", "name": "notes", "title": "general.notes", "width": "100%" }
+  ]
+}

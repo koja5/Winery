@@ -1,0 +1,102 @@
+<p-toast position="top-center"></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<input #fileInput type="file" multiple hidden (change)="onFilesSelected($event)" />
+
+<div class="documents-wrapper">
+  <div class="empty-overlay" *ngIf="!loading && documents.length === 0">
+    <div class="empty-state">
+      <i class="pi pi-folder-open empty-state-icon"></i>
+      <span class="empty-state-label">{{ 'documents.noFiles' | translate }}</span>
+    </div>
+  </div>
+
+  <p-table
+    #dt
+    [value]="documents"
+    [loading]="loading"
+    dataKey="id"
+    [paginator]="true"
+    [rows]="20"
+    [rowsPerPageOptions]="[10, 20, 50]"
+    [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="currentPageReportTemplate"
+    [globalFilterFields]="['name', 'entity_types']"
+    [scrollable]="true"
+    scrollHeight="60vh"
+    [tableStyle]="{ 'min-width': '100%' }"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="caption">
+      <div class="caption">
+        <button
+          pButton
+          icon="pi pi-upload"
+          class="custom-button"
+          [label]="'documents.uploadNew' | translate"
+          [loading]="uploading"
+          (click)="triggerUpload()"
+        ></button>
+
+        <div class="global-search ml-2 mr-2">
+          <p-iconfield iconPosition="left" class="ml-auto">
+            <p-inputicon styleClass="pi pi-search" />
+            <input pInputText type="text" [placeholder]="'documents.searchPlaceholder' | translate" (input)="onGlobalFilter($event)" />
+          </p-iconfield>
+        </div>
+
+        <button
+          pButton
+          type="button"
+          [outlined]="true"
+          icon="pi pi-refresh"
+          class="custom-button"
+          (click)="load()"
+          [pTooltip]="'general.refresh' | translate"
+          tooltipPosition="top"
+        ></button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th></th>
+        <th pSortableColumn="name">{{ 'commonFields.name' | translate }} <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="created_at">{{ 'commonFields.creationDate' | translate }} <p-sortIcon field="created_at"></p-sortIcon></th>
+        <th>{{ 'documents.size' | translate }}</th>
+        <th>{{ 'documents.attachedTo' | translate }}</th>
+        <th class="row-actions-col"></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-doc>
+      <tr>
+        <td class="file-icon-col"><i class="pi pi-file"></i></td>
+        <td>
+          <a [href]="downloadUrl(doc)" target="_blank" rel="noopener" class="document-name-link" [pTooltip]="'documents.downloadTooltip' | translate">
+            {{ doc.name }}
+          </a>
+        </td>
+        <td>{{ formatDate(doc.created_at) }}</td>
+        <td>{{ formatSize(doc.size_bytes) }}</td>
+        <td>{{ attachedToLabel(doc) }}</td>
+        <td class="row-actions-col">
+          <button
+            type="button"
+            class="row-action-btn delete-action-btn"
+            [pTooltip]="'documents.deleteTooltip' | translate"
+            (click)="confirmDelete(doc)"
+          >
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td class="empty" colspan="6"></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

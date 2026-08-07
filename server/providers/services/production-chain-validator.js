@@ -15,6 +15,14 @@ class WineProductionChainValidator {
     return rows[0].count;
   }
 
+  async _sumRelatedQuantity(pool, table, foreignKey, quantityColumn, id) {
+    const [rows] = await pool.query(
+      `SELECT COALESCE(SUM(${quantityColumn}), 0) as total FROM ${table} WHERE ${foreignKey} = ?`,
+      [id]
+    );
+    return Number(rows[0].total);
+  }
+
   // ---------------------------------------------------------------------
   // DELETE checks
   // ---------------------------------------------------------------------
@@ -101,6 +109,34 @@ class WineProductionChainValidator {
     ]);
     if (!rows.length) {
       return this._notFound();
+    }
+
+    const [blendResultRows] = await pool.query('SELECT id FROM wine_blends WHERE result_aging_id = ?', [id]);
+    if (blendResultRows.length) {
+      return {
+        canProceed: false,
+        message: 'productionChain.agingIsBlendResult',
+        deletionType: 'none',
+        affectedEntities: { blends: blendResultRows.length },
+        warnings: []
+      };
+    }
+
+    const blendConsumedQuantity = await this._sumRelatedQuantity(
+      pool,
+      'wine_blend_components',
+      'source_aging_id',
+      'quantity_liters',
+      id
+    );
+    if (blendConsumedQuantity > 0) {
+      return {
+        canProceed: false,
+        message: 'productionChain.agingConsumedByBlend',
+        deletionType: 'none',
+        affectedEntities: { blendConsumedLiters: blendConsumedQuantity },
+        warnings: []
+      };
     }
 
     const chargingCount = await this._countRelatedRecords(pool, 'wine_chargings', 'aging_id', id);
@@ -397,17 +433,25 @@ class WineProductionChainValidator {
       [id]
     );
     const bottledLiters = Number(chargingRows[0].bottled_liters);
+    const blendedLiters = await this._sumRelatedQuantity(
+      pool,
+      'wine_blend_components',
+      'source_aging_id',
+      'quantity_liters',
+      id
+    );
+    const consumedLiters = bottledLiters + blendedLiters;
 
     const blockedFields = [];
     const criticalFields = ['vessel_id', 'fermentation_id'];
 
-    if (bottledLiters > 0) {
-      if (changes.quantity_liters_current !== undefined && changes.quantity_liters_current < bottledLiters) {
+    if (consumedLiters > 0) {
+      if (changes.quantity_liters_current !== undefined && changes.quantity_liters_current < consumedLiters) {
         blockedFields.push({
           field: 'quantity_liters_current',
           currentValue: aging.quantity_liters_current,
           proposedValue: changes.quantity_liters_current,
-          reason: `Nova količina (${changes.quantity_liters_current}L) ne može biti manja od već flaširane količine (${bottledLiters}L).`
+          reason: `Nova količina (${changes.quantity_liters_current}L) ne može biti manja od već potrošene količine kroz flaširanje i kupažiranje (${consumedLiters}L).`
         });
       }
       criticalFields.forEach((field) => {
@@ -416,13 +460,48 @@ class WineProductionChainValidator {
             field,
             currentValue: aging[field],
             proposedValue: changes[field],
-            reason: 'Ovo polje se ne može menjati jer je vino iz ove nege već flaširano.'
+            reason: 'Ovo polje se ne može menjati jer je vino iz ove nege već flaširano ili kupažirano.'
           });
         }
       });
     }
 
     return this._buildEditResult(changes, blockedFields);
+  }
+
+  async canDeleteWineBlend(pool, id, tenantId) {
+    const [rows] = await pool.query('SELECT * FROM wine_blends WHERE id = ? AND tenant_id = ?', [id, tenantId]);
+    if (!rows.length) {
+      return this._notFound();
+    }
+    const blend = rows[0];
+
+    const chargingCount = await this._countRelatedRecords(pool, 'wine_chargings', 'aging_id', blend.result_aging_id);
+    const transferCount = await this._countRelatedRecords(pool, 'vessel_transfers', 'aging_id', blend.result_aging_id);
+    const downstreamBlendCount = await this._countRelatedRecords(
+      pool,
+      'wine_blend_components',
+      'source_aging_id',
+      blend.result_aging_id
+    );
+
+    if (chargingCount > 0 || transferCount > 0 || downstreamBlendCount > 0) {
+      return {
+        canProceed: false,
+        message: 'productionChain.blendResultAlreadyUsed',
+        deletionType: 'none',
+        affectedEntities: { chargings: chargingCount, transfers: transferCount, furtherBlends: downstreamBlendCount },
+        warnings: []
+      };
+    }
+
+    return {
+      canProceed: true,
+      message: 'productionChain.canSafelyDelete',
+      deletionType: 'cascade',
+      affectedEntities: {},
+      warnings: ['productionChain.warningBlendDeleteRestoresSources']
+    };
   }
 
   // ---------------------------------------------------------------------

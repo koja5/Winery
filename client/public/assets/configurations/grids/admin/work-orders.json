@@ -43,7 +43,7 @@
   "fields": [
     { "type": "textbox", "name": "title", "title": "workOrders.taskTitle", "width": "100%", "required": true },
     { "type": "textarea", "name": "description", "title": "workOrders.description", "width": "100%" },
-    { "type": "combobox", "name": "vessel_id", "title": "workOrders.vessel", "width": "48%", "request": { "type": "GET", "api": "/api/admin/wine-vessels" } },
+    { "type": "combobox", "name": "vessel_id", "title": "workOrders.vessel", "width": "48%", "request": { "type": "GET", "api": "/api/admin/wine-vessels" }, "allowCreate": true, "createConfigFile": "wine-vessels.json" },
     { "type": "combobox", "name": "assigned_to", "title": "workOrders.assignedTo", "width": "48%", "request": { "type": "GET", "api": "/api/admin/team-members" } },
     { "type": "date", "name": "due_date", "title": "workOrders.dueDate", "width": "48%", "required": true },
     {
